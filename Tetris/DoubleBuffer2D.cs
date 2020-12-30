@@ -62,7 +62,6 @@ namespace Tetris
                     Console.SetCursorPosition(x, y);
                     Console.Write(next[x,y].Character);
                 }
-                Console.WriteLine();
             }
 
             aux = next;

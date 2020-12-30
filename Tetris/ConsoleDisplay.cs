@@ -164,6 +164,23 @@ namespace Tetris
                 c:'M');
             screen[(screen.xDim / 2) + 5, (screen.yDim / 2) + 12] = new Pixel(
                 c:'E');
+
+            screen[(screen.xDim / 2) - 4, (screen.yDim / 2) + 13] = new Pixel(
+                c:'T');
+            screen[(screen.xDim / 2) - 3, (screen.yDim / 2) + 13] = new Pixel(
+                c:'U');
+            screen[(screen.xDim / 2) - 2, (screen.yDim / 2) + 13] = new Pixel(
+                c:'T');
+            screen[(screen.xDim / 2) - 1, (screen.yDim / 2) + 13] = new Pixel(
+                c:'O');
+            screen[(screen.xDim / 2), (screen.yDim / 2) + 13] = new Pixel(
+                c:'R');
+            screen[(screen.xDim / 2) + 1, (screen.yDim / 2) + 13] = new Pixel(
+                c:'I');
+            screen[(screen.xDim / 2) + 2, (screen.yDim / 2) + 13] = new Pixel(
+                c:'A');
+            screen[(screen.xDim / 2) + 3, (screen.yDim / 2) + 13] = new Pixel(
+                c:'L');
         }
 
         public void CursorDown()
