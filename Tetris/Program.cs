@@ -6,7 +6,9 @@ namespace Tetris
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Client gameClient = new Client();
+
+            gameClient.Run();
         }
     }
 }
