@@ -10,7 +10,6 @@ namespace Tetris
     {
         public Client()
         {
-            Console.CursorVisible = false;
             Console.Clear();
         }
 
@@ -23,15 +22,34 @@ namespace Tetris
             Thread inputThread = new Thread(UI.InputRead);
             inputThread.Start();
 
-            UI.TitleScreen();
-
             // Everything
             while (running)
             {
                 // Delta Time stuffs, we're implementing fixed version
                 // Process the player input, can grab it from UI.Input
                 // GameUpdate.Update();
-                // UI.Render();
+
+                UI.TitleScreen();
+
+                ConsoleKey key;
+                if (UI.Input.TryTake(out key))
+                {
+                    switch (key)
+                    {
+                        case ConsoleKey.W:
+                            UI.CursorUp();
+                            break;
+                        case ConsoleKey.S:
+                            UI.CursorDown();
+                            break;
+                        case ConsoleKey.Escape:
+                            running = false;
+                            break;
+
+                    }
+                }
+
+                UI.Render();
             }
 
             Console.ReadKey(true);
