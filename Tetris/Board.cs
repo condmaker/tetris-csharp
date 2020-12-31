@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 namespace Tetris
 {
-    public class Board
+    public class Board: GameObject
     {
         private int Height;
         private int Width;
-        private ConsoleColor[,] boardMatrix;
+
+        //PRIVATE lembrar
+        public ConsoleColor[,] boardMatrix;
 
         public Board(int w = 10, int h = 20)
         {
@@ -26,14 +28,14 @@ namespace Tetris
             return false;
         }
 
-        public bool IsCollision(ICollection<Tuple<int,int>> position)
+        public bool IsCollision(ICollection<Coord> position)
         {
-            foreach(Tuple<int,int> t in position)
+            foreach(Coord c in position)
             {
-                if(boardMatrix[t.Item1,t.Item2] != ConsoleColor.Black)
+                if(boardMatrix[c.x, c.y] != ConsoleColor.Black)
                     return true;
             }
-            // todo verificar colisao com peça
+
             return false;
         }
 
@@ -64,6 +66,11 @@ namespace Tetris
                 }
             return clearedLines;
         }
+
+        public override void Update()
+        {
+
+        }    
 
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Tetris
 {
-    public abstract class Tetrimino
+    public abstract class Tetromino: GameObject
     {
         protected ConsoleColor color;
 

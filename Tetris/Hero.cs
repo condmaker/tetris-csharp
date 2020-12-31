@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Tetris
 {
-    public class Hero: Tetrimino
+    public class Hero: Tetromino
     {
         protected ConsoleColor color;
 
@@ -13,5 +13,9 @@ namespace Tetris
         //Isto tbm 
         protected IList<Tuple<int,int>> definition;
 
+        public override void Update()
+        {
+
+        }
     }
 }

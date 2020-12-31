@@ -13,6 +13,7 @@ namespace Tetris
 
         // TODO piece?
 
+
         public Client(){
             inputThread = new Thread(ReadKey);
             inputLock = new Object();
@@ -26,8 +27,8 @@ namespace Tetris
             IDisplay UI = new ConsoleDisplay();
             running = true;
             inputThread.Start();
-
-            UI.TitleScreen();
+            
+                UI.TitleScreen();
 
             while(running)
             {
@@ -42,6 +43,12 @@ namespace Tetris
                 // render
                 UI.Render();
                 // sleep
+                
+                while(dir != Dir.Down)
+                {
+                    Console.WriteLine(dir);
+                }
+
             }
         }
 
