@@ -18,6 +18,7 @@ namespace Tetris
             inputLock = new Object();
             Console.CursorVisible = false;
             Console.Clear();
+            board = new Board();
         }
 
         public void GameLoop()
@@ -39,6 +40,7 @@ namespace Tetris
                 board.DeleteCompleteLines();
                 // update score
                 // render
+                UI.Render();
                 // sleep
             }
         }

@@ -27,6 +27,20 @@ namespace Tetris
             return true;
         }
 
+        public override bool Equals(Object obj)
+        {
+            if (!(obj is Pixel))
+                return false;
+            Pixel p = (Pixel) obj;
+            return ((Character == p.Character) && (Color == p.Color));
+
+        }
+
+        public override int GetHashCode()
+        {
+            return Color.GetHashCode() ^ Character.GetHashCode();
+        }
+
         public override string ToString()
         {
             return Color.ToString();
