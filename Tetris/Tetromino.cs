@@ -2,19 +2,39 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 
+/// <summary>
+/// Abstract class which represents a Tetromino piece
+/// </summary>
 namespace Tetris
 {
     public abstract class Tetromino: GameObject, IEnumerable<Coord>
     {
-        public ConsoleColor color;
+        /// <summary>
+        /// Property which represents the color of the Tetromino piece.
+        /// </summary>
+        /// <value>Tetromino piece's color.</value>
+        public ConsoleColor Color { get; private set;}
 
-        //Devia ser um vector2
+        /// <summary>
+        /// Instance variable which represents the current position of the 
+        /// Tetromino piece.
+        /// </summary>
+        /// <value>Tetromino piece's current position.</value>
         protected Coord position;
     
-        //Isto tbm 
+        /// <summary>
+        /// Instance variable which represents the different positions the 
+        /// Tetromino piece occupies, from the current position.
+        /// </summary>
+        /// <value>Collection of Coord occupied by the Tetromino, from its 
+        /// position.</value>
         protected IList<Coord> definition;
 
-        protected virtual void Rotate(Dir dir)
+        /// <summary>
+        /// Method responsible for rotating the Tetromino piece by 90 degrees 
+        /// clockwise.
+        /// </summary>
+        protected virtual void Rotate()
         {
             //Rotate bro
             for(int i = 0; i < definition.Count; i++){
@@ -23,12 +43,24 @@ namespace Tetris
             }
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the Tetromino 
+        /// definition collection.
+        /// </summary>
+        /// <returns>An enumerator that can be used to iterate through the 
+        /// definition collection.</returns>
         public IEnumerator<Coord> GetEnumerator()
         {
             foreach (Coord c in definition)
                 yield return (c+position);
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the Tetromino 
+        /// definition collection.
+        /// </summary>
+        /// <returns>An enumerator that can be used to iterate through the 
+        /// definition collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

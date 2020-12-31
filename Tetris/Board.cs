@@ -175,7 +175,7 @@ namespace Tetris
         {
             foreach (Coord c in t)
             {
-                BoardMatrix[c.x, c.y].Color = t.color;
+                BoardMatrix[c.x, c.y].Color = t.Color;
             }
         }
 

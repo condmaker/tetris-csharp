@@ -176,7 +176,7 @@ namespace Tetris
         {
             for (int x = 0; x < board.Width; x++)
                 for (int y = 0; y < board.Height; y++)
-                    screen[x, y] = new Pixel(board.BoardMatrix[x, y]);
+                    screen[x, y] = new Pixel(board.BoardMatrix[x, y].Color);
         }
 
         public void Render()
