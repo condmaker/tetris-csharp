@@ -31,6 +31,35 @@ namespace Tetris
             this.y = y;
         }
 
+        public Coord(Dir dir)
+        {
+            x = 0;
+            y = 0;
+            switch (dir)
+            {
+                case Dir.None:
+                    x = 0;
+                    y = 0;
+                    break;
+                case Dir.Up:
+                    x = 0;
+                    y = -1;
+                    break;
+                case Dir.Down:
+                    x = 0;
+                    y = 1;
+                    break;
+                case Dir.Left:
+                    x = -1;
+                    y = 0;
+                    break;
+                case Dir.Right:
+                    x = 1;
+                    y = 0;
+                    break;           
+            }
+        }
+
         /// <summary>
         /// Returns the instance's position properly formatted in string format.
         /// </summary>
