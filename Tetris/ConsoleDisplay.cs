@@ -9,16 +9,7 @@ namespace Tetris
     /// </summary>
     public class ConsoleDisplay : IDisplay
     {
-        /// <summary>
-        /// The general input manager of the game.
-        /// </summary>
-        /// <value></value>
-        public BlockingCollection<ConsoleKey> Input { get; private set; }
         private DoubleBuffer2D screen;
-
-        // TEMPORARY. THE CURSOR WILL BE DEFINED ON THE GAME LOGIC AT CLIENT
-        // AND WILL BE GIVEN AS AN ARGUMENT TO TITLE SCREEN().
-        private bool cursorPos;
 
         public ConsoleDisplay()
         {
@@ -34,11 +25,9 @@ namespace Tetris
                 Console.WindowWidth, Console.WindowHeight);
 
             Console.SetCursorPosition(0,0);
-
-            Input = new BlockingCollection<ConsoleKey>();
         }
 
-        public void TitleScreen()
+        public void TitleScreen(Dir dir)
         {
             // T
             screen[((screen.xDim / 2) - 13), 4] = new Pixel(ConsoleColor.Red);
@@ -131,14 +120,14 @@ namespace Tetris
             screen[((screen.xDim / 2) + 12), 7] = new Pixel(
                 ConsoleColor.DarkMagenta);
 
-            if (cursorPos)
+            if (dir == Dir.Down)
             {
                 screen[(screen.xDim / 2) - 6, (screen.yDim / 2) + 12] = new Pixel(
                 c:' ');
                 screen[(screen.xDim / 2) - 6, (screen.yDim / 2) + 13] = new Pixel(
                 c:'→');
             }
-            else
+            else if (dir == Dir.Up)
             {
                 screen[(screen.xDim / 2) - 6, (screen.yDim / 2) + 12] = new Pixel(
                 c:'→');
@@ -181,25 +170,6 @@ namespace Tetris
                 c:'A');
             screen[(screen.xDim / 2) + 3, (screen.yDim / 2) + 13] = new Pixel(
                 c:'L');
-        }
-
-        public void CursorDown()
-        {
-            cursorPos = true;
-        }
-        public void CursorUp()
-        {
-            cursorPos = false;
-        }
-
-        public void InputRead()
-        {
-            ConsoleKey c;
-            do
-            {
-                c = Console.ReadKey(true).Key;
-                Input.Add(c);
-            } while (c != ConsoleKey.Escape);
         }
 
         public void Render()
