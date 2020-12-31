@@ -31,6 +31,11 @@ namespace Tetris
             this.y = y;
         }
 
+        /// <summary>
+        /// Creates a position (Coord instance) to be used on the board from a 
+        /// Direction.
+        /// </summary>
+        /// <param name="dir">Direction.</param>
         public Coord(Dir dir)
         {
             x = 0;
