@@ -14,7 +14,7 @@ namespace Tetris
         //Isto tbm 
         protected IList<Coord> definition;
 
-        protected virtual void Rotate(Dir dir)
+        public virtual void Rotate()
         {
             //Rotate bro
             for(int i = 0; i < definition.Count; i++){
@@ -43,6 +43,10 @@ namespace Tetris
             return str;
         }
 
+        public override void Update()
+        {
+            
+        }
 
     }
 }

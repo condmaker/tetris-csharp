@@ -14,7 +14,13 @@ namespace Tetris
             BoardMatrix = new ConsoleColor[w, h];
             for (int x = 0; x < w; x++)
                 for (int y = 0; y < h; y++)
+                {   
                     BoardMatrix[x,y] = ConsoleColor.Black;
+                }
+            
+            BoardMatrix[3,3] = ConsoleColor.Red;
+            BoardMatrix[5,3] = ConsoleColor.Red;
+            BoardMatrix[3,5] = ConsoleColor.Red;
         }
 
         public bool IsTileFree(Coord c)
@@ -26,7 +32,7 @@ namespace Tetris
         {
             foreach(Coord c in position)
             {
-                if(BoardMatrix[c.x, c.y] != ConsoleColor.Black)
+                if(IsTileFree(c))
                     return true;
             }
 
@@ -63,7 +69,7 @@ namespace Tetris
 
         public override void Update()
         {
-
+            
         }    
         public void StorePiece(Tetromino t)
         {

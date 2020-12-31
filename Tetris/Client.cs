@@ -41,17 +41,11 @@ namespace Tetris
                 // reset direction
                 dir = Dir.None;
                 // check  and delete lines
-                board.DeleteCompleteLines();
+                //board.DeleteCompleteLines();
                 // update score
                 // render
                 UI.Render();
-                // sleep
-                
-                while(dir != Dir.Down)
-                {
-                    Console.WriteLine(dir);
-                }
-
+                // sleep                
             }
 
             Finish();

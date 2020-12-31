@@ -5,17 +5,14 @@ namespace Tetris
 {
     public class Hero: Tetromino
     {
-        protected ConsoleColor color;
-
-        //Devia ser um vector2
-        protected Tuple<int,int> position;
-    
-        //Isto tbm 
-        protected IList<Tuple<int,int>> definition;
-
-        public override void Update()
+        public Hero(Coord pos)
         {
-
+            position = pos;
+            definition = new List<Coord>();
+            definition.Add(new Coord(0, -1));
+            definition.Add(new Coord(0, 0));
+            definition.Add(new Coord(0, 1));
+            definition.Add(new Coord(0, 2));
         }
     }
 }
