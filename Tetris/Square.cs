@@ -6,7 +6,7 @@ namespace Tetris
     {
         public Square(Coord pos)
         {
-            sprite = new Pixel(System.ConsoleColor.Yellow);
+            sprite = new Pixel(System.ConsoleColor.Blue);
             position = pos;
             definition = new List<Coord>();
             definition.Add(new Coord(0, 0));

@@ -36,6 +36,7 @@ namespace Tetris
                 // read direction
                 ProcessInput();                
                 // update piece
+                board.Update();
                 //UI.TitleScreen(dir);
                 UI.UpdateBoard(board);
                 // reset direction

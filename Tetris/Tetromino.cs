@@ -23,6 +23,11 @@ namespace Tetris
             }
         }
 
+        public void Move(){
+            position = position + new Coord(0,1);
+        }
+
+
         public IEnumerator<Coord> GetEnumerator()
         {
             foreach (Coord c in definition)

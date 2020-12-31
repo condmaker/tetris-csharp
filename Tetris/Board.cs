@@ -12,6 +12,7 @@ namespace Tetris
         private Tetromino currentPiece;
 
 
+
         public Board(int w = 10, int h = 20)
         {
             BoardMatrix = new Pixel[w, h];
@@ -19,9 +20,10 @@ namespace Tetris
                 for (int y = 0; y < h; y++)
                 {   
                     BoardMatrix[x,y] = new Pixel();
-                }
-            
-            
+                }  
+
+            currentPiece = new Square(new Coord(3,3));    
+            StorePiece(currentPiece);      
         }
 
         public bool IsTileFree(Coord c)
@@ -29,17 +31,7 @@ namespace Tetris
             return (BoardMatrix[c.x, c.y] == new Pixel());
         }
 
-        public bool IsCollision(ICollection<Coord> position)
-        {
-            foreach(Coord c in position)
-            {
-                if(IsTileFree(c))
-                    return true;
-            }
-
-            return false;
-        }
-
+     
         public void DeleteLine(int y)
         {
             // move rows down
@@ -72,9 +64,42 @@ namespace Tetris
 
         public override void Update()
         {
-            
-        }    
-        public void StorePiece(Tetromino t)
+            ChangePiecePos(currentPiece);
+        }   
+        
+
+
+
+        //Tou a ter um aneurisma
+        public bool ChangePiecePos(Tetromino t)
+        {        
+            if(!IsCollision(t))
+            {
+                foreach (Coord c in t)
+                {
+                    BoardMatrix[c.x, c.y] = new Pixel();
+                }
+                t.Move();
+                StorePiece(t);
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsCollision(Tetromino t)
+        {
+            foreach(Coord c in t)
+            {
+                if(IsTileFree(c))
+                    return true;
+                if(c.y >= Height - 1)
+                    return true;
+            }
+           
+            return false;
+        }
+    
+        private void StorePiece(Tetromino t)
         {
             foreach (Coord c in t)
             {
