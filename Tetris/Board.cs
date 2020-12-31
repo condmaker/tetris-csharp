@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Tetris
 {
@@ -21,8 +22,13 @@ namespace Tetris
             return (boardMatrix[c.x, c.y] == ConsoleColor.Black);
         }
 
-        public bool isCollision()
+        public bool IsCollision(ICollection<Tuple<int,int>> position)
         {
+            foreach(Tuple<int,int> t in position)
+            {
+                if(boardMatrix[t.Item1,t.Item2] != ConsoleColor.Black)
+                    return true;
+            }
             // todo verificar colisao com peça
             return false;
         }
