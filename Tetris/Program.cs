@@ -10,7 +10,7 @@ namespace Tetris
             
             Client gameClient = new Client();
 
-            gameClient.Run();
+            gameClient.GameLoop();
         }
     }
 }

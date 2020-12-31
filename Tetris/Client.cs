@@ -1,6 +1,5 @@
 using System;
 using System.Threading;
-
 namespace Tetris
 {
     public class Client
@@ -35,12 +34,14 @@ namespace Tetris
                 // read direction
                 ProcessInput();                
                 // update piece
+                UI.TitleScreen();
                 // reset direction
                 dir = Dir.None;
                 // check  and delete lines
                 board.DeleteCompleteLines();
                 // update score
                 // render
+                UI.Render();
                 // sleep
             }
         }
@@ -61,7 +62,6 @@ namespace Tetris
         private void ProcessInput()
         {
             ConsoleKey key;
-
             lock(inputLock)
             {
                 key = inputKey;
