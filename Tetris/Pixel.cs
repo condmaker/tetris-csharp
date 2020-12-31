@@ -45,5 +45,10 @@ namespace Tetris
         {
             return Color.ToString();
         }
+
+        public void Clear()
+        {
+            Color = ConsoleColor.Black;
+        }
     }
 }
