@@ -25,6 +25,12 @@ namespace Tetris
             return false;
         }
 
+        public bool isCollision()
+        {
+            // todo verificar colisao com peça
+            return false;
+        }
+
         public void DeleteLine(int y)
         {
             // move rows down
@@ -37,8 +43,9 @@ namespace Tetris
                 boardMatrix[x, 0] = ConsoleColor.Black;
         }
 
-        public void DeleteCompleteLines()
+        public int DeleteCompleteLines()
         {
+            int clearedLines = 0;
             for (int y = 0; y < Height; y++)
                 for (int x = 0; x < Width; x++)
                 {
@@ -47,7 +54,9 @@ namespace Tetris
                         continue;
                     // if whole line is occupied, delete this line
                     DeleteLine(y);
+                    clearedLines++;
                 }
+            return clearedLines;
         }
 
     }
