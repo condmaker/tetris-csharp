@@ -9,5 +9,8 @@ namespace Tetris
 
         void TitleScreen();
         void InputRead();
+        void Render();
+        void CursorDown();
+        void CursorUp();
     }
 }
