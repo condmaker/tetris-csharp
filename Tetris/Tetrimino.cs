@@ -10,7 +10,7 @@ namespace Tetris
         //Devia ser um vector2
         protected Tuple<int,int> position;
     
-        //Isto tbm, e n tenho a certeza se pode ser IEquatable
+        //Isto tbm 
         protected IList<Tuple<int,int>> definition;
 
         protected virtual void Rotate(Dir dir)
