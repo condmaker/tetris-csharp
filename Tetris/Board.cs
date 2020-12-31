@@ -67,7 +67,10 @@ namespace Tetris
         }    
         public void StorePiece(Tetromino t)
         {
-            
+            foreach (Coord c in t)
+            {
+                BoardMatrix[c.x, c.y] = t.color;
+            }
         }
 
     }
