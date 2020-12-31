@@ -6,7 +6,7 @@ namespace Tetris
 {
     public abstract class Tetromino: GameObject, IEnumerable<Coord>
     {
-        public ConsoleColor color;
+        public Pixel sprite;
 
         //Devia ser um vector2
         protected Coord position;

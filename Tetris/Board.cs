@@ -7,25 +7,26 @@ namespace Tetris
     {
         public int Height => BoardMatrix.GetLength(1);
         public int Width => BoardMatrix.GetLength(0);
-        public ConsoleColor[,] BoardMatrix { get; private set; }
+        public Pixel[,] BoardMatrix { get; private set; }
+
+        private Tetromino currentPiece;
+
 
         public Board(int w = 10, int h = 20)
         {
-            BoardMatrix = new ConsoleColor[w, h];
+            BoardMatrix = new Pixel[w, h];
             for (int x = 0; x < w; x++)
                 for (int y = 0; y < h; y++)
                 {   
-                    BoardMatrix[x,y] = ConsoleColor.Black;
+                    BoardMatrix[x,y] = new Pixel();
                 }
             
-            BoardMatrix[3,3] = ConsoleColor.Red;
-            BoardMatrix[5,3] = ConsoleColor.Red;
-            BoardMatrix[3,5] = ConsoleColor.Red;
+            
         }
 
         public bool IsTileFree(Coord c)
         {
-            return (BoardMatrix[c.x, c.y] == ConsoleColor.Black);
+            return (BoardMatrix[c.x, c.y] == new Pixel());
         }
 
         public bool IsCollision(ICollection<Coord> position)
@@ -48,7 +49,7 @@ namespace Tetris
             
             // clear top row
             for (int x = 0; x < Width; x++)
-                BoardMatrix[x, 0] = ConsoleColor.Black;
+                BoardMatrix[x, 0] = new Pixel();
         }
 
         public int DeleteCompleteLines()
@@ -67,6 +68,8 @@ namespace Tetris
             return clearedLines;
         }
 
+        
+
         public override void Update()
         {
             
@@ -75,7 +78,7 @@ namespace Tetris
         {
             foreach (Coord c in t)
             {
-                BoardMatrix[c.x, c.y] = t.color;
+                BoardMatrix[c.x, c.y] = t.sprite;
             }
         }
 
