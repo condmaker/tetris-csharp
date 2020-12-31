@@ -4,21 +4,21 @@ namespace Tetris
 {
     public class Board
     {
-        private int Height => boardMatrix.GetLength(1);
-        private int Width => boardMatrix.GetLength(0);
-        private ConsoleColor[,] boardMatrix;
+        public int Height => BoardMatrix.GetLength(1);
+        public int Width => BoardMatrix.GetLength(0);
+        public ConsoleColor[,] BoardMatrix { get; private set; }
 
         public Board(int w = 10, int h = 20)
         {
-            boardMatrix = new ConsoleColor[w, h];
+            BoardMatrix = new ConsoleColor[w, h];
             for (int x = 0; x < w; x++)
                 for (int y = 0; y < h; y++)
-                    boardMatrix[x,y] = ConsoleColor.Black;
+                    BoardMatrix[x,y] = ConsoleColor.Black;
         }
 
         public bool IsTileFree(Coord c)
         {
-            return (boardMatrix[c.x, c.y] == ConsoleColor.Black);
+            return (BoardMatrix[c.x, c.y] == ConsoleColor.Black);
         }
 
         public bool isCollision()
@@ -32,11 +32,11 @@ namespace Tetris
             // move rows down
             for (; y > 0; y--)
                 for (int x = 0; x < Width; x++)
-                    boardMatrix[x, y] = boardMatrix[x, y-1];
+                    BoardMatrix[x, y] = BoardMatrix[x, y-1];
             
             // clear top row
             for (int x = 0; x < Width; x++)
-                boardMatrix[x, 0] = ConsoleColor.Black;
+                BoardMatrix[x, 0] = ConsoleColor.Black;
         }
 
         public int DeleteCompleteLines()

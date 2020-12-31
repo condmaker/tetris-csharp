@@ -172,6 +172,13 @@ namespace Tetris
                 c:'L');
         }
 
+        public void UpdateBoard(Board board)
+        {
+            for (int x = 0; x < board.Width; x++)
+                for (int y = 0; y < board.Height; y++)
+                    screen[x, y] = new Pixel(board.BoardMatrix[x, y]);
+        }
+
         public void Render()
         {
             Console.SetCursorPosition(0,0);

@@ -6,18 +6,18 @@ namespace Tetris
     {
         static void Main(string[] args)
         {
-            // Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             
-            // Client gameClient = new Client();
+            Client gameClient = new Client();
 
-            // gameClient.GameLoop();
+            gameClient.GameLoop();
 
             // TESTING
-            Square p1 = new Square(new Coord(2, 2));
-            Console.WriteLine(p1);
+            //Square p1 = new Square(new Coord(2, 2));
+            //Console.WriteLine(p1);
 
-            foreach(Coord c in p1)
-            Console.WriteLine(c);
+            //foreach(Coord c in p1)
+            //Console.WriteLine(c);
         }
     }
 }

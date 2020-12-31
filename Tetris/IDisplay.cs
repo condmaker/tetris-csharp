@@ -7,5 +7,6 @@ namespace Tetris
     {
         void TitleScreen(Dir dir);
         void Render();
+        void UpdateBoard(Board board);
     }
 }

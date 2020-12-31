@@ -36,7 +36,8 @@ namespace Tetris
                 // read direction
                 ProcessInput();                
                 // update piece
-                UI.TitleScreen(dir);
+                //UI.TitleScreen(dir);
+                UI.UpdateBoard(board);
                 // reset direction
                 dir = Dir.None;
                 // check  and delete lines
