@@ -22,6 +22,7 @@ namespace Tetris
 
             Console.CursorVisible = false;
             Console.Clear();
+            board = new Board();
         }
 
         public void GameLoop()

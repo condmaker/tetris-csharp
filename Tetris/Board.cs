@@ -4,25 +4,21 @@ namespace Tetris
 {
     public class Board
     {
-        private int Height;
-        private int Width;
+        private int Height => boardMatrix.GetLength(1);
+        private int Width => boardMatrix.GetLength(0);
         private ConsoleColor[,] boardMatrix;
 
         public Board(int w = 10, int h = 20)
         {
-            Width = w;
-            Height = h;
-            boardMatrix = new ConsoleColor[Width, Height];
-            for (int x = 0; x < Width; x++)
-                for (int y = 0; y < Height; y++)
+            boardMatrix = new ConsoleColor[w, h];
+            for (int x = 0; x < w; x++)
+                for (int y = 0; y < h; y++)
                     boardMatrix[x,y] = ConsoleColor.Black;
         }
 
-        public bool IsTileFree(int X, int Y)
+        public bool IsTileFree(Coord c)
         {
-            if (boardMatrix[X, Y] == ConsoleColor.Black)
-                return true;
-            return false;
+            return (boardMatrix[c.x, c.y] == ConsoleColor.Black);
         }
 
         public bool isCollision()
@@ -50,13 +46,18 @@ namespace Tetris
                 for (int x = 0; x < Width; x++)
                 {
                     // if tile is free, go to next line
-                    if (IsTileFree(x, y))
+                    if (IsTileFree(new Coord(x, y)))
                         continue;
                     // if whole line is occupied, delete this line
                     DeleteLine(y);
                     clearedLines++;
                 }
             return clearedLines;
+        }
+
+        public void StorePiece(Tetromino t)
+        {
+            
         }
 
     }
