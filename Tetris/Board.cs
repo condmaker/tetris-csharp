@@ -5,8 +5,8 @@ namespace Tetris
 {
     public class Board
     {
-        private int Height => boardMatrix.GetLength(1);
-        private int Width => boardMatrix.GetLength(0);
+        public int Height => boardMatrix.GetLength(1);
+        public int Width => boardMatrix.GetLength(0);
         private ConsoleColor[,] boardMatrix;
 
         public Board(int w = 10, int h = 20)
@@ -63,7 +63,10 @@ namespace Tetris
 
         public void StorePiece(Tetromino t)
         {
-            
+            foreach (Coord c in t)
+            {
+                boardMatrix[c.x, c.y] = t.color;
+            }
         }
 
     }

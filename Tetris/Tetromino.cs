@@ -6,7 +6,7 @@ namespace Tetris
 {
     public abstract class Tetromino : IEnumerable<Coord>
     {
-        protected ConsoleColor color;
+        public ConsoleColor color;
 
         //Devia ser um vector2
         protected Coord position;
@@ -39,7 +39,7 @@ namespace Tetris
         {
             String str = "";
             foreach (Coord c in definition)
-                str += c+position.ToString() + ", ";
+                str += (c+position).ToString() + ", ";
             return str;
         }
 
