@@ -3,17 +3,48 @@ using System.Threading;
 
 namespace Tetris
 {
+    /// <summary>
+    /// Client class with game loop.
+    /// </summary>
     public class Client
     {
+        /// <summary>
+        /// Instance variable that controls if the game is running or ends.
+        /// </summary>
         private bool running;
+
+        /// <summary>
+        /// Instance variable to control access to critical sections.
+        /// </summary>
         private Object inputLock; 
+
+        /// <summary>
+        /// Instance variable which stores the last key pressed by the user 
+        /// since the last update.
+        /// </summary>
         private ConsoleKey inputKey;
+
+        /// <summary>
+        /// Instance variable of the game board.
+        /// </summary>
         private Board board;
+
+        /// <summary>
+        /// Instance variable for the Thread responsible for reading the user 
+        /// input.
+        /// </summary>
         private Thread inputThread;
+
+        /// <summary>
+        /// Instance variable which stores Direction of movement.
+        /// </summary>
         private Dir dir;
 
         // TODO piece?
 
+        /// <summary>
+        /// Creates a new Client instance
+        /// </summary>
         public Client()
         {
             inputThread = new Thread(ReadKey);
@@ -25,6 +56,9 @@ namespace Tetris
             board = new Board();
         }
 
+        /// <summary>
+        /// Main game loop.
+        /// </summary>
         public void GameLoop()
         {
             IDisplay UI = new ConsoleDisplay();
@@ -57,6 +91,10 @@ namespace Tetris
             Finish();
         }
 
+        /// <summary>
+        /// Reads key presses and stores the last one pressed in the instance 
+        /// variable.
+        /// </summary>
         private void ReadKey()
         {
             ConsoleKey ck;
@@ -70,6 +108,10 @@ namespace Tetris
             } while (ck != ConsoleKey.Escape);
         }
 
+        /// <summary>
+        /// Reads the last key press stored and updates the direction of 
+        /// movement or exits the game accordingly.
+        /// </summary>
         private void ProcessInput()
         {
             ConsoleKey key;
@@ -100,6 +142,9 @@ namespace Tetris
             }
         }
 
+        /// <summary>
+        /// Method responsible for cleanup before the program ends.
+        /// </summary>
         private void Finish()
         {
             inputThread.Join();
