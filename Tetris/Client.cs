@@ -1,42 +1,99 @@
 using System;
 using System.Threading;
-
 namespace Tetris
 {
-    /// <summary>
-    /// Contains the main game loop.
-    /// </summary>
     public class Client
     {
-        public Client()
-        {
+        private bool running;
+        private Object inputLock; 
+        private ConsoleKey inputKey;
+        private Board board;
+        private Thread inputThread;
+        private Dir dir;
+
+        // TODO piece?
+
+        public Client(){
+            inputThread = new Thread(ReadKey);
+            inputLock = new Object();
             Console.CursorVisible = false;
             Console.Clear();
+            board = new Board();
         }
 
-        // The main game loop.
-        public void Run()
+        public void GameLoop()
         {
-            bool running = true;
             IDisplay UI = new ConsoleDisplay();
-
-            Thread inputThread = new Thread(UI.InputRead);
+            running = true;
             inputThread.Start();
 
             UI.TitleScreen();
 
-            // Everything
-            while (running)
+            while(running)
             {
-                // Delta Time stuffs, we're implementing fixed version
-                // Process the player input, can grab it from UI.Input
-                // GameUpdate.Update();
-                // UI.Render();
+                // read direction
+                ProcessInput();                
+                // update piece
+                // reset direction
+                dir = Dir.None;
+                // check  and delete lines
+                board.DeleteCompleteLines();
+                // update score
+                // render
+                UI.Render();
+                // sleep
             }
+        }
 
-            Console.ReadKey(true);
+        private void ReadKey()
+        {
+            ConsoleKey ck;
+            do
+            {
+                ck = Console.ReadKey(true).Key;
+                lock(inputLock)
+                {
+                    inputKey = ck;
+                }
+            } while (ck != ConsoleKey.Escape);
+        }
+
+        private void ProcessInput()
+        {
+            ConsoleKey key;
+            lock(inputLock)
+            {
+                key = inputKey;
+            }
+            switch(key)
+            {
+                case ConsoleKey.W:
+                    dir = Dir.Up;
+                    break;
+                case ConsoleKey.S:
+                    dir = Dir.Down;
+                    break;
+                case ConsoleKey.A:
+                    dir = Dir.Left;
+                    break;
+                case ConsoleKey.D:
+                    dir = Dir.Right;
+                    break;
+                case ConsoleKey.Escape:
+                    running = false;
+                    break;
+                default:
+                    dir = Dir.None;
+                    break;
+            }
+        }
+
+        private void Finish()
+        {
             inputThread.Join();
             Console.CursorVisible = true;
         }
+
+
     }
 }

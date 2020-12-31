@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Collections.Concurrent;
 
 namespace Tetris
@@ -15,15 +16,24 @@ namespace Tetris
         public BlockingCollection<ConsoleKey> Input { get; private set; }
         private DoubleBuffer2D screen;
 
+        // TEMPORARY. THE CURSOR WILL BE DEFINED ON THE GAME LOGIC AT CLIENT
+        // AND WILL BE GIVEN AS AN ARGUMENT TO TITLE SCREEN().
+        private bool cursorPos;
+
         public ConsoleDisplay()
         {
-            int bH = (Console.WindowHeight % 2) == 0 ? Console.WindowHeight + 1
-                : Console.WindowHeight - 1;
-            int bW = (Console.WindowWidth % 2) == 0 ? Console.WindowWidth - 1
-                : Console.WindowWidth - 1;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.CursorVisible = false;
+                Console.SetWindowSize(110, 40);
+            }
+            Console.Title = "TETRIS";
 
             // Needs to be even. Otherwise screen won't be aligned.
-            screen = new DoubleBuffer2D(bW, bH);
+            screen = new DoubleBuffer2D(
+                Console.WindowWidth, Console.WindowHeight);
+
+            Console.SetCursorPosition(0,0);
 
             Input = new BlockingCollection<ConsoleKey>();
         }
@@ -31,83 +41,170 @@ namespace Tetris
         public void TitleScreen()
         {
             // T
-            screen[((screen.xDim / 2) - 13), 4] = ConsoleColor.Red;
-            screen[((screen.xDim / 2) - 12), 4] = ConsoleColor.Red;
-            screen[((screen.xDim / 2) - 11), 4] = ConsoleColor.Red;
-            screen[((screen.xDim / 2) - 11), 5] = ConsoleColor.Red;
-            screen[((screen.xDim / 2) - 11), 6] = ConsoleColor.DarkRed;
-            screen[((screen.xDim / 2) - 11), 7] = ConsoleColor.DarkRed;
-            screen[((screen.xDim / 2) - 11), 8] = ConsoleColor.DarkRed;
-            screen[((screen.xDim / 2) - 10), 4] = ConsoleColor.Red;
-            screen[((screen.xDim / 2) - 9), 4] = ConsoleColor.Red;
+            screen[((screen.xDim / 2) - 13), 4] = new Pixel(ConsoleColor.Red);
+            screen[((screen.xDim / 2) - 12), 4] = new Pixel(ConsoleColor.Red);
+            screen[((screen.xDim / 2) - 11), 4] = new Pixel(ConsoleColor.Red);
+            screen[((screen.xDim / 2) - 11), 5] = new Pixel(ConsoleColor.Red);
+            screen[((screen.xDim / 2) - 11), 6] = new Pixel(
+                ConsoleColor.DarkRed);
+            screen[((screen.xDim / 2) - 11), 7] = new Pixel(
+                ConsoleColor.DarkRed);
+            screen[((screen.xDim / 2) - 11), 8] = new Pixel(
+                ConsoleColor.DarkRed);
+            screen[((screen.xDim / 2) - 10), 4] = new Pixel(ConsoleColor.Red);
+            screen[((screen.xDim / 2) - 9), 4] = new Pixel(ConsoleColor.Red);
 
-            screen[((screen.xDim / 2) - 7), 4] = ConsoleColor.White;
-            screen[((screen.xDim / 2) - 7), 5] = ConsoleColor.White;
-            screen[((screen.xDim / 2) - 7), 6] = ConsoleColor.Gray;
-            screen[((screen.xDim / 2) - 7), 7] = ConsoleColor.Gray;
-            screen[((screen.xDim / 2) - 7), 8] = ConsoleColor.Gray;
-            screen[((screen.xDim / 2) - 6), 4] = ConsoleColor.White;
-            screen[((screen.xDim / 2) - 6), 6] = ConsoleColor.Gray;
-            screen[((screen.xDim / 2) - 6), 8] = ConsoleColor.Gray;
-            screen[((screen.xDim / 2) - 5), 4] = ConsoleColor.White;
-            screen[((screen.xDim / 2) - 5), 6] = ConsoleColor.Gray;
-            screen[((screen.xDim / 2) - 5), 8] = ConsoleColor.Gray;
+            // E
+            screen[((screen.xDim / 2) - 7), 4] = new Pixel(ConsoleColor.White);
+            screen[((screen.xDim / 2) - 7), 5] = new Pixel(ConsoleColor.White);
+            screen[((screen.xDim / 2) - 7), 6] = new Pixel(ConsoleColor.Gray);
+            screen[((screen.xDim / 2) - 7), 7] = new Pixel(ConsoleColor.Gray);
+            screen[((screen.xDim / 2) - 7), 8] = new Pixel(ConsoleColor.Gray);
+            screen[((screen.xDim / 2) - 6), 4] = new Pixel(ConsoleColor.White);
+            screen[((screen.xDim / 2) - 6), 6] = new Pixel(ConsoleColor.Gray);
+            screen[((screen.xDim / 2) - 6), 8] = new Pixel(ConsoleColor.Gray);
+            screen[((screen.xDim / 2) - 5), 4] = new Pixel(ConsoleColor.White);
+            screen[((screen.xDim / 2) - 5), 6] = new Pixel(ConsoleColor.Gray);
+            screen[((screen.xDim / 2) - 5), 8] = new Pixel(ConsoleColor.Gray);
 
-            screen[((screen.xDim / 2) - 3), 4] = ConsoleColor.Yellow;
-            screen[((screen.xDim / 2) - 2), 4] = ConsoleColor.Yellow;
-            screen[((screen.xDim / 2) - 1), 4] = ConsoleColor.Yellow;
-            screen[((screen.xDim / 2) - 1), 5] = ConsoleColor.Yellow;
-            screen[((screen.xDim / 2) - 1), 6] = ConsoleColor.DarkYellow;
-            screen[((screen.xDim / 2) - 1), 7] = ConsoleColor.DarkYellow;
-            screen[((screen.xDim / 2) - 1), 8] = ConsoleColor.DarkYellow;
-            screen[(screen.xDim / 2), 4] = ConsoleColor.Yellow;
-            screen[((screen.xDim / 2) + 1), 4] = ConsoleColor.Yellow;
+            // T
+            screen[((screen.xDim / 2) - 3), 4] = new Pixel(ConsoleColor.Yellow);
+            screen[((screen.xDim / 2) - 2), 4] = new Pixel(ConsoleColor.Yellow);
+            screen[((screen.xDim / 2) - 1), 4] = new Pixel(ConsoleColor.Yellow);
+            screen[((screen.xDim / 2) - 1), 5] = new Pixel(ConsoleColor.Yellow);
+            screen[((screen.xDim / 2) - 1), 6] = new Pixel(
+                ConsoleColor.DarkYellow);
+            screen[((screen.xDim / 2) - 1), 7] = new Pixel(
+                ConsoleColor.DarkYellow);
+            screen[((screen.xDim / 2) - 1), 8] = new Pixel(
+                ConsoleColor.DarkYellow);
+            screen[(screen.xDim / 2), 4] = new Pixel(ConsoleColor.Yellow);
+            screen[((screen.xDim / 2) + 1), 4] = new Pixel(ConsoleColor.Yellow);
 
-            screen[((screen.xDim / 2) + 3), 4] = ConsoleColor.Green;
-            screen[((screen.xDim / 2) + 3), 5] = ConsoleColor.Green;
-            screen[((screen.xDim / 2) + 3), 6] = ConsoleColor.DarkGreen;
-            screen[((screen.xDim / 2) + 3), 7] = ConsoleColor.DarkGreen;
-            screen[((screen.xDim / 2) + 3), 8] = ConsoleColor.DarkGreen;
-            screen[((screen.xDim / 2) + 4), 4] = ConsoleColor.Green;
-            screen[((screen.xDim / 2) + 4), 6] = ConsoleColor.DarkGreen;
-            screen[((screen.xDim / 2) + 5), 5] = ConsoleColor.Green;
-            screen[((screen.xDim / 2) + 5), 7] = ConsoleColor.DarkGreen;
-            screen[((screen.xDim / 2) + 5), 8] = ConsoleColor.DarkGreen;
+            // R
+            screen[((screen.xDim / 2) + 3), 4] = new Pixel(ConsoleColor.Green);
+            screen[((screen.xDim / 2) + 3), 5] = new Pixel(ConsoleColor.Green);
+            screen[((screen.xDim / 2) + 3), 6] = new Pixel(
+                ConsoleColor.DarkGreen);
+            screen[((screen.xDim / 2) + 3), 7] = new Pixel(
+                ConsoleColor.DarkGreen);
+            screen[((screen.xDim / 2) + 3), 8] = new Pixel(
+                ConsoleColor.DarkGreen);
+            screen[((screen.xDim / 2) + 4), 4] = new Pixel(ConsoleColor.Green);
+            screen[((screen.xDim / 2) + 4), 6] = new Pixel(
+                ConsoleColor.DarkGreen);
+            screen[((screen.xDim / 2) + 5), 5] = new Pixel(ConsoleColor.Green);
+            screen[((screen.xDim / 2) + 5), 7] = new Pixel(
+                ConsoleColor.DarkGreen);
+            screen[((screen.xDim / 2) + 5), 8] = new Pixel(
+                ConsoleColor.DarkGreen);
 
-            screen[((screen.xDim / 2) + 7), 4] = ConsoleColor.Blue;
-            screen[((screen.xDim / 2) + 7), 5] = ConsoleColor.Blue;
-            screen[((screen.xDim / 2) + 7), 6] = ConsoleColor.DarkBlue;
-            screen[((screen.xDim / 2) + 7), 7] = ConsoleColor.DarkBlue;
-            screen[((screen.xDim / 2) + 7), 8] = ConsoleColor.DarkBlue;
+            // I
+            screen[((screen.xDim / 2) + 7), 4] = new Pixel(ConsoleColor.Blue);
+            screen[((screen.xDim / 2) + 7), 5] = new Pixel(ConsoleColor.Blue);
+            screen[((screen.xDim / 2) + 7), 6] = new Pixel(
+                ConsoleColor.DarkBlue);
+            screen[((screen.xDim / 2) + 7), 7] = new Pixel(
+                ConsoleColor.DarkBlue);
+            screen[((screen.xDim / 2) + 7), 8] = new Pixel(
+                ConsoleColor.DarkBlue);
 
-            screen[((screen.xDim / 2) + 9), 5] = ConsoleColor.Magenta;
-            screen[((screen.xDim / 2) + 9), 8] = ConsoleColor.DarkMagenta;
-            screen[((screen.xDim / 2) + 10), 4] = ConsoleColor.Magenta;
-            screen[((screen.xDim / 2) + 10), 6] = ConsoleColor.DarkMagenta;
-            screen[((screen.xDim / 2) + 10), 8] = ConsoleColor.DarkMagenta;
-            screen[((screen.xDim / 2) + 11), 4] = ConsoleColor.Magenta;
-            screen[((screen.xDim / 2) + 11), 6] = ConsoleColor.DarkMagenta;
-            screen[((screen.xDim / 2) + 11), 8] = ConsoleColor.DarkMagenta;
-            screen[((screen.xDim / 2) + 12), 4] = ConsoleColor.Magenta;
-            screen[((screen.xDim / 2) + 12), 7] = ConsoleColor.DarkMagenta;
+            // S
+            screen[((screen.xDim / 2) + 9), 5] = new Pixel(
+                ConsoleColor.Magenta);
+            screen[((screen.xDim / 2) + 9), 8] = new Pixel(
+                ConsoleColor.DarkMagenta);
+            screen[((screen.xDim / 2) + 10), 4] = new Pixel(
+                ConsoleColor.Magenta);
+            screen[((screen.xDim / 2) + 10), 6] = new Pixel(
+                ConsoleColor.DarkMagenta);
+            screen[((screen.xDim / 2) + 10), 8] = new Pixel(
+                ConsoleColor.DarkMagenta);
+            screen[((screen.xDim / 2) + 11), 4] = new Pixel(
+                ConsoleColor.Magenta);
+            screen[((screen.xDim / 2) + 11), 6] = new Pixel(
+                ConsoleColor.DarkMagenta);
+            screen[((screen.xDim / 2) + 11), 8] = new Pixel(
+                ConsoleColor.DarkMagenta);
+            screen[((screen.xDim / 2) + 12), 4] = new Pixel(
+                ConsoleColor.Magenta);
+            screen[((screen.xDim / 2) + 12), 7] = new Pixel(
+                ConsoleColor.DarkMagenta);
 
-            Render();
+            if (cursorPos)
+            {
+                screen[(screen.xDim / 2) - 6, (screen.yDim / 2) + 12] = new Pixel(
+                c:' ');
+                screen[(screen.xDim / 2) - 6, (screen.yDim / 2) + 13] = new Pixel(
+                c:'→');
+            }
+            else
+            {
+                screen[(screen.xDim / 2) - 6, (screen.yDim / 2) + 12] = new Pixel(
+                c:'→');
+                screen[(screen.xDim / 2) - 6, (screen.yDim / 2) + 13] = new Pixel(
+                c:' ');
+            }
+            // → START GAME
+            screen[(screen.xDim / 2) - 4, (screen.yDim / 2) + 12] = new Pixel(
+                c:'S');
+            screen[(screen.xDim / 2) - 3, (screen.yDim / 2) + 12] = new Pixel(
+                c:'T');
+            screen[(screen.xDim / 2) - 2, (screen.yDim / 2) + 12] = new Pixel(
+                c:'A');
+            screen[(screen.xDim / 2) - 1, (screen.yDim / 2) + 12] = new Pixel(
+                c:'R');
+            screen[(screen.xDim / 2), (screen.yDim / 2) + 12] = new Pixel(
+                c:'T');
+            screen[(screen.xDim / 2) + 2, (screen.yDim / 2) + 12] = new Pixel(
+                c:'G');
+            screen[(screen.xDim / 2) + 3, (screen.yDim / 2) + 12] = new Pixel(
+                c:'A');
+            screen[(screen.xDim / 2) + 4, (screen.yDim / 2) + 12] = new Pixel(
+                c:'M');
+            screen[(screen.xDim / 2) + 5, (screen.yDim / 2) + 12] = new Pixel(
+                c:'E');
+
+            screen[(screen.xDim / 2) - 4, (screen.yDim / 2) + 13] = new Pixel(
+                c:'T');
+            screen[(screen.xDim / 2) - 3, (screen.yDim / 2) + 13] = new Pixel(
+                c:'U');
+            screen[(screen.xDim / 2) - 2, (screen.yDim / 2) + 13] = new Pixel(
+                c:'T');
+            screen[(screen.xDim / 2) - 1, (screen.yDim / 2) + 13] = new Pixel(
+                c:'O');
+            screen[(screen.xDim / 2), (screen.yDim / 2) + 13] = new Pixel(
+                c:'R');
+            screen[(screen.xDim / 2) + 1, (screen.yDim / 2) + 13] = new Pixel(
+                c:'I');
+            screen[(screen.xDim / 2) + 2, (screen.yDim / 2) + 13] = new Pixel(
+                c:'A');
+            screen[(screen.xDim / 2) + 3, (screen.yDim / 2) + 13] = new Pixel(
+                c:'L');
+        }
+
+        public void CursorDown()
+        {
+            cursorPos = true;
+        }
+        public void CursorUp()
+        {
+            cursorPos = false;
         }
 
         public void InputRead()
         {
             ConsoleKey c;
-
             do
             {
                 c = Console.ReadKey(true).Key;
-
+                Input.Add(c);
             } while (c != ConsoleKey.Escape);
         }
 
         public void Render()
         {
-            screen.Swap();
+            Console.SetCursorPosition(0,0);
             screen.PrintToScreen();
         }
     }

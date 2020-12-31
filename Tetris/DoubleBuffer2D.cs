@@ -6,10 +6,9 @@ namespace Tetris
     /// Class that defines a double buffer to print on a console. Code created
     /// by Nuno Fachada.
     /// </summary>
-    /// <typeparam name="T">The type to instantiate</typeparam>
     public class DoubleBuffer2D
     {
-        private ConsoleColor[,] current, next;
+        private Pixel[,] current, next;
         private ConsoleColor defaultBg;
 
         public int xDim => current.GetLength(0);
@@ -17,12 +16,18 @@ namespace Tetris
 
         public DoubleBuffer2D(int x, int y)
         {
-            current = new ConsoleColor[x, y];
-            next = new ConsoleColor[x, y];
+            current = new Pixel[x, y];
+            next = new Pixel[x, y];
+
+            for (int a = 0; a < xDim; a += 1) 
+                for (int b = 0; b < yDim; b += 1)
+                    current[a, b] = new Pixel(ConsoleColor.Blue);
+
+            Clear();
 
             defaultBg = ConsoleColor.Black;
         }
-        public ConsoleColor this[int x, int y] 
+        public Pixel this[int x, int y] 
         {
             get => current[x, y];
             set => next[x, y] = value;
@@ -32,37 +37,37 @@ namespace Tetris
         {
             Array.Clear(next, 0, xDim * yDim);
         }
-        
-        public void Swap()
-        {
-            ConsoleColor[,] aux = current;
-            current = next;
-            next = aux;
-        }
 
         public void PrintToScreen()
         {
             Console.BackgroundColor = defaultBg;
 
+            Pixel[,] aux;
+
             for (int y = 0; y < yDim; y++)
             {
                 for (int x = 0; x < xDim; x++)
                 {
-                    // this may not work for everything, nullables dont work
-                    // up there for some reason
-                    if (this[x, y] == ConsoleColor.Black)
+                    if (next[x, y] == current[x, y]) continue;
+
+                    else if (next[x, y].Color == ConsoleColor.Black)
                     {
                         Console.BackgroundColor = defaultBg;
                     }
                     else
                     {
-                        Console.BackgroundColor = this[x, y];
+                        Console.BackgroundColor = next[x, y].Color;
                     }
-
-                    Console.Write(' ');
+                    
+                    Console.SetCursorPosition(x, y);
+                    Console.Write(next[x,y].Character);
                 }
-                Console.WriteLine();
             }
+
+            aux = next;
+            next = current;
+            current = aux;
+            Clear();
         }
     }
 }
