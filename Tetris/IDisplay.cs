@@ -5,12 +5,8 @@ namespace Tetris
 {
     public interface IDisplay
     {
-        BlockingCollection<ConsoleKey> Input { get; }
-
-        void TitleScreen();
-        void InputRead();
+        void TitleScreen(Dir dir);
         void Render();
-        void CursorDown();
-        void CursorUp();
+        void UpdateBoard(Board board);
     }
 }

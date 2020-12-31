@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+
 namespace Tetris
 {
     public class Client
@@ -13,10 +14,12 @@ namespace Tetris
 
         // TODO piece?
 
-
-        public Client(){
+        public Client()
+        {
             inputThread = new Thread(ReadKey);
             inputLock = new Object();
+            board = new Board();
+
             Console.CursorVisible = false;
             Console.Clear();
             board = new Board();
@@ -27,14 +30,14 @@ namespace Tetris
             IDisplay UI = new ConsoleDisplay();
             running = true;
             inputThread.Start();
-            
-                UI.TitleScreen();
 
             while(running)
             {
                 // read direction
                 ProcessInput();                
                 // update piece
+                //UI.TitleScreen(dir);
+                UI.UpdateBoard(board);
                 // reset direction
                 dir = Dir.None;
                 // check  and delete lines
@@ -50,6 +53,8 @@ namespace Tetris
                 }
 
             }
+
+            Finish();
         }
 
         private void ReadKey()

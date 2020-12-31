@@ -5,34 +5,28 @@ namespace Tetris
 {
     public class Board: GameObject
     {
-        private int Height;
-        private int Width;
-
-        //PRIVATE lembrar
-        public ConsoleColor[,] boardMatrix;
+        public int Height => BoardMatrix.GetLength(1);
+        public int Width => BoardMatrix.GetLength(0);
+        public ConsoleColor[,] BoardMatrix { get; private set; }
 
         public Board(int w = 10, int h = 20)
         {
-            Width = w;
-            Height = h;
-            boardMatrix = new ConsoleColor[Width, Height];
-            for (int x = 0; x < Width; x++)
-                for (int y = 0; y < Height; y++)
-                    boardMatrix[x,y] = ConsoleColor.Black;
+            BoardMatrix = new ConsoleColor[w, h];
+            for (int x = 0; x < w; x++)
+                for (int y = 0; y < h; y++)
+                    BoardMatrix[x,y] = ConsoleColor.Black;
         }
 
-        public bool IsTileFree(int X, int Y)
+        public bool IsTileFree(Coord c)
         {
-            if (boardMatrix[X, Y] == ConsoleColor.Black)
-                return true;
-            return false;
+            return (BoardMatrix[c.x, c.y] == ConsoleColor.Black);
         }
 
         public bool IsCollision(ICollection<Coord> position)
         {
             foreach(Coord c in position)
             {
-                if(boardMatrix[c.x, c.y] != ConsoleColor.Black)
+                if(BoardMatrix[c.x, c.y] != ConsoleColor.Black)
                     return true;
             }
 
@@ -44,11 +38,11 @@ namespace Tetris
             // move rows down
             for (; y > 0; y--)
                 for (int x = 0; x < Width; x++)
-                    boardMatrix[x, y] = boardMatrix[x, y-1];
+                    BoardMatrix[x, y] = BoardMatrix[x, y-1];
             
             // clear top row
             for (int x = 0; x < Width; x++)
-                boardMatrix[x, 0] = ConsoleColor.Black;
+                BoardMatrix[x, 0] = ConsoleColor.Black;
         }
 
         public int DeleteCompleteLines()
@@ -58,7 +52,7 @@ namespace Tetris
                 for (int x = 0; x < Width; x++)
                 {
                     // if tile is free, go to next line
-                    if (IsTileFree(x, y))
+                    if (IsTileFree(new Coord(x, y)))
                         continue;
                     // if whole line is occupied, delete this line
                     DeleteLine(y);
@@ -71,6 +65,10 @@ namespace Tetris
         {
 
         }    
+        public void StorePiece(Tetromino t)
+        {
+            
+        }
 
     }
 }

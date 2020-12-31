@@ -11,6 +11,13 @@ namespace Tetris
             Client gameClient = new Client();
 
             gameClient.GameLoop();
+
+            // TESTING
+            //Square p1 = new Square(new Coord(2, 2));
+            //Console.WriteLine(p1);
+
+            //foreach(Coord c in p1)
+            //Console.WriteLine(c);
         }
     }
 }
