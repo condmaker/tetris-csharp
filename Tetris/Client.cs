@@ -8,7 +8,13 @@ namespace Tetris
         private bool running;
         private Object inputLock; 
         private ConsoleKey inputKey;
+
+        /// The 3 scenes.
+        private Scene currentScene;
         private Board board;
+        private TitleScreen title;
+        private Tutorial tutorial;
+
         private Thread inputThread;
         private Dir dir;
 
@@ -18,7 +24,16 @@ namespace Tetris
         {
             inputThread = new Thread(ReadKey);
             inputLock = new Object();
+            
+            title = new TitleScreen();
             board = new Board();
+            tutorial = new Tutorial();
+
+            title.SetScenes(new Scene[] {board, tutorial});
+            board.SetScenes(title);
+            tutorial.SetScenes(title);
+
+            currentScene = title;
 
             Console.CursorVisible = false;
             Console.Clear();
@@ -29,14 +44,17 @@ namespace Tetris
         {
             IDisplay UI = new ConsoleDisplay();
             running = true;
+
+
+
             inputThread.Start();
 
             while(running)
             {
                 // read direction
-                ProcessInput();                
+                ProcessInput();       
                 // update piece
-                board.Update();
+                currentScene = currentScene.UpdateScene();
                 //UI.TitleScreen(dir);
                 UI.UpdateBoard(board);
                 // reset direction
@@ -85,6 +103,9 @@ namespace Tetris
                     break;
                 case ConsoleKey.D:
                     dir = Dir.Right;
+                    break;
+                case ConsoleKey.Enter:
+                    dir = Dir.Enter;
                     break;
                 case ConsoleKey.Escape:
                     running = false;

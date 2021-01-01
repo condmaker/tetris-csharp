@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 namespace Tetris
 {
-    public class Board: GameObject
+    public class Board: Scene
     {
         public int Height => BoardMatrix.GetLength(1);
         public int Width => BoardMatrix.GetLength(0);
         public Pixel[,] BoardMatrix { get; private set; }
+        private GameObject prevScene;
 
         private Tetromino currentPiece;
 
@@ -15,7 +16,9 @@ namespace Tetris
 
         public Board(int w = 10, int h = 20)
         {
+            scenes = new Scene[1];
             BoardMatrix = new Pixel[w, h];
+
             for (int x = 0; x < w; x++)
                 for (int y = 0; y < h; y++)
                 {   
@@ -62,12 +65,16 @@ namespace Tetris
 
         
 
-        public override void Update()
+        public override void Update(Dir input)
         {
             ChangePiecePos(currentPiece);
-        }   
-        
+        }
 
+        public override Scene UpdateScene()
+        {
+            // Not implemented yet
+            return this;
+        }
 
 
         //Tou a ter um aneurisma

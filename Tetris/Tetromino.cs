@@ -48,7 +48,7 @@ namespace Tetris
             return str;
         }
 
-        public override void Update()
+        public override void Update(Dir input)
         {
             
         }
