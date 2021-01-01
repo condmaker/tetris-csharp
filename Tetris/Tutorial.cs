@@ -13,7 +13,7 @@ namespace Tetris
         public override void Update(Dir input)
         {
             if (input != Dir.None)
-                sceneChange = false;
+                sceneChange = true;
         }
 
         public override Scene UpdateScene()

@@ -52,11 +52,12 @@ namespace Tetris
             while(running)
             {
                 // read direction
-                ProcessInput();       
+                ProcessInput();   
                 // update piece
+                currentScene.Update(dir);
                 currentScene = currentScene.UpdateScene();
                 //UI.TitleScreen(dir);
-                UI.UpdateBoard(board);
+                UI.UpdateScene(currentScene);
                 // reset direction
                 dir = Dir.None;
                 // check  and delete lines
@@ -89,6 +90,7 @@ namespace Tetris
             lock(inputLock)
             {
                 key = inputKey;
+                inputKey = ConsoleKey.NoName;
             }
             switch(key)
             {
@@ -114,6 +116,8 @@ namespace Tetris
                     dir = Dir.None;
                     break;
             }
+
+            
         }
 
         private void Finish()

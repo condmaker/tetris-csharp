@@ -4,12 +4,12 @@ namespace Tetris
 {
     public class TitleScreen : Scene
     {
-        private bool cursorPos;
+        public bool CursorPos { get; private set; }
         public TitleScreen()
         {
             scenes = new Scene[2];
-
-            cursorPos = true;
+            sceneChange = false;
+            CursorPos = true;
         }
 
         public override void Update(Dir input)
@@ -17,10 +17,10 @@ namespace Tetris
             switch (input)
             {
                 case Dir.Up:
-                    cursorPos = true;
+                    CursorPos = true;
                     break;
                 case Dir.Down:
-                    cursorPos = false;
+                    CursorPos = false;
                     break;
                 case Dir.Enter:
                     sceneChange = true;
@@ -33,9 +33,9 @@ namespace Tetris
             if (sceneChange)
             {
                 sceneChange = false;
-                
-                if (cursorPos) return scenes[0];
-                else if (!cursorPos) return scenes[1];
+
+                if (CursorPos) return scenes[0];
+                else if (!CursorPos) return scenes[1];
             }
             
             return this;

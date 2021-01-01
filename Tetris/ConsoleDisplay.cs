@@ -172,11 +172,44 @@ namespace Tetris
                 c:'L');
         }
 
-        public void UpdateBoard(Board board)
+        public void UpdateScene(Scene scene)
         {
-            for (int x = 0; x < board.Width; x++)
-                for (int y = 0; y < board.Height; y++)
-                    screen[x, y] = board.BoardMatrix[x, y];
+            if (scene is Board)
+            {
+                Board board;
+                board = scene as Board;
+
+                for (int x = 0; x < board.Width; x++)
+                    for (int y = 0; y < board.Height; y++)
+                        screen[x, y] = board.BoardMatrix[x, y];
+            }
+            else if (scene is TitleScreen)
+            {
+                TitleScreen titleScreen;
+                titleScreen = scene as TitleScreen;
+
+                switch (titleScreen.CursorPos)
+                {
+                    case true:
+                        TitleScreen(Dir.Up);
+                        break;
+                    case false:
+                        TitleScreen(Dir.Down);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (scene is Tutorial)
+            {
+                Tutorial tutorial;
+                tutorial = scene as Tutorial;
+                
+                for (int x = 0; x < screen.xDim; x++)
+                    for (int y = 0; y < screen.yDim; y++)
+                        screen[x, y] = new Pixel(ConsoleColor.DarkGray, 'd');
+            }
+
         }
 
         public void Render()
