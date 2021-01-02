@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Tetris
 {
+    /// <summary>
+    /// Class that defines the game board.
+    /// </summary>
     public class Board: Scene
     {
         /// <summary>
