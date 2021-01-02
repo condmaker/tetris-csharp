@@ -4,9 +4,8 @@ namespace Tetris
 {
     public class SPiece : Tetromino
     {
-        public SPiece(Coord pos)
+        public SPiece(Coord pos): base(pos)
         {
-            position = pos;
             definition = new List<Coord>();
             definition.Add(new Coord(-1, 0));
             definition.Add(new Coord(0, 0));

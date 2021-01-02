@@ -5,9 +5,8 @@ namespace Tetris
 {
     public class Hero: Tetromino
     {
-        public Hero(Coord pos)
+        public Hero(Coord pos): base(pos)
         {
-            position = pos;
             definition = new List<Coord>();
             definition.Add(new Coord(0, -1));
             definition.Add(new Coord(0, 0));

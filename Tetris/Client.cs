@@ -98,7 +98,8 @@ namespace Tetris
                 // update score
                 // render
                 UI.Render();
-                // sleep                
+                // sleep         
+                Thread.Sleep(500);       
             }
 
             Finish();

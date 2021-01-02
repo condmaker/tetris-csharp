@@ -17,7 +17,15 @@ namespace Tetris
         public int Width => BoardMatrix.GetLength(0);
 
 
+
+        private Coord InitialPos => new Coord(Width / 2 ,0);
+        private IList<Tetromino> piecePool;
+
+
+        private Tetromino nextPiece;
         private Tetromino currentPiece;
+
+
 
         /// <summary>
         /// Instance variable that contains a reference to the bi-dimensional 
@@ -38,12 +46,28 @@ namespace Tetris
             BoardMatrix = new Pixel[w, h];
 
             for (int x = 0; x < w; x++)
+            {
                 for (int y = 0; y < h; y++)
                 {   
                     BoardMatrix[x,y] = new Pixel();
                 }  
+            }
 
-            currentPiece = new Square(new Coord(3,3));    
+
+            piecePool = new List<Tetromino>
+            {
+                new LPiece(InitialPos),
+                new Square(InitialPos),
+                new JPiece(InitialPos),
+                new ZPiece(InitialPos),
+                new SPiece(InitialPos),
+                new Hero(InitialPos),
+                new TPiece(InitialPos)
+            };
+
+            nextPiece = new LPiece(InitialPos);
+            currentPiece = new Square(InitialPos);    
+          
             StorePiece(currentPiece);      
         }
         
@@ -56,13 +80,13 @@ namespace Tetris
         /// limits of the board, <c>false</c> otherwise
         public bool IsInsideBounds(Coord c)
         {
-            if (c.x < 0)
+            if (c.x < 1)
                 return false;
             if (c.y < 0)
                 return false;
-            if (c.x >= Width)
+            if (c.x >= Width - 1)
                 return false;
-            if (c.y >= Height)
+            if (c.y >= Height - 1)
                 return false;
             return true;
         }
@@ -91,9 +115,7 @@ namespace Tetris
         {
             foreach(Coord c in t)
             {
-                if(IsTileFree(c))
-                    return true;
-                if(c.y >= Height - 1)
+                if(!IsTileFree(c))
                     return true;
             }
            
@@ -177,7 +199,14 @@ namespace Tetris
         /// </summary>
         public override void Update(Dir input)
         {
-            ChangePiecePos(currentPiece);
+            if(!ChangePiecePos(currentPiece))
+            {
+                currentPiece = nextPiece;
+                nextPiece = piecePool[2];
+                currentPiece.ResetPos();
+                StorePiece(currentPiece); 
+            }
+
 
             if (input == Dir.Enter)
                 sceneChange = true;
@@ -211,17 +240,23 @@ namespace Tetris
         //Tou a ter um aneurisma
         public bool ChangePiecePos(Tetromino t)
         {        
-            if(!IsCollision(t))
+            foreach (Coord c in t)
             {
-                foreach (Coord c in t)
-                {
-                    BoardMatrix[c.x, c.y] = new Pixel();
-                }
+                BoardMatrix[c.x, c.y] = new Pixel();
+            }
+
+            if(IsMovementPossible(t, Dir.Down))
+            {             
                 t.Move();
                 StorePiece(t);
                 return true;
             }
-            return false;
+            else
+            {
+                StorePiece(t);
+                return false;
+            }
+           
         }
 
     }

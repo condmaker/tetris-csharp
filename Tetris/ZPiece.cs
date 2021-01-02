@@ -4,9 +4,9 @@ namespace Tetris
 {
     public class ZPiece : Tetromino
     {
-        public ZPiece(Coord pos)
+        public ZPiece(Coord pos): base(pos)
         {
-            position = pos;
+
             definition = new List<Coord>();
             definition.Add(new Coord(-1, 1));
             definition.Add(new Coord(0, 0));

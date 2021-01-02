@@ -15,6 +15,8 @@ namespace Tetris
         /// <value>Tetromino piece's color.</value>
         public Pixel sprite { get; protected set;}
 
+        private Coord initialPos;
+
         /// <summary>
         /// Instance variable which represents the current position of the 
         /// Tetromino piece.
@@ -30,6 +32,19 @@ namespace Tetris
         /// position.</value>
         protected IList<Coord> definition;
 
+
+        public Tetromino(Coord initialPos)
+        {
+            this.initialPos = initialPos;
+            ResetPos();
+        }
+
+
+        public void ResetPos()
+        {
+            position = initialPos;
+        }
+
         /// <summary>
         /// Method responsible for rotating the Tetromino piece by 90 degrees 
         /// clockwise.
@@ -42,9 +57,9 @@ namespace Tetris
                 definition[i] = new Coord(-t.y,t.x);
             }
         }
-
-        
-        public void Move(){
+    
+        public void Move()
+        {
             position = position + new Coord(0,1);
         }
 

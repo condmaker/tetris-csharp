@@ -4,9 +4,9 @@ namespace Tetris
 {
     public class LPiece: Tetromino
     {
-        public LPiece(Coord pos)
+        public LPiece(Coord pos): base(pos)
         {
-            position = pos;
+            sprite = new Pixel(System.ConsoleColor.DarkGreen);
             definition = new List<Coord>();
             definition.Add(new Coord(-1, 0));
             definition.Add(new Coord(0, 0));
