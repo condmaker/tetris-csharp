@@ -202,15 +202,14 @@ namespace Tetris
 
                 a += 4;
 
-                for (int x = 0; x < board.NextPiece.Definition.Count; x++)
-                    for (int y = 0; y < board.NextPiece.Definition.Count; y++)
-                    {
-                        screen[((screen.xDim / 2) - board.Width) + a + 
-                            board.NextPiece.Definition[x].x, (
-                                (screen.yDim / 2) - (board.Height / 2)) 
-                                    + board.NextPiece.Definition[y].y] 
-                                        = board.NextPiece.sprite;
-                    }
+                for (int y = 0; y < board.NextPiece.Definition.Count; y++)
+                {
+                    screen[((screen.xDim / 2) - board.Width) + a + 
+                        board.NextPiece.Definition[y].x, (
+                            (screen.yDim / 2) - (board.Height / 2)) 
+                                + board.NextPiece.Definition[y].y] 
+                                    = board.NextPiece.sprite;
+                }
 
                 a += 4;
 
@@ -251,7 +250,43 @@ namespace Tetris
                 
                 for (int x = 0; x < screen.xDim; x++)
                     for (int y = 0; y < screen.yDim; y++)
-                        screen[x, y] = new Pixel(ConsoleColor.DarkGray, 'd');
+                        screen[x, y] = new Pixel(ConsoleColor.Black);
+
+                Console.SetCursorPosition((screen.xDim / 2) - 9
+                    , (screen.yDim / 2) - 6);
+
+                Console.Write("Welcome to TETRIS!");
+
+                Console.SetCursorPosition((screen.xDim / 2) - 29
+                    , (screen.yDim / 2) - 4);
+
+                Console.Write("This tutorial will teach you how to play and ");
+                Console.Write("control the game.");
+
+                Console.SetCursorPosition(screen.xDim / 2 - 32
+                    , screen.yDim / 2 - 2);
+
+                Console.Write("Use the WASD keys or the keyboard arrows to ");
+                Console.Write("move the pieces around.");
+
+                Console.SetCursorPosition(screen.xDim / 2 - 26
+                    , screen.yDim / 2);
+
+                Console.Write("A and D (or ← and →) will move the piece left ");
+                Console.Write("and right.");
+
+                Console.SetCursorPosition(screen.xDim / 2 - 34
+                    , screen.yDim / 2 + 2);
+
+                Console.Write("W (or ↑) will rotate the piece, while S (or ↓)");
+                Console.Write(" will make it go down faster.");
+
+                Console.SetCursorPosition(screen.xDim / 2 - 44
+                    , screen.yDim / 2 + 4);
+
+                Console.Write("You can press the ESCAPE key to leave at ");
+                Console.Write("anytime, and press ENTER to return to the ");
+                Console.Write("main menu.");
             }
 
         }
@@ -285,7 +320,7 @@ namespace Tetris
 
             Render();
 
-            Console.SetCursorPosition(screen.xDim - 2, screen.yDim - 2);
+            Console.SetCursorPosition(screen.xDim - 1, screen.yDim - 1);
             Console.CursorVisible = true;
         }
 
