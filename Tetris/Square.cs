@@ -13,5 +13,8 @@ namespace Tetris
             definition.Add(new Coord(1, 0));
             definition.Add(new Coord(1, 1));
         }
+
+
+        public override void Rotate(){}
     }
 }

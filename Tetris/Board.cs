@@ -18,14 +18,13 @@ namespace Tetris
 
         private Random rnd = new Random();
 
-
         private Coord InitialPos => new Coord(Width / 2 ,2);
+       
         private IList<Tetromino> piecePool;
 
 
         private Tetromino nextPiece;
         public Tetromino currentPiece;
-
 
 
         /// <summary>
@@ -106,23 +105,6 @@ namespace Tetris
             return (BoardMatrix[c.x, c.y] == new Pixel(ConsoleColor.Gray));
         }
 
-        /// <summary>
-        /// Method that indicates whether a given set of positions are free or 
-        /// occupied.
-        /// </summary>
-        /// <param name="position">Collection of positions.</param>
-        /// <returns><c>true</c> if any of the positions are occuiped, 
-        /// <c>false</c> if all positions are free.</returns>
-        private bool IsCollision(Tetromino t)
-        {
-            foreach(Coord c in t)
-            {
-                if(!IsTileFree(c))
-                    return true;
-            }
-           
-            return false;
-        }
 
         /// <summary>
         /// Method that indicates if a given Tetromino can move in a given 
@@ -257,29 +239,31 @@ namespace Tetris
         }
 
 
+        private void PlacePiece()
+        {
+                //Switch Piece
+                currentPiece = nextPiece;
+                nextPiece = piecePool[rnd.Next(0,7)];
+                currentPiece.ResetPos();
+                StorePiece(currentPiece);
+                //DeleteLines
+                DeleteCompleteLines();
+        }
+
         /// <summary>
         /// Update method to be called every frame.
         /// </summary>
         public override void Update(Dir input)
         {
 
-            if(!ChangePiecePos(currentPiece, input))
-            {
-                currentPiece = nextPiece;
-                nextPiece = piecePool[rnd.Next(0,7)];
-                currentPiece.ResetPos();
-                StorePiece(currentPiece); 
-            }
-            
+            ChangePiecePos(currentPiece, input);
+ 
             if(!ChangePiecePos(currentPiece, Dir.Down))
             {
-                currentPiece = nextPiece;
-                nextPiece = piecePool[rnd.Next(0,7)];
-                currentPiece.ResetPos();
-                StorePiece(currentPiece); 
+                PlacePiece();
             }
             
-            DeleteCompleteLines();
+            
 
             if (input == Dir.Enter)
                 sceneChange = true;
