@@ -86,7 +86,7 @@ namespace Tetris
         public IEnumerator<Coord> GetEnumerator()
         {
             foreach (Coord c in definition)
-                yield return (c+position);
+                yield return c + position;
         }
 
         /// <summary>
@@ -100,19 +100,8 @@ namespace Tetris
             return GetEnumerator();
         }
 
-        // DELETE
-        public override string ToString()
-        {
-            String str = "";
-            foreach (Coord c in definition)
-                str += (c+position).ToString() + ", ";
-            return str;
-        }
-
-        public override void Update(Dir input)
-        {
-            
-        }
+        public override void Update(Dir input) 
+        {}
 
     }
 }
