@@ -8,5 +8,7 @@ namespace Tetris
         void TitleScreen(Dir dir);
         void Render();
         void UpdateScene(Scene scene);
+
+        void Finish();
     }
 }
