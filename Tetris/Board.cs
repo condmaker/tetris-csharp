@@ -59,16 +59,16 @@ namespace Tetris
             piecePool = new List<Tetromino>
             {
                 new LPiece(InitialPos),
-                new Square(InitialPos),
+                new SquarePiece(InitialPos),
                 new JPiece(InitialPos),
                 new ZPiece(InitialPos),
                 new SPiece(InitialPos),
-                new Hero(InitialPos),
+                new LinePiece(InitialPos),
                 new TPiece(InitialPos)
             };
 
             nextPiece = piecePool[5];
-            currentPiece = new Square(InitialPos);    
+            currentPiece = new SquarePiece(InitialPos);    
           
             StorePiece(currentPiece);      
         }

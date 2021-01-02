@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace Tetris
 {
-    public class Square : Tetromino
+    public class SquarePiece : Tetromino
     {
-        public Square(Coord pos): base(pos)
+        public SquarePiece(Coord pos): base(pos)
         {
             sprite = new Pixel(System.ConsoleColor.Blue);
             definition = new List<Coord>();

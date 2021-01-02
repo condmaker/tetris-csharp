@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Tetris
 {
-    public class Hero: Tetromino
+    public class LinePiece: Tetromino
     {
-        public Hero(Coord pos): base(pos)
+        public LinePiece(Coord pos): base(pos)
         {
             sprite = new Pixel(System.ConsoleColor.Cyan);
             definition = new List<Coord>();
