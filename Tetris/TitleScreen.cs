@@ -34,8 +34,10 @@ namespace Tetris
             {
                 sceneChange = false;
 
-                if (CursorPos) return scenes[0];
-                else if (!CursorPos) return scenes[1];
+                if (CursorPos) 
+                    return scenes[0];
+                else if (!CursorPos) 
+                    return scenes[1];
             }
             
             return this;

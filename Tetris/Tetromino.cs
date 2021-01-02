@@ -7,13 +7,13 @@ namespace Tetris
     /// <summary>
     /// Abstract class which represents a Tetromino piece
     /// </summary>
-    public abstract class Tetromino: GameObject, IEnumerable<Coord>
+    public abstract class Tetromino : GameObject, IEnumerable<Coord>
     {
         /// <summary>
         /// Gets the property which represents the color of the Tetromino piece.
         /// </summary>
         /// <value>Tetromino piece's color.</value>
-        public Pixel sprite { get; protected set;}
+        public Pixel sprite { get; protected set; }
 
         private Coord initialPos;
 
@@ -32,8 +32,12 @@ namespace Tetris
         /// position.</value>
         protected IList<Coord> definition;
 
+        /// <summary>
+        /// Gets the positions which a piece occupies, from the current 
+        /// position.
+        /// </summary>
+        /// <value>The positions the piece occupies.</value>
         public IList<Coord> Definition { get => definition; }
-
 
         /// <summary>
         /// Constructor. Creates a new instance with the given initial 
@@ -45,7 +49,6 @@ namespace Tetris
             this.initialPos = initialPos;
             ResetPos();
         }
-
 
         /// <summary>
         /// Method that resets current position of the Tetromino to its 
@@ -62,18 +65,19 @@ namespace Tetris
         /// </summary>
         public virtual void Rotate()
         {
-            for(int i = 0; i < definition.Count; i++){
+            for (int i = 0; i < definition.Count; i++)
+            {
                 Coord t = definition[i];
-                definition[i] = new Coord(-t.y,t.x);
+                definition[i] = new Coord(-t.Y, t.X);
             }
         }
-    
         
         public IEnumerable<Coord> Rotated()
         {
-            for(int i = 0; i < definition.Count; i++){
+            for (int i = 0; i < definition.Count; i++)
+            {
                 Coord t = definition[i];
-                yield return new Coord(-t.y,t.x) + position;
+                yield return new Coord(-t.Y, t.X) + position;
             }
         }
 
@@ -83,7 +87,7 @@ namespace Tetris
         /// <param name="dir">Direction.</param>
         public void Move(Dir dir)
         {          
-            switch(dir)
+            switch (dir)
             {
                 case Dir.Rot:
                 Rotate();

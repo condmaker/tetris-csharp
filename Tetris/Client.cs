@@ -46,12 +46,12 @@ namespace Tetris
         private Dir dir;
 
         /// <summary>
-        /// Creates a new Client instance
+        /// Creates a new Client instance.
         /// </summary>
         public Client()
         {
             inputThread = new Thread(ReadKey);
-            inputLock = new Object();
+            inputLock = new object();
             
             title = new TitleScreen();
             board = new Board();
@@ -71,7 +71,7 @@ namespace Tetris
         /// </summary>
         public void GameLoop()
         {
-            IDisplay UI = new ConsoleDisplay();
+            IDisplay ui = new ConsoleDisplay();
             running = true;
 
 
@@ -86,15 +86,15 @@ namespace Tetris
                 currentScene.Update(dir);
                 currentScene = currentScene.UpdateScene();
                 //UI.TitleScreen(dir);
-                UI.UpdateScene(currentScene);
+                ui.UpdateScene(currentScene);
                 // reset direction
                 dir = Dir.None;              
                 // render
-                UI.Render();
+                ui.Render();
                 Thread.Sleep(130);
             }
 
-            Finish(UI);
+            Finish(ui);
         }
 
         /// <summary>
@@ -153,17 +153,15 @@ namespace Tetris
                     dir = Dir.None;
                     break;
             }
-
-            
         }
 
         /// <summary>
         /// Method responsible for cleanup before the program ends.
         /// </summary>
-        private void Finish(IDisplay UI)
+        private void Finish(IDisplay ui)
         {
             inputThread.Join();
-            UI.Finish();
+            ui.Finish();
         }
 
 

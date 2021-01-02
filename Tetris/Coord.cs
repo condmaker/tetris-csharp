@@ -12,13 +12,13 @@ namespace Tetris
         /// Gets the property that defines a horizontal position on the 'board'.
         /// </summary>
         /// <value>Aforementioned horizontal position.</value>
-        public int x { get; }
+        public int X { get; }
 
         /// <summary>
         /// Gets the property that defines a vertical position on the 'board'.
         /// </summary>
         /// <value>Aforementioned vertical position.</value>
-        public int y { get; }
+        public int Y { get; }
 
         /// <summary>
         /// Creates a position (Coord instance) to be used on the board.
@@ -27,8 +27,8 @@ namespace Tetris
         /// <param name="y">Vertical position.</param>
         public Coord(int x = 0, int y = 0)
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
 
         /// <summary>
@@ -38,29 +38,29 @@ namespace Tetris
         /// <param name="dir">Direction.</param>
         public Coord(Dir dir)
         {
-            x = 0;
-            y = 0;
+            X = 0;
+            Y = 0;
             switch (dir)
             {
                 case Dir.None:
-                    x = 0;
-                    y = 0;
+                    X = 0;
+                    Y = 0;
                     break;
                 case Dir.Up:
-                    x = 0;
-                    y = -1;
+                    X = 0;
+                    Y = -1;
                     break;
                 case Dir.Down:
-                    x = 0;
-                    y = 1;
+                    X = 0;
+                    Y = 1;
                     break;
                 case Dir.Left:
-                    x = -1;
-                    y = 0;
+                    X = -1;
+                    Y = 0;
                     break;
                 case Dir.Right:
-                    x = 1;
-                    y = 0;
+                    X = 1;
+                    Y = 0;
                     break;           
             }
         }
@@ -69,7 +69,7 @@ namespace Tetris
         /// Returns the instance's position properly formatted in string format.
         /// </summary>
         /// <returns>A string representing the instance's position.</returns>
-        public  override string ToString() => $"({x}, {y})";
+        public  override string ToString() => $"({X}, {Y})";
 
         /// <summary>
         /// Retuns the sum of two positions.
@@ -78,7 +78,7 @@ namespace Tetris
         /// <param name="b">Another position.</param>
         /// <returns>The sum of the positions.</returns>
         public static Coord operator +(Coord a, Coord b) 
-        => new Coord(a.x + b.x, a.y + b.y);
+        => new Coord(a.X + b.X, a.Y + b.Y);
 
         /// <summary>
         /// Retuns the subtraction of two positions.
@@ -87,7 +87,7 @@ namespace Tetris
         /// <param name="b">Another position.</param>
         /// <returns>The subtraction of the positions.</returns>
         public static Coord operator -(Coord a, Coord b) 
-        => new Coord(a.x - b.x, a.y - b.y);
+        => new Coord(a.X - b.X, a.Y - b.Y);
 
         /// <summary>
         /// Retuns the mutiplication of two positions.
@@ -96,20 +96,7 @@ namespace Tetris
         /// <param name="b">Another position.</param>
         /// <returns>The multiplication of the positions.</returns>
         public static Coord operator *(Coord a, int b) 
-        => new Coord(a.x * b, a.y * b);
-
-        /// <summary>
-        /// Retuns the division of two positions.
-        /// </summary>
-        /// <param name="a">A position.</param>
-        /// <param name="b">Another position.</param>
-        /// <returns>The division of the positions.</returns>
-        public static Coord operator /(Coord a, int b)
-        {
-            if (b == 0)
-                throw new System.DivideByZeroException();
-            return new Coord(a.x / b, a.y / b);
-        }
+        => new Coord(a.X * b, a.Y * b);
 
         /// <summary>
         /// Method that indicates whether two given Positions are equal.
@@ -120,9 +107,9 @@ namespace Tetris
         /// <c>false</c> otherwise.</returns>
         public static bool operator ==(Coord a, Coord b)
         {
-            if (a.x != b.x)
+            if (a.X != b.X)
                 return false;
-            if (a.y != b.y)
+            if (a.Y != b.Y)
                 return false;
             return true;
         } 
@@ -146,12 +133,12 @@ namespace Tetris
         /// <param name="obj">An object.</param>
         /// <returns><c>true</c> if the object is a position and is equal to 
         /// this position, <c>false</c> otherwise.</returns>
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             if (!(obj is Coord))
                 return false;
             Coord c = (Coord)obj;
-            return (x == c.x) && (y == c.y);
+            return (X == c.X) && (Y == c.Y);
         }
 
         /// <summary>
@@ -160,7 +147,7 @@ namespace Tetris
         /// <returns>The hash code for this instance.</returns>
         public override int GetHashCode()
         {
-            return x.GetHashCode() ^ y.GetHashCode();
+            return X.GetHashCode() ^ Y.GetHashCode();
         }
     }
 }

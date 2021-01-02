@@ -9,7 +9,7 @@ namespace Tetris
     /// </summary>
     public class ConsoleDisplay : IDisplay
     {
-        private DoubleBuffer2D screen;
+        private readonly DoubleBuffer2D screen;
 
         public ConsoleDisplay()
         {
@@ -28,7 +28,6 @@ namespace Tetris
 
             Console.Clear();
             Console.SetCursorPosition(0,0);
-            
         }
 
         public void TitleScreen(Dir dir)
@@ -203,15 +202,17 @@ namespace Tetris
                 a += 4;
 
                 for (int x = 0; x < board.NextPiece.Definition.Count; x++)
+                {
                     for (int y = 0; y < board.NextPiece.Definition.Count; y++)
                     {
                         screen[((screen.xDim / 2) - board.Width) + a + 
-                            board.NextPiece.Definition[x].x, (
+                            board.NextPiece.Definition[x].X, (
                                 (screen.yDim / 2) - (board.Height / 2)) 
-                                    + board.NextPiece.Definition[y].y] 
+                                    + board.NextPiece.Definition[y].Y] 
                                         = board.NextPiece.sprite;
                     }
-
+                }
+                    
                 a += 4;
 
                 screen[((screen.xDim / 2) - board.Width) + a,
@@ -225,7 +226,6 @@ namespace Tetris
                 screen[((screen.xDim / 2) - board.Width) + a,
                     (screen.yDim / 2) - (board.Height / 2) + 3] 
                         = new Pixel(c: 'T');   
-
             }
             else if (scene is TitleScreen)
             {
@@ -250,51 +250,54 @@ namespace Tetris
                 tutorial = scene as Tutorial;
                 
                 for (int x = 0; x < screen.xDim; x++)
+                {
                     for (int y = 0; y < screen.yDim; y++)
                         screen[x, y] = new Pixel(ConsoleColor.DarkGray, 'd');
+                }      
             }
-
         }
 
         public void Finish()
         {
-            for (int x = 0; x < screen.xDim; x++)
-                    for (int y = 0; y < screen.yDim; y++)
+            for (int x = 0; x < screen.xDim; x++){
+                for (int y = 0; y < screen.yDim; y++)
                         screen[x, y] = new Pixel(ConsoleColor.Black);
+            }
+                    
             
-            screen[(screen.xDim / 2) - 6, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) - 6, screen.yDim / 2] = 
                 new Pixel(c: 'T');
-            screen[(screen.xDim / 2) - 5, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) - 5, screen.yDim / 2] = 
                 new Pixel(c: 'H');
-            screen[(screen.xDim / 2) - 4, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) - 4, screen.yDim / 2] = 
                 new Pixel(c: 'A');
-            screen[(screen.xDim / 2) - 3, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) - 3, screen.yDim / 2] = 
                 new Pixel(c: 'N');
-            screen[(screen.xDim / 2) - 2, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) - 2, screen.yDim / 2] = 
                 new Pixel(c: 'K');
-            screen[(screen.xDim / 2) - 1, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) - 1, screen.yDim / 2] = 
                 new Pixel(c: 'S');
 
-            screen[(screen.xDim / 2) + 1, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) + 1, screen.yDim / 2] = 
                 new Pixel(c: 'F');
-            screen[(screen.xDim / 2) + 2, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) + 2, screen.yDim / 2] = 
                 new Pixel(c: 'O');
-            screen[(screen.xDim / 2) + 3, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) + 3, screen.yDim / 2] = 
                 new Pixel(c: 'R');
 
-            screen[(screen.xDim / 2) + 5, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) + 5, screen.yDim / 2] = 
                 new Pixel(c: 'P');
-            screen[(screen.xDim / 2) + 6, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) + 6, screen.yDim / 2] = 
                 new Pixel(c: 'L');
-            screen[(screen.xDim / 2) + 7, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) + 7, screen.yDim / 2] = 
                 new Pixel(c: 'A');
-            screen[(screen.xDim / 2) + 8, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) + 8, screen.yDim / 2] = 
                 new Pixel(c: 'Y');
-            screen[(screen.xDim / 2) + 9, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) + 9, screen.yDim / 2] = 
                 new Pixel(c: 'I');
-            screen[(screen.xDim / 2) + 10, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) + 10, screen.yDim / 2] = 
                 new Pixel(c: 'N');
-            screen[(screen.xDim / 2) + 11, (screen.yDim / 2)] = 
+            screen[(screen.xDim / 2) + 11, screen.yDim / 2] = 
                 new Pixel(c: 'G');
 
             Render();

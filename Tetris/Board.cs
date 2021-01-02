@@ -67,7 +67,7 @@ namespace Tetris
                 new ZPiece(InitialPos),
                 new SPiece(InitialPos),
                 new LinePiece(InitialPos),
-                new TPiece(InitialPos)
+                new TPiece(InitialPos),
             };
 
             NextPiece = piecePool[5];
@@ -80,18 +80,18 @@ namespace Tetris
         /// Method that indicates if a given Coord <paramref name="c"/> is 
         /// inside the limits of the board.
         /// </summary>
-        /// <param name="c">A Coord</param>
+        /// <param name="c">A Coord.</param>
         /// <returns><c>true</c> if the Coord <paramref name="c"/> is within 
-        /// the limits of the board, <c>false</c> otherwise
+        /// the limits of the board, <c>false</c> otherwise.
         public bool IsInsideBounds(Coord c)
         {
-            if (c.x < 0)
+            if (c.X < 0)
                 return false;
-            if (c.y < 0)
+            if (c.Y < 0)
                 return false;
-            if (c.x >= Width)
+            if (c.X >= Width)
                 return false;
-            if (c.y >= Height)
+            if (c.Y >= Height)
                 return false;
             return true;
         }
@@ -106,7 +106,7 @@ namespace Tetris
         {
             if(!IsInsideBounds(c))
                 return false;
-            return (BoardMatrix[c.x, c.y] == new Pixel(bgColor));
+            return BoardMatrix[c.X, c.Y] == new Pixel(bgColor);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Tetris
         /// <param name="t">Tetromino.</param>
         /// <param name="d">Direction.</param>
         /// <returns><c>true</c> if the piece can move in the direction 
-        /// without colliding, <c>false</c> otherwise</returns>
+        /// without colliding, <c>false</c> otherwise.</returns>
         public bool IsMovementPossible(Tetromino t, Dir d)
         {
             Coord move = new Coord(d);
@@ -150,9 +150,9 @@ namespace Tetris
         /// <summary>
         /// Method that indicates if a given Tetromino can rotate.
         /// </summary>
-        /// <param name="t">Tetromino</param>
+        /// <param name="t">Tetromino.</param>
         /// <returns><c>true</c> if the piece can rotate 
-        /// without colliding, <c>false</c> otherwise</returns>
+        /// without colliding, <c>false</c> otherwise.</returns>
         public bool IsRotationPossible(Tetromino t)
         {
             bool canRot = true;
@@ -178,8 +178,11 @@ namespace Tetris
         {
             // move rows down
             for (; y > 0; y--)
+             {
                 for (int x = 0; x < Width; x++)
-                    BoardMatrix[x, y] = BoardMatrix[x, y-1];
+                                    BoardMatrix[x, y] = BoardMatrix[x, y - 1];
+            }
+                
             
             // clear top row
             for (int x = 0; x < Width; x++)
@@ -206,15 +209,13 @@ namespace Tetris
                     if (IsTileFree(new Coord(x, y)))
                     {
                         isComplete = false;
-                        continue;
-                    }
-                                 
+                        x = Width;
+                    }           
                 }
 
                 // if whole line is occupied, delete this line    
                 if(isComplete)
                 {
-                    
                     DeleteLine(y);
                     clearedLines++;
                 }
@@ -226,12 +227,11 @@ namespace Tetris
         /// Stores given Tetromino piece <paramref name="t"/> in its current 
         /// position on the board.
         /// </summary>
-        /// <param name="t">Tetromino Piece</param>
+        /// <param name="t">Tetromino Piece.</param>
         public void StorePiece(Tetromino t)
         {
             foreach (Coord c in t)
-                BoardMatrix[c.x, c.y] = t.sprite;
-
+                BoardMatrix[c.X, c.Y] = t.sprite;
         }
 
         public override Scene UpdateScene()
@@ -251,7 +251,7 @@ namespace Tetris
         {        
             foreach (Coord c in t)
             {
-                BoardMatrix[c.x, c.y] = new Pixel(bgColor);
+                BoardMatrix[c.X, c.Y] = new Pixel(bgColor);
             }
 
             if(dir == Dir.Rot)
@@ -283,7 +283,7 @@ namespace Tetris
         {
                 //Check if piece stopped off screen
                 foreach(Coord c in CurrentPiece){
-                    if(c.y <= InitialPos.y)
+                    if(c.Y <= InitialPos.Y)
                     {
                         //End Game
                         return;
@@ -295,16 +295,15 @@ namespace Tetris
                 CurrentPiece = NextPiece;
                 NextPiece = piecePool[rnd.Next(0,7)];
                 CurrentPiece.ResetPos();
-                StorePiece(CurrentPiece);
-                
+                StorePiece(CurrentPiece);  
         }
 
         /// <summary>
         /// Update method to be called every frame.
         /// </summary>
+        /// <param name="input">Direction of movement.</param>
         public override void Update(Dir input)
         {
-
             ChangePiecePos(CurrentPiece, input);
  
             if(!ChangePiecePos(CurrentPiece, Dir.Down))
@@ -315,7 +314,5 @@ namespace Tetris
             if (input == Dir.Enter)
                 sceneChange = true;
         }    
-        
-
     }
 }

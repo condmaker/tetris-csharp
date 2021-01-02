@@ -67,13 +67,12 @@ namespace Tetris
         /// <param name="obj">An object.</param>
         /// <returns><c>true</c> if the object is a Pixel and is equal to 
         /// this Pixel, <c>false</c> otherwise.</returns>
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             if (!(obj is Pixel))
                 return false;
-            Pixel p = (Pixel) obj;
-            return ((Character == p.Character) && (Color == p.Color));
-
+            Pixel p = (Pixel)obj;
+            return (Character == p.Character) && (Color == p.Color);
         }
 
         /// <summary>

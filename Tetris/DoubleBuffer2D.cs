@@ -20,8 +20,11 @@ namespace Tetris
             next = new Pixel[x, y];
 
             for (int a = 0; a < xDim; a += 1) 
+            {
                 for (int b = 0; b < yDim; b += 1)
                     current[a, b] = new Pixel(ConsoleColor.Blue);
+            }
+                
 
             Clear();
 
@@ -48,16 +51,12 @@ namespace Tetris
             {
                 for (int x = 0; x < xDim; x++)
                 {
-                    if (next[x, y] == current[x, y]) continue;
-
+                    if (next[x, y] == current[x, y]) 
+                        continue;
                     else if (next[x, y].Color == ConsoleColor.Black)
-                    {
                         Console.BackgroundColor = defaultBg;
-                    }
                     else
-                    {
                         Console.BackgroundColor = next[x, y].Color;
-                    }
                     
                     Console.SetCursorPosition(x, y);
                     Console.Write(next[x,y].Character);

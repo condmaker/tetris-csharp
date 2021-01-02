@@ -34,10 +34,10 @@
         <Rule Id="SA1022"  Action="Warning" />          <!-- Positive signs should be spaced correctly -->
         <Rule Id="SA1023"  Action="Warning" />          <!-- Dereference and access of symbols should be spaced correctly -->
         <Rule Id="SA1024"  Action="Warning" />          <!-- Colons should be spaced correctly -->
-        <Rule Id="SA1025"  Action="None" />          <!-- Code should not contain multiple whitespace in a row -->
+        <Rule Id="SA1025"  Action="None" />             <!-- Code should not contain multiple whitespace in a row -->
         <Rule Id="SA1026"  Action="Warning" />          <!-- Code should not contain space after new or stackalloc keyword in implicitly typed array allocation -->
         <Rule Id="SA1027"  Action="Warning" />          <!-- Use tabs correctly -->
-        <Rule Id="SA1028"  Action="None" />          <!-- Code should not contain trailing whitespace -->
+        <Rule Id="SA1028"  Action="None" />             <!-- Code should not contain trailing whitespace -->
     </Rules>
 
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.ReadabilityRules">
@@ -51,15 +51,15 @@
         <Rule Id="SA1107"  Action="Warning" />          <!-- Code should not contain multiple statements on one line -->
         <Rule Id="SA1108"  Action="Warning" />          <!-- Block statements should not contain embedded comments -->
         <Rule Id="SA1109"  Action="None" />             <!-- Block statements should not contain embedded regions -->
-        <Rule Id="SA1110"  Action="None" />          <!-- Opening parenthesis or bracket should be on declaration line -->
+        <Rule Id="SA1110"  Action="None" />             <!-- Opening parenthesis or bracket should be on declaration line -->
         <Rule Id="SA1111"  Action="Warning" />          <!-- Closing parenthesis should be on line of last parameter -->
         <Rule Id="SA1112"  Action="Warning" />          <!-- Closing parenthesis should be on line of opening parenthesis -->
         <Rule Id="SA1113"  Action="Warning" />          <!-- Comma should be on the same line as previous parameter -->
         <Rule Id="SA1114"  Action="Warning" />          <!-- Parameter list should follow declaration -->
         <Rule Id="SA1115"  Action="Warning" />          <!-- Parameter should follow comma -->
-        <!--<Rule Id="SA1116"  Action="Warning" />           Split parameters should start on line after declaration -->
+        <Rule Id="SA1116"  Action="None" />             <!-- Split parameters should start on line after declaration -->
         <Rule Id="SA1117"  Action="Warning" />          <!-- Parameters should be on same line or separate lines -->
-        <Rule Id="SA1118"  Action="Warning" />          <!-- Parameter should not span multiple lines -->
+        <Rule Id="SA1118"  Action="None" />          <!-- Parameter should not span multiple lines -->
         <Rule Id="SA1120"  Action="Warning" />          <!-- Comments should contain text -->
         <Rule Id="SA1121"  Action="Warning" />          <!-- Use built-in type alias -->
         <Rule Id="SA1122"  Action="Warning" />          <!-- Use string.Empty for empty strings -->
@@ -165,7 +165,7 @@
     </Rules>
 
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.DocumentationRules">
-        <Rule Id="SA1600"  Action="Warning" />          <!-- Elements should be documented -->
+        <Rule Id="SA1600"  Action="None" />          <!-- Elements should be documented -->
         <Rule Id="SA1601"  Action="Warning" />          <!-- Partial elements should be documented -->
         <Rule Id="SA1602"  Action="Warning" />          <!-- Enumeration items should be documented -->
         <Rule Id="SA1603"  Action="None" />             <!-- Documentation should contain valid XML -->

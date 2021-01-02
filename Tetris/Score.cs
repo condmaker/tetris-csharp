@@ -9,7 +9,7 @@ namespace Tetris
         /// Property that defines the player's name.
         /// </summary>
         /// <value>The player name.</value>
-        public string Name {get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets the property that defines the player's score.
@@ -51,6 +51,7 @@ namespace Tetris
                     increaseBy = 800;
                     break;
             }
+
             Points += increaseBy;
         }
 

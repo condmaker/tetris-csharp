@@ -11,15 +11,8 @@ namespace Tetris
 
         public void SetScenes(Scene[] o)
         {
-            try
-            {
-                for (int i = 0; i <= o.Length; i++)
-                    scenes[i] = o[i];
-            }
-            catch (Exception)
-            {
-
-            }
+            for (int i = 0; i < o.Length; i++)
+                scenes[i] = o[i];
         }
         public void SetScenes(Scene o)
         {

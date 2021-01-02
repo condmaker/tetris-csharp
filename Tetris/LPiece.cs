@@ -21,7 +21,5 @@ namespace Tetris
             definition.Add(new Coord(0, 1));
             definition.Add(new Coord(0, 2));
         }
-
-
     }
 }
