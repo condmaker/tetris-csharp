@@ -11,7 +11,8 @@ namespace Tetris
         /// Constructor. Creates a new instance on a given position.
         /// </summary>
         /// <param name="pos">Piece position.</param>
-        public ZPiece(Coord pos): base(pos)
+        public ZPiece(Coord pos)
+            : base(pos)
         {
             sprite = new Pixel(System.ConsoleColor.White);
             definition = new List<Coord>();

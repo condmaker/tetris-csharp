@@ -10,7 +10,7 @@ namespace Tetris
     public abstract class Tetromino: GameObject, IEnumerable<Coord>
     {
         /// <summary>
-        /// Property which represents the color of the Tetromino piece.
+        /// Gets the property which represents the color of the Tetromino piece.
         /// </summary>
         /// <value>Tetromino piece's color.</value>
         public Pixel sprite { get; protected set;}
@@ -33,13 +33,22 @@ namespace Tetris
         protected IList<Coord> definition;
 
 
-        public Tetromino(Coord initialPos)
+        /// <summary>
+        /// Constructor. Creates a new instance with the given initial 
+        /// position.
+        /// </summary>
+        /// <param name="initialPos">Initial position.</param>
+        protected Tetromino(Coord initialPos)
         {
             this.initialPos = initialPos;
             ResetPos();
         }
 
 
+        /// <summary>
+        /// Method that resets current position of the Tetromino to its 
+        /// starting position.
+        /// </summary>
         public void ResetPos()
         {
             position = initialPos;
@@ -58,6 +67,10 @@ namespace Tetris
             }
         }
     
+        /// <summary>
+        /// Method responsible for moving the Tetromino in a given direction.
+        /// </summary>
+        /// <param name="dir">Direction.</param>
         public void Move(Dir dir)
         {          
             switch(dir)
@@ -72,7 +85,7 @@ namespace Tetris
                 position = position + new Coord(dir);
                 break;
                 case Dir.Down:
-                position = position + new Coord(0,1);
+                position = position + new Coord(0, 1);
                 break;
             }
         }
@@ -100,8 +113,14 @@ namespace Tetris
             return GetEnumerator();
         }
 
+        /// <summary>
+        /// Method responsible for updating the Tetromino piece each frame.
+        /// </summary>
+        /// <param name="input">Direction to move Tetromino.</param>
         public override void Update(Dir input) 
-        {}
+        {
+            return;
+        }
 
     }
 }
