@@ -19,6 +19,8 @@ namespace Tetris
         /// <value>Horizontal dimension of the board.</value>
         public int Width => BoardMatrix.GetLength(0);
 
+        private const ConsoleColor bgColor = ConsoleColor.Gray;
+
         private Random rnd = new Random();
 
         private Coord InitialPos => new Coord(Width / 2 ,2);
@@ -52,7 +54,7 @@ namespace Tetris
             {
                 for (int y = 0; y < h; y++)
                 {   
-                    BoardMatrix[x,y] = new Pixel(ConsoleColor.Gray);
+                    BoardMatrix[x,y] = new Pixel(bgColor);
                 }  
             }
 
@@ -105,7 +107,7 @@ namespace Tetris
         {
             if(!IsInsideBounds(c))
                 return false;
-            return (BoardMatrix[c.x, c.y] == new Pixel(ConsoleColor.Gray));
+            return (BoardMatrix[c.x, c.y] == new Pixel(bgColor));
         }
 
 
@@ -156,7 +158,7 @@ namespace Tetris
             
             // clear top row
             for (int x = 0; x < Width; x++)
-                BoardMatrix[x, 0] = new Pixel();
+                BoardMatrix[x, 0] = new Pixel(bgColor);
         }
 
         /// <summary>
@@ -224,7 +226,7 @@ namespace Tetris
         {        
             foreach (Coord c in t)
             {
-                BoardMatrix[c.x, c.y] = new Pixel();
+                BoardMatrix[c.x, c.y] = new Pixel(bgColor);
             }
 
             if(IsMovementPossible(t, dir))
@@ -244,13 +246,14 @@ namespace Tetris
 
         private void PlacePiece()
         {
+                //DeleteLines
+                DeleteCompleteLines();
                 //Switch Piece
                 CurrentPiece = NextPiece;
                 NextPiece = piecePool[rnd.Next(0,7)];
                 CurrentPiece.ResetPos();
                 StorePiece(CurrentPiece);
-                //DeleteLines
-                DeleteCompleteLines();
+                
         }
 
         /// <summary>
@@ -266,8 +269,6 @@ namespace Tetris
                 PlacePiece();
             }
             
-            
-
             if (input == Dir.Enter)
                 sceneChange = true;
         }    

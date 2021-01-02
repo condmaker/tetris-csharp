@@ -91,13 +91,7 @@ namespace Tetris
                 dir = Dir.None;              
                 // render
                 UI.Render();
-<<<<<<< HEAD
-                // sleep     
-                Thread.Sleep(100); 
-=======
-                // sleep         
-                Thread.Sleep(100);       
->>>>>>> marco_branch
+                Thread.Sleep(130);
             }
 
             Finish(UI);
