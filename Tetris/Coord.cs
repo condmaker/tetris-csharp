@@ -3,7 +3,7 @@ using System;
 namespace Tetris
 {
     /// <summary>
-    /// The class that defines what is a 'position'/'coordinate' on the game's
+    /// Struct that defines what is a 'position'/'coordinate' on the game's
     /// 'board'.
     /// </summary>
     public struct Coord

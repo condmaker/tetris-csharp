@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 
-/// <summary>
-/// Abstract class which represents a Tetromino piece
-/// </summary>
 namespace Tetris
 {
+    /// <summary>
+    /// Abstract class which represents a Tetromino piece
+    /// </summary>
     public abstract class Tetromino: GameObject, IEnumerable<Coord>
     {
         /// <summary>

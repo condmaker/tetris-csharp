@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Tetris
 {
+    /// <summary>
+    /// Class that defines the game board.
+    /// </summary>
     public class Board: Scene
     {
         /// <summary>
@@ -58,16 +61,16 @@ namespace Tetris
             piecePool = new List<Tetromino>
             {
                 new LPiece(InitialPos),
-                new Square(InitialPos),
+                new SquarePiece(InitialPos),
                 new JPiece(InitialPos),
                 new ZPiece(InitialPos),
                 new SPiece(InitialPos),
-                new Hero(InitialPos),
+                new LinePiece(InitialPos),
                 new TPiece(InitialPos)
             };
 
             NextPiece = piecePool[5];
-            CurrentPiece = new Square(InitialPos);    
+            CurrentPiece = new SquarePiece(InitialPos);    
           
             StorePiece(CurrentPiece);      
         }
@@ -221,7 +224,7 @@ namespace Tetris
         {        
             foreach (Coord c in t)
             {
-                BoardMatrix[c.x, c.y].Clear();
+                BoardMatrix[c.x, c.y] = new Pixel();
             }
 
             if(IsMovementPossible(t, dir))
