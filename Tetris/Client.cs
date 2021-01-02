@@ -91,8 +91,7 @@ namespace Tetris
                 UI.UpdateScene(currentScene);
                 // reset direction
                 dir = Dir.None;
-                // check  and delete lines
-                //board.DeleteCompleteLines();
+                // check  and delete lines              
                 // update score
                 // render
                 UI.Render();

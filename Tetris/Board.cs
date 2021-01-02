@@ -183,44 +183,33 @@ namespace Tetris
         public int DeleteCompleteLines()
         {
             int clearedLines = 0;
-            for (int y = 0; y < Height; y++)
+            
+            for (int y = 0; y < Height; y++)                     
+            {
+                bool isComplete = true;
+
                 for (int x = 0; x < Width; x++)
                 {
                     // if tile is free, go to next line
                     if (IsTileFree(new Coord(x, y)))
+                    {
+                        isComplete = false;
                         continue;
-                    // if whole line is occupied, delete this line
+                    }
+                                 
+                }
+
+                // if whole line is occupied, delete this line    
+                if(isComplete)
+                {
+                    
                     DeleteLine(y);
                     clearedLines++;
                 }
+            }
             return clearedLines;
         }
-
-        /// <summary>
-        /// Update method to be called every frame.
-        /// </summary>
-        public override void Update(Dir input)
-        {
-            if(!ChangePiecePos(currentPiece, input))
-            {
-                currentPiece = nextPiece;
-                nextPiece = piecePool[rnd.Next(0,7)];
-                currentPiece.ResetPos();
-                StorePiece(currentPiece); 
-            }
-            if(!ChangePiecePos(currentPiece, Dir.Down))
-            {
-                currentPiece = nextPiece;
-                nextPiece = piecePool[rnd.Next(0,7)];
-                currentPiece.ResetPos();
-                StorePiece(currentPiece); 
-            }
-
-
-            if (input == Dir.Enter)
-                sceneChange = true;
-        }    
-        
+     
         /// <summary>
         /// Stores given Tetromino piece <param name="t"> in its current 
         /// position on the board.
@@ -245,7 +234,6 @@ namespace Tetris
             return this;
         }
 
-
         //Tou a ter um aneurisma
         public bool ChangePiecePos(Tetromino t, Dir dir)
         {        
@@ -267,6 +255,36 @@ namespace Tetris
             }
            
         }
+
+
+        /// <summary>
+        /// Update method to be called every frame.
+        /// </summary>
+        public override void Update(Dir input)
+        {
+
+            if(!ChangePiecePos(currentPiece, input))
+            {
+                currentPiece = nextPiece;
+                nextPiece = piecePool[rnd.Next(0,7)];
+                currentPiece.ResetPos();
+                StorePiece(currentPiece); 
+            }
+            
+            if(!ChangePiecePos(currentPiece, Dir.Down))
+            {
+                currentPiece = nextPiece;
+                nextPiece = piecePool[rnd.Next(0,7)];
+                currentPiece.ResetPos();
+                StorePiece(currentPiece); 
+            }
+            
+            DeleteCompleteLines();
+
+            if (input == Dir.Enter)
+                sceneChange = true;
+        }    
+        
 
     }
 }
