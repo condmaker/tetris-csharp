@@ -139,9 +139,18 @@ namespace Tetris
         /// without colliding, <c>false</c> otherwise</returns>
         public bool IsRotationPossible(Tetromino t)
         {
+            bool canRot = true;
+
+            foreach(Coord c in t.Rotated())
+            {
+                if(!IsTileFree(c))
+                {
+                    canRot = false;
+                }
+            }
             // tratar definition
             // verificar collisao
-            return true;
+            return canRot;
         }
 
         /// <summary>
@@ -229,6 +238,17 @@ namespace Tetris
                 BoardMatrix[c.x, c.y] = new Pixel(bgColor);
             }
 
+            if(dir == Dir.Rot)
+            {
+                if(IsRotationPossible(t))
+                {
+                    t.Rotate();
+                    return true;
+                }
+
+                return false;
+            }
+
             if(IsMovementPossible(t, dir))
             {             
                 t.Move(dir);
@@ -239,13 +259,20 @@ namespace Tetris
             {
                 StorePiece(t);
                 return false;
-            }
-           
+            }         
         }
 
 
         private void PlacePiece()
         {
+                //Check if piece stopped off screen
+                foreach(Coord c in CurrentPiece){
+                    if(c.y <= InitialPos.y)
+                    {
+                        //End Game
+                        return;
+                    }
+                }
                 //DeleteLines
                 DeleteCompleteLines();
                 //Switch Piece

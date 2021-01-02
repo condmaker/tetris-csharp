@@ -59,6 +59,14 @@ namespace Tetris
             }
         }
     
+        public IEnumerable<Coord> Rotated()
+        {
+            for(int i = 0; i < definition.Count; i++){
+                Coord t = definition[i];
+                yield return new Coord(-t.y,t.x) + position;
+            }
+        }
+
         public void Move(Dir dir)
         {          
             switch(dir)
