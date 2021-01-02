@@ -242,7 +242,7 @@ namespace Tetris
         {        
             foreach (Coord c in t)
             {
-                BoardMatrix[c.x, c.y].Clear();
+                BoardMatrix[c.x, c.y] = new Pixel();
             }
 
             if(IsMovementPossible(t, dir))
