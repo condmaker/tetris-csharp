@@ -88,13 +88,10 @@ namespace Tetris
                 //UI.TitleScreen(dir);
                 UI.UpdateScene(currentScene);
                 // reset direction
-                dir = Dir.None;
-                // check  and delete lines              
-                // update score
+                dir = Dir.None;              
                 // render
                 UI.Render();
-                // sleep         
-                Thread.Sleep(100);       
+                Thread.Sleep(130);
             }
 
             Finish(UI);

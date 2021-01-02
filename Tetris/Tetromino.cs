@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 
-/// <summary>
-/// Abstract class which represents a Tetromino piece
-/// </summary>
 namespace Tetris
 {
+    /// <summary>
+    /// Abstract class which represents a Tetromino piece
+    /// </summary>
     public abstract class Tetromino: GameObject, IEnumerable<Coord>
     {
         /// <summary>
@@ -53,13 +53,20 @@ namespace Tetris
         /// </summary>
         public virtual void Rotate()
         {
-            //Rotate bro
             for(int i = 0; i < definition.Count; i++){
                 Coord t = definition[i];
                 definition[i] = new Coord(-t.y,t.x);
             }
         }
     
+        public IEnumerable<Coord> Rotated()
+        {
+            for(int i = 0; i < definition.Count; i++){
+                Coord t = definition[i];
+                yield return new Coord(-t.y,t.x) + position;
+            }
+        }
+
         public void Move(Dir dir)
         {          
             switch(dir)
