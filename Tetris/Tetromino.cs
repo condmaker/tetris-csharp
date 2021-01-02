@@ -30,7 +30,7 @@ namespace Tetris
         /// </summary>
         /// <value>Collection of Coord occupied by the Tetromino, from its 
         /// position.</value>
-        protected IList<Coord> definition;
+        public IList<Coord> definition;
 
 
         public Tetromino(Coord initialPos)

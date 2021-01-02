@@ -23,8 +23,8 @@ namespace Tetris
         private IList<Tetromino> piecePool;
 
 
-        private Tetromino nextPiece;
-        public Tetromino currentPiece;
+        public Tetromino NextPiece { get; private set; }
+        public Tetromino CurrentPiece { get; private set; }
 
 
 
@@ -67,10 +67,10 @@ namespace Tetris
                 new TPiece(InitialPos)
             };
 
-            nextPiece = piecePool[5];
-            currentPiece = new Square(InitialPos);    
+            NextPiece = piecePool[5];
+            CurrentPiece = new Square(InitialPos);    
           
-            StorePiece(currentPiece);      
+            StorePiece(CurrentPiece);      
         }
         
         /// <summary>
@@ -263,20 +263,20 @@ namespace Tetris
         public override void Update(Dir input)
         {
 
-            if(!ChangePiecePos(currentPiece, input))
+            if(!ChangePiecePos(CurrentPiece, input))
             {
-                currentPiece = nextPiece;
-                nextPiece = piecePool[rnd.Next(0,7)];
-                currentPiece.ResetPos();
-                StorePiece(currentPiece); 
+                CurrentPiece = NextPiece;
+                NextPiece = piecePool[rnd.Next(0,7)];
+                CurrentPiece.ResetPos();
+                StorePiece(CurrentPiece); 
             }
             
-            if(!ChangePiecePos(currentPiece, Dir.Down))
+            if(!ChangePiecePos(CurrentPiece, Dir.Down))
             {
-                currentPiece = nextPiece;
-                nextPiece = piecePool[rnd.Next(0,7)];
-                currentPiece.ResetPos();
-                StorePiece(currentPiece); 
+                CurrentPiece = NextPiece;
+                NextPiece = piecePool[rnd.Next(0,7)];
+                CurrentPiece.ResetPos();
+                StorePiece(CurrentPiece); 
             }
             
             DeleteCompleteLines();
