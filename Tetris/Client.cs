@@ -97,7 +97,7 @@ namespace Tetris
                 // render
                 UI.Render();
                 // sleep         
-                Thread.Sleep(250);       
+                Thread.Sleep(550);       
             }
 
             Finish();

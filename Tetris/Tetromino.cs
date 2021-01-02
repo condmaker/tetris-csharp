@@ -60,19 +60,21 @@ namespace Tetris
     
         public void Move(Dir dir)
         {          
-            switch(dir){
+            switch(dir)
+            {
+                case Dir.Rot:
+                Rotate();
+                break;
                 case Dir.Left:
+                position = position + new Coord(dir);
                 break;
                 case Dir.Right:
+                position = position + new Coord(dir);
                 break;
                 case Dir.Down:
-                position = position + new Coord(0,2);
-                break;
-                default:
                 position = position + new Coord(0,1);
-                return;
+                break;
             }
-            position = position + new Coord(dir);
         }
 
         /// <summary>

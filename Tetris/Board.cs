@@ -88,7 +88,7 @@ namespace Tetris
                 return false;
             if (c.x >= Width)
                 return false;
-            if (c.y >= Height - 1)
+            if (c.y >= Height)
                 return false;
             return true;
         }
@@ -202,6 +202,13 @@ namespace Tetris
         public override void Update(Dir input)
         {
             if(!ChangePiecePos(currentPiece, input))
+            {
+                currentPiece = nextPiece;
+                nextPiece = piecePool[rnd.Next(0,7)];
+                currentPiece.ResetPos();
+                StorePiece(currentPiece); 
+            }
+            if(!ChangePiecePos(currentPiece, Dir.Down))
             {
                 currentPiece = nextPiece;
                 nextPiece = piecePool[rnd.Next(0,7)];
