@@ -62,13 +62,21 @@ namespace Tetris
         /// </summary>
         public virtual void Rotate()
         {
-            //Rotate bro
             for(int i = 0; i < definition.Count; i++){
                 Coord t = definition[i];
                 definition[i] = new Coord(-t.y,t.x);
             }
         }
     
+        
+        public IEnumerable<Coord> Rotated()
+        {
+            for(int i = 0; i < definition.Count; i++){
+                Coord t = definition[i];
+                yield return new Coord(-t.y,t.x) + position;
+            }
+        }
+
         /// <summary>
         /// Method responsible for moving the Tetromino in a given direction.
         /// </summary>
