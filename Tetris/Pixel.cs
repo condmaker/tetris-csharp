@@ -93,6 +93,5 @@ namespace Tetris
         {
             return Color.ToString();
         }
-
     }
 }

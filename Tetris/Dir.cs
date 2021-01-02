@@ -33,5 +33,5 @@ namespace Tetris
         /// Does nothing.
         /// </summary>
         None
-    };
+    }
 }

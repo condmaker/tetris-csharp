@@ -12,7 +12,7 @@ namespace Tetris
         public string Name {get; set; }
 
         /// <summary>
-        /// Property that defines the player's score.
+        /// Gets the property that defines the player's score.
         /// </summary>
         /// <value>The score.</value>
         public int Points { get; private set; }

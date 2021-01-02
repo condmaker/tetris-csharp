@@ -22,14 +22,12 @@ namespace Tetris
         private Random rnd = new Random();
 
 
-        private Coord InitialPos => new Coord(Width / 2 ,2);
+        private Coord InitialPos => new Coord(Width / 2, 2);
         private IList<Tetromino> piecePool;
 
 
         private Tetromino nextPiece;
         public Tetromino currentPiece;
-
-
 
         /// <summary>
         /// Instance variable that contains a reference to the bi-dimensional 
@@ -77,12 +75,12 @@ namespace Tetris
         }
         
         /// <summary>
-        /// Method that indicates if a given Coord <param name="c"> is inside
-        /// the limits of the board.
+        /// Method that indicates if a given Coord <paramref name="c"/> is 
+        /// inside the limits of the board.
         /// </summary>
         /// <param name="c">A Coord</param>
-        /// <returns><c>true</c> if the Coord <param name="c"> is within the 
-        /// limits of the board, <c>false</c> otherwise
+        /// <returns><c>true</c> if the Coord <paramref name="c"/> is within 
+        /// the limits of the board, <c>false</c> otherwise
         public bool IsInsideBounds(Coord c)
         {
             if (c.x < 0)
@@ -101,7 +99,7 @@ namespace Tetris
         /// </summary>
         /// <param name="c">Position on the board.</param>
         /// <returns><c>true</c> if an the board is free at position
-        /// <param name="c">, <c>false</c> otherwise.</returns>
+        /// <paramref name="c"/>, <c>false</c> otherwise.</returns>
         public bool IsTileFree(Coord c)
         {
             if(!IsInsideBounds(c))
@@ -113,7 +111,7 @@ namespace Tetris
         /// Method that indicates whether a given set of positions are free or 
         /// occupied.
         /// </summary>
-        /// <param name="position">Collection of positions.</param>
+        /// <param name="t">Collection of positions.</param>
         /// <returns><c>true</c> if any of the positions are occuiped, 
         /// <c>false</c> if all positions are free.</returns>
         private bool IsCollision(Tetromino t)
@@ -161,8 +159,8 @@ namespace Tetris
         }
 
         /// <summary>
-        /// Moves all lines above given line <param name="y"> one line down,
-        /// and cleats the top line.
+        /// Moves all lines above given line <paramref name="y"/> one line 
+        /// down, and cleats the top line.
         /// </summary>
         /// <param name="y">Line on board to be deleted.</param>
         public void DeleteLine(int y)
@@ -214,7 +212,7 @@ namespace Tetris
         }
      
         /// <summary>
-        /// Stores given Tetromino piece <param name="t"> in its current 
+        /// Stores given Tetromino piece <paramref name="t"/> in its current 
         /// position on the board.
         /// </summary>
         /// <param name="t">Tetromino Piece</param>

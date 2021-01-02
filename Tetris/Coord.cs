@@ -9,13 +9,13 @@ namespace Tetris
     public struct Coord
     {
         /// <summary>
-        /// Property that defines a horizontal position on the 'board'.
+        /// Gets the property that defines a horizontal position on the 'board'.
         /// </summary>
         /// <value>Aforementioned horizontal position.</value>
         public int x { get; }
 
         /// <summary>
-        /// Property that defines a vertical position on the 'board'.
+        /// Gets the property that defines a vertical position on the 'board'.
         /// </summary>
         /// <value>Aforementioned vertical position.</value>
         public int y { get; }
