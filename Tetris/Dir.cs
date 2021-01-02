@@ -7,6 +7,7 @@ namespace Tetris
         Left,
         Right,
         Enter,
+        Rot,
         None
     };
 }

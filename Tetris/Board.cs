@@ -16,14 +16,15 @@ namespace Tetris
         /// <value>Horizontal dimension of the board.</value>
         public int Width => BoardMatrix.GetLength(0);
 
+        private Random rnd = new Random();
 
 
-        private Coord InitialPos => new Coord(Width / 2 ,0);
+        private Coord InitialPos => new Coord(Width / 2 ,2);
         private IList<Tetromino> piecePool;
 
 
         private Tetromino nextPiece;
-        private Tetromino currentPiece;
+        public Tetromino currentPiece;
 
 
 
@@ -49,9 +50,10 @@ namespace Tetris
             {
                 for (int y = 0; y < h; y++)
                 {   
-                    BoardMatrix[x,y] = new Pixel();
+                    BoardMatrix[x,y] = new Pixel(ConsoleColor.Gray);
                 }  
             }
+
 
 
             piecePool = new List<Tetromino>
@@ -65,7 +67,7 @@ namespace Tetris
                 new TPiece(InitialPos)
             };
 
-            nextPiece = new LPiece(InitialPos);
+            nextPiece = piecePool[5];
             currentPiece = new Square(InitialPos);    
           
             StorePiece(currentPiece);      
@@ -80,11 +82,11 @@ namespace Tetris
         /// limits of the board, <c>false</c> otherwise
         public bool IsInsideBounds(Coord c)
         {
-            if (c.x < 1)
+            if (c.x < 0)
                 return false;
             if (c.y < 0)
                 return false;
-            if (c.x >= Width - 1)
+            if (c.x >= Width)
                 return false;
             if (c.y >= Height - 1)
                 return false;
@@ -101,7 +103,7 @@ namespace Tetris
         {
             if(!IsInsideBounds(c))
                 return false;
-            return (BoardMatrix[c.x, c.y] == new Pixel());
+            return (BoardMatrix[c.x, c.y] == new Pixel(ConsoleColor.Gray));
         }
 
         /// <summary>
@@ -199,10 +201,10 @@ namespace Tetris
         /// </summary>
         public override void Update(Dir input)
         {
-            if(!ChangePiecePos(currentPiece))
+            if(!ChangePiecePos(currentPiece, input))
             {
                 currentPiece = nextPiece;
-                nextPiece = piecePool[2];
+                nextPiece = piecePool[rnd.Next(0,7)];
                 currentPiece.ResetPos();
                 StorePiece(currentPiece); 
             }
@@ -238,16 +240,16 @@ namespace Tetris
 
 
         //Tou a ter um aneurisma
-        public bool ChangePiecePos(Tetromino t)
+        public bool ChangePiecePos(Tetromino t, Dir dir)
         {        
             foreach (Coord c in t)
             {
-                BoardMatrix[c.x, c.y] = new Pixel();
+                BoardMatrix[c.x, c.y].Clear();
             }
 
-            if(IsMovementPossible(t, Dir.Down))
+            if(IsMovementPossible(t, dir))
             {             
-                t.Move();
+                t.Move(dir);
                 StorePiece(t);
                 return true;
             }

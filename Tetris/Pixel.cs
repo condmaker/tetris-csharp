@@ -48,7 +48,7 @@ namespace Tetris
 
         public void Clear()
         {
-            Color = ConsoleColor.Black;
+            Color = ConsoleColor.Gray;
         }
     }
 }

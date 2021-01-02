@@ -45,8 +45,6 @@ namespace Tetris
         /// </summary>
         private Dir dir;
 
-        // TODO piece?
-
         /// <summary>
         /// Creates a new Client instance
         /// </summary>
@@ -99,7 +97,7 @@ namespace Tetris
                 // render
                 UI.Render();
                 // sleep         
-                Thread.Sleep(500);       
+                Thread.Sleep(250);       
             }
 
             Finish();
@@ -150,6 +148,9 @@ namespace Tetris
                     break;
                 case ConsoleKey.Enter:
                     dir = Dir.Enter;
+                    break;
+                case ConsoleKey.E:
+                    dir = Dir.Rot;
                     break;
                 case ConsoleKey.Escape:
                     running = false;

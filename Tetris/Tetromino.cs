@@ -58,9 +58,21 @@ namespace Tetris
             }
         }
     
-        public void Move()
-        {
-            position = position + new Coord(0,1);
+        public void Move(Dir dir)
+        {          
+            switch(dir){
+                case Dir.Left:
+                break;
+                case Dir.Right:
+                break;
+                case Dir.Down:
+                position = position + new Coord(0,2);
+                break;
+                default:
+                position = position + new Coord(0,1);
+                return;
+            }
+            position = position + new Coord(dir);
         }
 
         /// <summary>

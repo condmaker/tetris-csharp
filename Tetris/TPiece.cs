@@ -6,7 +6,7 @@ namespace Tetris
     {
         public TPiece(Coord pos): base(pos)
         {
-            sprite = new Pixel(System.ConsoleColor.Cyan);
+            sprite = new Pixel(System.ConsoleColor.Magenta);
             definition = new List<Coord>();
             definition.Add(new Coord(-1, 0));
             definition.Add(new Coord(0, 0));

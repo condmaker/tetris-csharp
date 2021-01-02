@@ -6,7 +6,7 @@ namespace Tetris
     {
         public ZPiece(Coord pos): base(pos)
         {
-
+            sprite = new Pixel(System.ConsoleColor.White);
             definition = new List<Coord>();
             definition.Add(new Coord(-1, 1));
             definition.Add(new Coord(0, 0));
