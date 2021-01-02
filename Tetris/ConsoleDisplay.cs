@@ -204,9 +204,9 @@ namespace Tetris
                 for (int y = 0; y < board.NextPiece.Definition.Count; y++)
                 {
                     screen[((screen.xDim / 2) - board.Width) + a + 
-                        board.NextPiece.Definition[y].x, (
+                        board.NextPiece.Definition[y].X, (
                             (screen.yDim / 2) - (board.Height / 2)) 
-                                + board.NextPiece.Definition[y].y] 
+                                + board.NextPiece.Definition[y].Y] 
                                     = board.NextPiece.sprite;
                 }
 
@@ -237,8 +237,6 @@ namespace Tetris
                     case false:
                         TitleScreen(Dir.Down);
                         break;
-                    default:
-                        break;
                 }
             }
             else if (scene is Tutorial)
@@ -250,6 +248,7 @@ namespace Tetris
                 {
                     for (int y = 0; y < screen.yDim; y++)
                         screen[x, y] = new Pixel(ConsoleColor.Black);
+                }
 
                 Console.SetCursorPosition((screen.xDim / 2) - 9
                     , (screen.yDim / 2) - 6);
@@ -291,7 +290,8 @@ namespace Tetris
 
         public void Finish()
         {
-            for (int x = 0; x < screen.xDim; x++){
+            for (int x = 0; x < screen.xDim; x++)
+            {
                 for (int y = 0; y < screen.yDim; y++)
                         screen[x, y] = new Pixel(ConsoleColor.Black);
             }
