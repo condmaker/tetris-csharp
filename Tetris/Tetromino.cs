@@ -13,7 +13,7 @@ namespace Tetris
         /// Property which represents the color of the Tetromino piece.
         /// </summary>
         /// <value>Tetromino piece's color.</value>
-        public ConsoleColor Color { get; private set;}
+        public Pixel sprite { get; protected set;}
 
         /// <summary>
         /// Instance variable which represents the current position of the 
@@ -34,13 +34,18 @@ namespace Tetris
         /// Method responsible for rotating the Tetromino piece by 90 degrees 
         /// clockwise.
         /// </summary>
-        protected virtual void Rotate()
+        public virtual void Rotate()
         {
             //Rotate bro
             for(int i = 0; i < definition.Count; i++){
                 Coord t = definition[i];
                 definition[i] = new Coord(-t.y,t.x);
             }
+        }
+
+        
+        public void Move(){
+            position = position + new Coord(0,1);
         }
 
         /// <summary>
@@ -75,6 +80,10 @@ namespace Tetris
             return str;
         }
 
+        public override void Update(Dir input)
+        {
+            
+        }
 
     }
 }

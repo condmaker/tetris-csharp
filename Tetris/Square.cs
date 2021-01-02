@@ -6,17 +6,13 @@ namespace Tetris
     {
         public Square(Coord pos)
         {
+            sprite = new Pixel(System.ConsoleColor.Blue);
             position = pos;
             definition = new List<Coord>();
             definition.Add(new Coord(0, 0));
             definition.Add(new Coord(0, 1));
             definition.Add(new Coord(1, 0));
             definition.Add(new Coord(1, 1));
-        }
-
-        public override void Update()
-        {
-
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Tetris
         Down,
         Left,
         Right,
+        Enter,
         None
     };
 }

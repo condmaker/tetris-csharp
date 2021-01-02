@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Tetris
 {
-    public class Board: GameObject
+    public class Board: Scene
     {
         /// <summary>
         /// Property that represents the vertical dimension of the board.
@@ -15,6 +15,9 @@ namespace Tetris
         /// </summary>
         /// <value>Horizontal dimension of the board.</value>
         public int Width => BoardMatrix.GetLength(0);
+
+
+        private Tetromino currentPiece;
 
         /// <summary>
         /// Instance variable that contains a reference to the bi-dimensional 
@@ -29,10 +32,19 @@ namespace Tetris
         /// <param name="h">Vertical dimensions.</param>
         public Board(int w = 10, int h = 20)
         {
+            scenes = new Scene[1];
+            sceneChange = false;
+
             BoardMatrix = new Pixel[w, h];
+
             for (int x = 0; x < w; x++)
                 for (int y = 0; y < h; y++)
-                    BoardMatrix[x,y].Clear();
+                {   
+                    BoardMatrix[x,y] = new Pixel();
+                }  
+
+            currentPiece = new Square(new Coord(3,3));    
+            StorePiece(currentPiece);      
         }
         
         /// <summary>
@@ -65,7 +77,7 @@ namespace Tetris
         {
             if(!IsInsideBounds(c))
                 return false;
-            return (BoardMatrix[c.x, c.y].Color == ConsoleColor.Black);
+            return (BoardMatrix[c.x, c.y] == new Pixel());
         }
 
         /// <summary>
@@ -75,14 +87,16 @@ namespace Tetris
         /// <param name="position">Collection of positions.</param>
         /// <returns><c>true</c> if any of the positions are occuiped, 
         /// <c>false</c> if all positions are free.</returns>
-        public bool IsCollision(ICollection<Coord> position)
+        private bool IsCollision(Tetromino t)
         {
-            foreach(Coord c in position)
+            foreach(Coord c in t)
             {
-                if(!IsTileFree(c))
+                if(IsTileFree(c))
+                    return true;
+                if(c.y >= Height - 1)
                     return true;
             }
-
+           
             return false;
         }
 
@@ -133,7 +147,7 @@ namespace Tetris
             
             // clear top row
             for (int x = 0; x < Width; x++)
-                BoardMatrix[x, 0].Clear();
+                BoardMatrix[x, 0] = new Pixel();
         }
 
         /// <summary>
@@ -161,9 +175,12 @@ namespace Tetris
         /// <summary>
         /// Update method to be called every frame.
         /// </summary>
-        public override void Update()
+        public override void Update(Dir input)
         {
+            ChangePiecePos(currentPiece);
 
+            if (input == Dir.Enter)
+                sceneChange = true;
         }    
         
         /// <summary>
@@ -174,9 +191,37 @@ namespace Tetris
         public void StorePiece(Tetromino t)
         {
             foreach (Coord c in t)
+                BoardMatrix[c.x, c.y] = t.sprite;
+
+        }
+
+        public override Scene UpdateScene()
+        {
+            // Not implemented yet
+            if (sceneChange)
             {
-                BoardMatrix[c.x, c.y].Color = t.Color;
+                sceneChange = false;
+                return scenes[0];
             }
+
+            return this;
+        }
+
+
+        //Tou a ter um aneurisma
+        public bool ChangePiecePos(Tetromino t)
+        {        
+            if(!IsCollision(t))
+            {
+                foreach (Coord c in t)
+                {
+                    BoardMatrix[c.x, c.y] = new Pixel();
+                }
+                t.Move();
+                StorePiece(t);
+                return true;
+            }
+            return false;
         }
 
     }

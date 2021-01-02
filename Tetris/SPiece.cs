@@ -1,18 +1,17 @@
-using System;
 using System.Collections.Generic;
 
 namespace Tetris
 {
-    public class Hero: Tetromino
+    public class SPiece : Tetromino
     {
-        public Hero(Coord pos)
+        public SPiece(Coord pos)
         {
             position = pos;
             definition = new List<Coord>();
-            definition.Add(new Coord(0, -1));
+            definition.Add(new Coord(-1, 0));
             definition.Add(new Coord(0, 0));
             definition.Add(new Coord(0, 1));
-            definition.Add(new Coord(0, 2));
+            definition.Add(new Coord(1, 1));
         }
     }
 }

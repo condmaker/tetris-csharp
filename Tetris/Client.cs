@@ -24,10 +24,15 @@ namespace Tetris
         /// </summary>
         private ConsoleKey inputKey;
 
+
+        /// The 3 scenes.
+        private Scene currentScene;
         /// <summary>
         /// Instance variable of the game board.
         /// </summary>
         private Board board;
+        private TitleScreen title;
+        private Tutorial tutorial;
 
         /// <summary>
         /// Instance variable for the Thread responsible for reading the user 
@@ -49,7 +54,16 @@ namespace Tetris
         {
             inputThread = new Thread(ReadKey);
             inputLock = new Object();
+            
+            title = new TitleScreen();
             board = new Board();
+            tutorial = new Tutorial();
+
+            title.SetScenes(new Scene[] {board, tutorial});
+            board.SetScenes(title);
+            tutorial.SetScenes(title);
+
+            currentScene = title;
 
             Console.CursorVisible = false;
             Console.Clear();
@@ -63,29 +77,28 @@ namespace Tetris
         {
             IDisplay UI = new ConsoleDisplay();
             running = true;
+
+
+
             inputThread.Start();
 
             while(running)
             {
                 // read direction
-                ProcessInput();                
+                ProcessInput();   
                 // update piece
+                currentScene.Update(dir);
+                currentScene = currentScene.UpdateScene();
                 //UI.TitleScreen(dir);
-                UI.UpdateBoard(board);
+                UI.UpdateScene(currentScene);
                 // reset direction
                 dir = Dir.None;
                 // check  and delete lines
-                board.DeleteCompleteLines();
+                //board.DeleteCompleteLines();
                 // update score
                 // render
                 UI.Render();
-                // sleep
-                
-                while(dir != Dir.Down)
-                {
-                    Console.WriteLine(dir);
-                }
-
+                // sleep                
             }
 
             Finish();
@@ -118,6 +131,7 @@ namespace Tetris
             lock(inputLock)
             {
                 key = inputKey;
+                inputKey = ConsoleKey.NoName;
             }
             switch(key)
             {
@@ -133,6 +147,9 @@ namespace Tetris
                 case ConsoleKey.D:
                     dir = Dir.Right;
                     break;
+                case ConsoleKey.Enter:
+                    dir = Dir.Enter;
+                    break;
                 case ConsoleKey.Escape:
                     running = false;
                     break;
@@ -140,6 +157,8 @@ namespace Tetris
                     dir = Dir.None;
                     break;
             }
+
+            
         }
 
         /// <summary>
