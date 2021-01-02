@@ -63,8 +63,6 @@ namespace Tetris
 
             currentScene = title;
 
-            Console.CursorVisible = false;
-            Console.Clear();
             board = new Board();
         }
 
@@ -96,10 +94,10 @@ namespace Tetris
                 // render
                 UI.Render();
                 // sleep         
-                Thread.Sleep(550);       
+                Thread.Sleep(100);       
             }
 
-            Finish();
+            Finish(UI);
         }
 
         /// <summary>
@@ -165,10 +163,10 @@ namespace Tetris
         /// <summary>
         /// Method responsible for cleanup before the program ends.
         /// </summary>
-        private void Finish()
+        private void Finish(IDisplay UI)
         {
             inputThread.Join();
-            Console.CursorVisible = true;
+            UI.Finish();
         }
 
 

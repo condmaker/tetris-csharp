@@ -32,6 +32,8 @@ namespace Tetris
         /// position.</value>
         protected IList<Coord> definition;
 
+        public IList<Coord> Definition { get => definition; }
+
 
         /// <summary>
         /// Constructor. Creates a new instance with the given initial 
