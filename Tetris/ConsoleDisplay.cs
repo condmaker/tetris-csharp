@@ -202,13 +202,13 @@ namespace Tetris
 
                 a += 4;
 
-                for (int x = 0; x < board.NextPiece.definition.Count; x++)
-                    for (int y = 0; y < board.NextPiece.definition.Count; y++)
+                for (int x = 0; x < board.NextPiece.Definition.Count; x++)
+                    for (int y = 0; y < board.NextPiece.Definition.Count; y++)
                     {
                         screen[((screen.xDim / 2) - board.Width) + a + 
-                            board.NextPiece.definition[x].x, (
+                            board.NextPiece.Definition[x].x, (
                                 (screen.yDim / 2) - (board.Height / 2)) 
-                                    + board.NextPiece.definition[y].y] 
+                                    + board.NextPiece.Definition[y].y] 
                                         = board.NextPiece.sprite;
                     }
 
