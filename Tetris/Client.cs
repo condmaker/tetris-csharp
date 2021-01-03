@@ -147,7 +147,6 @@ namespace Tetris
             {
                 Console.SetCursorPosition(0, 0);
                 Console.BackgroundColor = ConsoleColor.Black;
-                Console.Write((int)Math.Ceiling(gameDifSpeed));
 
                 // read direction
                 ProcessInput(); 
@@ -218,6 +217,10 @@ namespace Tetris
 
                 if (gameDifSpeed > maxGameDifSpeed && currentScene is Board)
                     gameDifSpeed -= gameDifficultyAccel;
+
+                if (currentScene is Board)
+                    if (!(currentScene as Board).GameState)
+                        gameDifSpeed = initialGameDifSpeed;
 
                 Thread.Sleep((int)Math.Ceiling(gameDifSpeed));
             }
