@@ -66,7 +66,7 @@ namespace Tetris
             }
         }
         
-        public IEnumerable<Coord> Rotated()
+        public virtual IEnumerable<Coord> Rotated()
         {
             for (int i = 0; i < Definition.Count; i++)
             {
@@ -126,8 +126,6 @@ namespace Tetris
         /// </summary>
         /// <param name="input">Direction to move Tetromino.</param>
         public override void Update(Dir input) 
-        {
-            return;
-        }
+        { }
     }
 }
