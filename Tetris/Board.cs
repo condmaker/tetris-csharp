@@ -8,11 +8,23 @@ namespace Tetris
     /// </summary>
     public class Board : Scene
     {
+        /// <summary>
+        /// Constant that defines the board's background color.
+        /// </summary>
         private const ConsoleColor BgColor = ConsoleColor.Gray;
 
+        /// <summary>
+        /// Readonly Collection that contains the pool of available pieces.
+        /// </summary>
         private readonly IList<Tetromino> piecePool;
 
+        /// <summary>
+        /// Readonly random number generator.
+        /// </summary>
+        /// <returns></returns>
         private readonly Random rnd = new Random();
+
+        private int lastRandom;
 
         /// <summary>
         /// Property that represents the vertical dimension of the board.
@@ -26,11 +38,25 @@ namespace Tetris
         /// <value>Horizontal dimension of the board.</value>
         public int Width => BoardMatrix.GetLength(0);
 
+        /// <summary>
+        /// Instance variable that controls the current game's score.
+        /// </summary>
         public Score score;
-
+        
         private Coord InitialPos => new Coord(Width / 2, 2);
 
+        /// <summary>
+        /// Instance variable that contains a reference to the current falling 
+        /// piece.
+        /// </summary>
+        /// <value>The current falling piece.</value>
         public Tetromino NextPiece { get; private set; }
+        
+        /// <summary>
+        /// Instance variable that contains a reference to the next falling 
+        /// piece.
+        /// </summary>
+        /// <value>The next falling piece.</value>
         public Tetromino CurrentPiece { get; private set; }
 
         /// <summary>
@@ -49,6 +75,7 @@ namespace Tetris
             scenes = new Scene[1];
             sceneChange = false;
             score = new Score();
+            lastRandom = -1;
 
             BoardMatrix = new Pixel[w, h];
 
@@ -71,10 +98,23 @@ namespace Tetris
                 new TPiece(InitialPos),
             };
 
-            NextPiece = piecePool[5];
-            CurrentPiece = new SquarePiece(InitialPos);    
+            NextPiece = piecePool[GetRandomPiece()];
+            CurrentPiece = piecePool[GetRandomPiece()];    
           
             StorePiece(CurrentPiece);      
+        }
+
+        private int GetRandomPiece()
+        {
+            int rng;
+            do 
+            {
+                rng =  rnd.Next(0, piecePool.Count);
+            } while (rng == lastRandom);
+
+            lastRandom = rng;
+
+            return rng;
         }
         
         /// <summary>
@@ -309,7 +349,7 @@ namespace Tetris
 
                 // Switch Piece
                 CurrentPiece = NextPiece;
-                NextPiece = piecePool[rnd.Next(0, 7)];
+                NextPiece = piecePool[GetRandomPiece()];
                 CurrentPiece.ResetPos();
                 StorePiece(CurrentPiece);  
         }
