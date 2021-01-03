@@ -42,6 +42,15 @@ namespace Tetris
             Array.Clear(next, 0, XDim * YDim);
         }
 
+        public void ClearScreen()
+        {
+            for (int x = 0; x < XDim; x++)
+                {
+                    for (int y = 0; y < YDim; y++)
+                        this[x, y] = new Pixel(ConsoleColor.Black);
+                }
+        }
+
         public void PrintToScreen()
         {
             Console.BackgroundColor = defaultBg;

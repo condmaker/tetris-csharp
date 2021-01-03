@@ -38,10 +38,16 @@ namespace Tetris
         /// <value>Horizontal dimension of the board.</value>
         public int Width => BoardMatrix.GetLength(0);
 
+        private Score score;
         /// <summary>
-        /// Instance variable that controls the current game's score.
+        /// Instance property that controls the current game's score.
         /// </summary>
-        public Score score;
+        public Score Score { get => score; }
+
+        /// <summary>
+        /// A boolean that defines if the game is running or not.
+        /// </summary>
+        public bool GameState { get; private set; }
         
         private Coord InitialPos => new Coord(Width / 2, 2);
 
@@ -75,6 +81,8 @@ namespace Tetris
             scenes = new Scene[1];
             sceneChange = false;
             score = new Score();
+            score.Name = "Player";
+            GameState = true;
             lastRandom = -1;
 
             BoardMatrix = new Pixel[w, h];
@@ -280,7 +288,6 @@ namespace Tetris
 
         public override Scene UpdateScene()
         {
-            // Not implemented yet
             if (sceneChange)
             {
                 sceneChange = false;
@@ -336,7 +343,7 @@ namespace Tetris
                 {
                     if (c.Y <= InitialPos.Y)
                     {
-                        // End Game
+                        GameState = false;
                         return;
                     }
                 }
