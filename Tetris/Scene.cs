@@ -11,6 +11,7 @@ namespace Tetris
         /// An array of scenes that this scene can access.
         /// </summary>
         protected Scene[] scenes;
+        
         /// <summary>
         /// A bool defining if the scene needs to be changed or not.
         /// </summary>

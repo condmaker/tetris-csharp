@@ -134,11 +134,11 @@ namespace Tetris
 
         /// <summary>
         /// Deletes every line of the board, reseting it to its 
-        /// original state
+        /// original state.
         /// </summary>
         public void ClearBoard()
         {
-            for(int y = 0; y < Height; y++)
+            for (int y = 0; y < Height; y++)
             {
                 DeleteLine(y);
             }
@@ -327,6 +327,11 @@ namespace Tetris
                 BoardMatrix[c.X, c.Y] = t.Sprite;
         }
 
+        /// <summary>
+        /// Updates the state of the board. If the game ends of the player
+        /// returns, it cleans it.
+        /// </summary>
+        /// <returns>Another scene or itself.</returns>
         public override Scene UpdateScene()
         {
             if (sceneChange)
@@ -396,6 +401,7 @@ namespace Tetris
         private void PlacePiece()
         {
                 // Check if piece stopped off screen
+
                 foreach (Coord c in CurrentPiece)
                 {
                     if (c.Y <= InitialPos.Y)

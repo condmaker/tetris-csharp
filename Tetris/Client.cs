@@ -49,12 +49,12 @@ namespace Tetris
         /// <summary>
         /// Instance variable to control access to critical sections.
         /// </summary>
-        private readonly object InputLock;
+        private readonly object inputLock;
 
         /// <summary>
         /// Instance variable to control access to critical sections.
         /// </summary>
-        private readonly object FallTimerLock;
+        private readonly object fallTimerLock;
 
         /// <summary>
         /// Instance variable that controls if the game is running or ends.
@@ -87,17 +87,17 @@ namespace Tetris
         /// <summary>
         /// Instance variable of the game scene.
         /// </summary>
-        private Board board;
+        private readonly Board board;
 
         /// <summary>
         /// Instance variable of the title scene.
         /// </summary>
-        private TitleScreen title;
+        private readonly TitleScreen title;
 
         /// <summary>
         /// Instance variable of the tutorial scene.
         /// </summary>
-        private Tutorial tutorial;
+        private readonly Tutorial tutorial;
 
         /// <summary>
         /// Instance variable which stores Direction of movement.
@@ -113,8 +113,8 @@ namespace Tetris
             inputThread = new Thread(ReadKey);
             fallTimerThread = new Thread(FallTimer);
 
-            InputLock = new object();
-            FallTimerLock = new object();
+            inputLock = new object();
+            fallTimerLock = new object();
             
             title = new TitleScreen();
             board = new Board();
@@ -152,7 +152,7 @@ namespace Tetris
                 ProcessInput(); 
 
                 // move piece down
-                lock (FallTimerLock)
+                lock (fallTimerLock)
                 {
                     if (isFallFrame && currentScene is Board)
                     {
@@ -188,7 +188,7 @@ namespace Tetris
             do
             {
                 ck = Console.ReadKey(true).Key;
-                lock (InputLock)
+                lock (inputLock)
                 {
                     inputKey = ck;
                 }
@@ -210,7 +210,7 @@ namespace Tetris
         {
             while (running)
             {
-                lock (FallTimerLock)
+                lock (fallTimerLock)
                 {
                     isFallFrame = true;
                 }
@@ -218,8 +218,8 @@ namespace Tetris
                 if (gameDifSpeed > maxGameDifSpeed && currentScene is Board)
                     gameDifSpeed -= gameDifficultyAccel;
 
-                if (currentScene is Board)
-                    if (!(currentScene as Board).GameState)
+                if ((currentScene is Board) 
+                    && (!(currentScene as Board).GameState))
                         gameDifSpeed = initialGameDifSpeed;
 
                 Thread.Sleep((int)Math.Ceiling(gameDifSpeed));
@@ -233,7 +233,7 @@ namespace Tetris
         private void ProcessInput()
         {
             ConsoleKey key;
-            lock (InputLock)
+            lock (inputLock)
             {
                 key = inputKey;
                 inputKey = ConsoleKey.NoName;

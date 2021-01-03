@@ -199,8 +199,8 @@ namespace Tetris
                 short a = 0;
 
                 short scoreLength 
-                    = (short) Math.Floor(Math.Log10(board.Score.Points) + 1);
-                short playerLength = (short) board.Score.Name.Length;
+                    = (short)Math.Floor(Math.Log10(board.Score.Points) + 1);
+                short playerLength = (short)board.Score.Name.Length;
 
                 string scoreString = board.Score.Points.ToString();
 
@@ -212,20 +212,20 @@ namespace Tetris
 
                     for (int i = 0; i < playerLength; i++)
                     {
-                        screen[((screen.XDim / 2) - (playerLength / 2) + i),
-                            (screen.YDim / 2)] 
+                        screen[(screen.XDim / 2 - playerLength / 2 + i),
+                            screen.YDim / 2] 
                                 = new Pixel(c: board.Score.Name[i]);
                     }
 
                     if (board.Score.Points == 0)
                     {
-                        screen[(screen.XDim / 2), (screen.YDim / 2) + 1] 
+                        screen[screen.XDim / 2, (screen.YDim / 2) + 1] 
                             = new Pixel(c: '0');
                     }
 
                     for (int h = 0; h < scoreLength; h++)
                     {
-                        screen[((screen.XDim / 2) - (scoreLength / 2) + h),
+                        screen[(screen.XDim / 2 - scoreLength / 2 + h),
                             (screen.YDim / 2) + 1] 
                                 = new Pixel(c: scoreString[h]);
                     }
@@ -237,13 +237,13 @@ namespace Tetris
                 {
                     for (int y = 0; y < board.Height; y++)
                     {
-                        screen[((screen.XDim / 2) - board.Width) + a, (
-                            (screen.YDim / 2) - (board.Height / 2)) + y]
-                                = board.BoardMatrix[x, y];
+                        screen[((screen.XDim / 2) - board.Width) + a,
+                            ((screen.YDim / 2) - (board.Height / 2)) + y]
+                            = board.BoardMatrix[x, y];
 
-                        screen[((screen.XDim / 2) - board.Width) + a + 1, (
-                            (screen.YDim / 2) - (board.Height / 2)) + y] 
-                                = board.BoardMatrix[x, y];
+                        screen[((screen.XDim / 2) - board.Width) + a + 1, 
+                            ((screen.YDim / 2) - (board.Height / 2)) + y] 
+                            = board.BoardMatrix[x, y];
                     }
 
                     a += 2;
@@ -254,10 +254,10 @@ namespace Tetris
                 for (int y = 0; y < board.NextPiece.Definition.Count; y++)
                 {
                     screen[((screen.XDim / 2) - board.Width) + a + 
-                        board.NextPiece.Definition[y].X, (
-                            (screen.YDim / 2) - (board.Height / 2)) 
-                                + board.NextPiece.Definition[y].Y] 
-                                    = board.NextPiece.Sprite;
+                        board.NextPiece.Definition[y].X, 
+                        ((screen.YDim / 2) - (board.Height / 2)) 
+                        + board.NextPiece.Definition[y].Y] 
+                        = board.NextPiece.Sprite;
                 }
 
                 a += 4;
@@ -308,6 +308,7 @@ namespace Tetris
                 }
                   
             }
+
             else if (scene is TitleScreen)
             {
                 TitleScreen titleScreen;
@@ -516,9 +517,9 @@ namespace Tetris
                 ConsoleColor.DarkGreen);
             screen[(screen.XDim / 2) - 1, 8] = new Pixel(
                 ConsoleColor.DarkGreen);
-            screen[(screen.XDim / 2), 4] = new Pixel(ConsoleColor.Green);
-            screen[(screen.XDim / 2), 6] = new Pixel(ConsoleColor.DarkGreen);
-            screen[(screen.XDim / 2), 8] = new Pixel(ConsoleColor.DarkGreen);
+            screen[screen.XDim / 2, 4] = new Pixel(ConsoleColor.Green);
+            screen[screen.XDim / 2, 6] = new Pixel(ConsoleColor.DarkGreen);
+            screen[screen.XDim / 2, 8] = new Pixel(ConsoleColor.DarkGreen);
 
             // O
             screen[(screen.XDim / 2) + 2, 4] = new Pixel(ConsoleColor.Blue);
@@ -590,7 +591,7 @@ namespace Tetris
         }
 
         /// <summary>
-        /// Renders the current image on the buffer.
+        /// Renders the current image on the screen.
         /// </summary>
         public void Render()
         {

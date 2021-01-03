@@ -66,6 +66,11 @@ namespace Tetris
             }
         }
         
+        /// <summary>
+        /// An IEnumerable of coordinates with the possible positions of the
+        /// piece when rotated.
+        /// </summary>
+        /// <returns>A coordinate with the possible rotation.</returns>
         public virtual IEnumerable<Coord> Rotated()
         {
             for (int i = 0; i < Definition.Count; i++)

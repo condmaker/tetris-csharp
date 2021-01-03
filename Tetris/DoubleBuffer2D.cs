@@ -13,14 +13,15 @@ namespace Tetris
         private Pixel[,] next;
 
         /// <summary>
-        /// The number of X positions on the screen (length)
+        /// The number of X positions on the screen (length).
         /// </summary>
-        /// <returns>The length of the screen</returns>
+        /// <returns>The length of the screen.</returns>
         public int XDim => current.GetLength(0);
+        
         /// <summary>
-        /// The number of Y positions on the screen (height)
+        /// The number of Y positions on the screen (height).
         /// </summary>
-        /// <returns>The height of the screen</returns>
+        /// <returns>The height of the screen.</returns>
         public int YDim => current.GetLength(1);
 
         /// <summary>
@@ -49,7 +50,8 @@ namespace Tetris
         /// An indexer that gets pixels from the current buffer, and writes
         /// pixels to the next.
         /// </summary>
-        /// <value>The value to be written on the next buffer.</value>
+        /// <param name="x">The x position of the buffer.</param>
+        /// <param name="y">The y position of the buffer.</param>
         public Pixel this[int x, int y] 
         {
             get => current[x, y];
