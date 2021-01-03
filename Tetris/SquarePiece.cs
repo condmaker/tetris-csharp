@@ -20,5 +20,19 @@ namespace Tetris
             Definition.Add(new Coord(1, 0));
             Definition.Add(new Coord(1, 1));
         }
+
+        public override void Rotate()
+        {
+            return;
+        }
+
+        public IEnumerable<Coord> Rotated()
+        {
+            for (int i = 0; i < Definition.Count; i++)
+            {
+                Coord t = Definition[i];
+                yield return t + position;
+            }
+        }
     }
 }

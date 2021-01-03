@@ -14,21 +14,29 @@ namespace Tetris
         /// </summary>
         private readonly Thread inputThread;
 
+        private readonly Thread FallTimerThread;
+
         /// <summary>
         /// Readonly variable that defines the game speed.
         /// <remarks>Bigger values are slower.</remarks>
         /// </summary>
-        private readonly int GameSpeed = 300;
+        private readonly int GameSpeed = 130;
 
         /// <summary>
         /// Instance variable that controls if the game is running or ends.
         /// </summary>
         private bool running;
 
+        private int gameDifSpeed;
+
         /// <summary>
         /// Instance variable to control access to critical sections.
         /// </summary>
-        private object inputLock; 
+        private object inputLock;
+
+        private object fallTimerLock;
+
+        private bool isFallFrame;
 
         /// <summary>
         /// Instance variable which stores the last key pressed by the user 
@@ -57,7 +65,10 @@ namespace Tetris
         public Client()
         {
             inputThread = new Thread(ReadKey);
+            FallTimerThread = new Thread(FallTimer);
+
             inputLock = new object();
+            fallTimerLock = new object();
             
             title = new TitleScreen();
             board = new Board();
@@ -70,6 +81,9 @@ namespace Tetris
             currentScene = title;
 
             board = new Board();
+
+            gameDifSpeed = 300;
+            isFallFrame = false;
         }
 
         /// <summary>
@@ -81,11 +95,22 @@ namespace Tetris
             running = true;
 
             inputThread.Start();
+            FallTimerThread.Start();
 
             while (running)
             {
                 // read direction
                 ProcessInput(); 
+
+                // move piece down
+                lock (fallTimerLock)
+                {
+                    if (isFallFrame)
+                    {
+                        FallPiece();
+                        isFallFrame = false;
+                    }   
+                }
                 
                 // update piece
                 currentScene.Update(dir);
@@ -93,7 +118,7 @@ namespace Tetris
 
                 // UI.TitleScreen(dir);
                 ui.UpdateScene(currentScene);
-
+                
                 // reset direction
                 dir = Dir.None;   
                 
@@ -120,6 +145,25 @@ namespace Tetris
                     inputKey = ck;
                 }
             } while (ck != ConsoleKey.Escape);
+        }
+
+        private void FallPiece()
+        {
+            if (currentScene is Board)
+                currentScene.Update(Dir.Down);   
+        }
+
+        private void FallTimer()
+        {
+            while(running)
+            {
+                lock (fallTimerLock)
+                {
+                    isFallFrame = true;
+                }
+                Thread.Sleep(gameDifSpeed);
+            }
+            
         }
 
         /// <summary>
@@ -170,6 +214,7 @@ namespace Tetris
         private void Finish(IDisplay ui)
         {
             inputThread.Join();
+            FallTimerThread.Join();
             ui.Finish();
         }
     }

@@ -306,12 +306,15 @@ namespace Tetris
         /// <param name="input">Direction of movement.</param>
         public override void Update(Dir input)
         {
-            ChangePiecePos(CurrentPiece, input);
- 
-            if (!ChangePiecePos(CurrentPiece, Dir.Down))
-            {
+            bool place = ChangePiecePos(CurrentPiece, input);
+
+            if (!place && input == Dir.Down)
                 PlacePiece();
-            }
+ 
+            // if (!ChangePiecePos(CurrentPiece, Dir.Down))
+            // {
+            //     PlacePiece();
+            // }
             
             if (input == Dir.Enter)
                 sceneChange = true;

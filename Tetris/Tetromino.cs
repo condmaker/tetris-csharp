@@ -22,7 +22,7 @@ namespace Tetris
         /// Tetromino piece.
         /// </summary>
         /// <value>Tetromino piece's current position.</value>
-        private Coord position;
+        protected Coord position;
     
         /// <summary>
         /// Instance variable which represents the different positions the 
