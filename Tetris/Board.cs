@@ -6,11 +6,13 @@ namespace Tetris
     /// <summary>
     /// Class that defines the game board.
     /// </summary>
-    public class Board: Scene
+    public class Board : Scene
     {
-        private const ConsoleColor bgColor = ConsoleColor.Gray;
+        private const ConsoleColor BgColor = ConsoleColor.Gray;
 
         private readonly IList<Tetromino> piecePool;
+
+        private readonly Random rnd = new Random();
 
         /// <summary>
         /// Property that represents the vertical dimension of the board.
@@ -23,8 +25,6 @@ namespace Tetris
         /// </summary>
         /// <value>Horizontal dimension of the board.</value>
         public int Width => BoardMatrix.GetLength(0);
-
-        private Random rnd = new Random();
 
         private Coord InitialPos => new Coord(Width / 2, 2);
 
@@ -53,11 +53,9 @@ namespace Tetris
             {
                 for (int y = 0; y < h; y++)
                 {   
-                    BoardMatrix[x, y] = new Pixel(bgColor);
+                    BoardMatrix[x, y] = new Pixel(BgColor);
                 }  
             }
-
-
 
             piecePool = new List<Tetromino>
             {
@@ -105,9 +103,9 @@ namespace Tetris
         /// <paramref name="c"/>, <c>false</c> otherwise.</returns>
         public bool IsTileFree(Coord c)
         {
-            if(!IsInsideBounds(c))
+            if (!IsInsideBounds(c))
                 return false;
-            return BoardMatrix[c.X, c.Y] == new Pixel(bgColor);
+            return BoardMatrix[c.X, c.Y] == new Pixel(BgColor);
         }
 
         /// <summary>
@@ -119,9 +117,9 @@ namespace Tetris
         /// <c>false</c> if all positions are free.</returns>
         private bool IsCollision(Tetromino t)
         {
-            foreach(Coord c in t)
+            foreach (Coord c in t)
             {
-                if(!IsTileFree(c))
+                if (!IsTileFree(c))
                     return true;
             }
            
@@ -139,12 +137,13 @@ namespace Tetris
         public bool IsMovementPossible(Tetromino t, Dir d)
         {
             Coord move = new Coord(d);
-            foreach(Coord c in t)
+            foreach (Coord c in t)
             {
                 Coord newCoord = c + move;
                 if (!IsTileFree(newCoord))
                     return false;
             }
+
             return true;
         }
 
@@ -158,9 +157,9 @@ namespace Tetris
         {
             bool canRot = true;
 
-            foreach(Coord c in t.Rotated())
+            foreach (Coord c in t.Rotated())
             {
-                if(!IsTileFree(c))
+                if (!IsTileFree(c))
                 {
                     canRot = false;
                 }
@@ -183,12 +182,11 @@ namespace Tetris
              {
                 for (int x = 0; x < Width; x++)
                                     BoardMatrix[x, y] = BoardMatrix[x, y - 1];
-            }
-                
+            }                
             
             // clear top row
             for (int x = 0; x < Width; x++)
-                BoardMatrix[x, 0] = new Pixel(bgColor);
+                BoardMatrix[x, 0] = new Pixel(BgColor);
         }
 
         /// <summary>
@@ -216,12 +214,13 @@ namespace Tetris
                 }
 
                 // if whole line is occupied, delete this line    
-                if(isComplete)
+                if (isComplete)
                 {
                     DeleteLine(y);
                     clearedLines++;
                 }
             }
+
             return clearedLines;
         }
      
@@ -248,17 +247,16 @@ namespace Tetris
             return this;
         }
 
-        //Tou a ter um aneurisma
         public bool ChangePiecePos(Tetromino t, Dir dir)
         {        
             foreach (Coord c in t)
             {
-                BoardMatrix[c.X, c.Y] = new Pixel(bgColor);
+                BoardMatrix[c.X, c.Y] = new Pixel(BgColor);
             }
 
-            if(dir == Dir.Rot)
+            if (dir == Dir.Rot)
             {
-                if(IsRotationPossible(t))
+                if (IsRotationPossible(t))
                 {
                     t.Rotate();
                     return true;
@@ -267,7 +265,7 @@ namespace Tetris
                 return false;
             }
 
-            if(IsMovementPossible(t, dir))
+            if (IsMovementPossible(t, dir))
             {             
                 t.Move(dir);
                 StorePiece(t);
@@ -280,14 +278,14 @@ namespace Tetris
             }         
         }
 
-
         private void PlacePiece()
         {
                 // Check if piece stopped off screen
-                foreach(Coord c in CurrentPiece){
-                    if(c.Y <= InitialPos.Y)
+                foreach (Coord c in CurrentPiece)
+                {
+                    if (c.Y <= InitialPos.Y)
                     {
-                        //End Game
+                        // End Game
                         return;
                     }
                 }
@@ -310,7 +308,7 @@ namespace Tetris
         {
             ChangePiecePos(CurrentPiece, input);
  
-            if(!ChangePiecePos(CurrentPiece, Dir.Down))
+            if (!ChangePiecePos(CurrentPiece, Dir.Down))
             {
                 PlacePiece();
             }
