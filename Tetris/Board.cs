@@ -254,7 +254,7 @@ namespace Tetris
                 BoardMatrix[c.X, c.Y] = new Pixel(BgColor);
             }
 
-            if (dir == Dir.Rot)
+            if (dir == Dir.Rot || dir == Dir.Up)
             {
                 if (IsRotationPossible(t))
                 {
@@ -263,6 +263,14 @@ namespace Tetris
                 }
 
                 return false;
+            }
+
+            if (dir == Dir.Fall)
+            {
+                while (IsMovementPossible(t, Dir.Down))
+                {
+                    t.Move(Dir.Down);
+                } 
             }
 
             if (IsMovementPossible(t, dir))

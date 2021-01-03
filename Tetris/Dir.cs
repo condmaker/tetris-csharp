@@ -11,9 +11,14 @@ namespace Tetris
         Up,
 
         /// <summary>
-        /// Moves down faster.
+        /// Moves down.
         /// </summary>
         Down,
+
+        /// <summary>
+        /// Moves down faster.
+        /// </summary>
+        Fall,
 
         /// <summary>
         /// Moves left.

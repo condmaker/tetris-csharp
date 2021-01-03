@@ -182,10 +182,13 @@ namespace Tetris
             switch (key)
             {
                 case ConsoleKey.W:
-                    dir = Dir.Rot;
+                    dir = Dir.Up;
                     break;
                 case ConsoleKey.S:
-                    dir = Dir.Down;
+                    if (currentScene is Board)
+                        dir = Dir.Fall;
+                    else
+                        dir = Dir.Down;
                     break;
                 case ConsoleKey.A:
                     dir = Dir.Left;
