@@ -223,7 +223,12 @@ namespace Tetris
                         = new Pixel(c: 'X');
                 screen[((screen.XDim / 2) - board.Width) + a,
                     (screen.YDim / 2) - (board.Height / 2) + 3] 
-                        = new Pixel(c: 'T');   
+                        = new Pixel(c: 'T');
+
+                Console.SetCursorPosition(0, 0);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.Write(board.score); 
+                  
             }
             else if (scene is TitleScreen)
             {

@@ -26,6 +26,8 @@ namespace Tetris
         /// <value>Horizontal dimension of the board.</value>
         public int Width => BoardMatrix.GetLength(0);
 
+        public Score score;
+
         private Coord InitialPos => new Coord(Width / 2, 2);
 
         public Tetromino NextPiece { get; private set; }
@@ -46,6 +48,7 @@ namespace Tetris
         {
             scenes = new Scene[1];
             sceneChange = false;
+            score = new Score();
 
             BoardMatrix = new Pixel[w, h];
 
@@ -299,7 +302,10 @@ namespace Tetris
                 }
 
                 // DeleteLines
-                DeleteCompleteLines();
+                int cleared = DeleteCompleteLines();
+
+                // Update score
+                score.IncreaseScore(cleared);
 
                 // Switch Piece
                 CurrentPiece = NextPiece;

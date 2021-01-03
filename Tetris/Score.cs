@@ -61,7 +61,7 @@ namespace Tetris
         /// <returns>A string representing the score.</returns>
         public override string ToString()
         {
-            return $"{Name},{Points}";
+            return $"Player - {Points}";
         }
     }
 }
