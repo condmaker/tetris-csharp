@@ -1,9 +1,11 @@
+using System;
+
 namespace Tetris
 {
     /// <summary>
     /// Struct that defines the game score and player name.
     /// </summary>
-    public struct Score
+    public struct Score:  IComparable<Score>
     {
         /// <summary>
         /// Property that defines the player's name.
@@ -63,5 +65,18 @@ namespace Tetris
         {
             return $"{Name} - {Points}";
         }
+
+        /// <summary>
+        /// Compares two Score objects.
+        /// </summary>
+        /// <param name="other">Second Score object.</param>
+        /// <returns><c>-1</c> if <param name="other"> is not a Score,
+        /// difference between <param name="other"> and this Score otherwise.
+        /// </returns>
+        public int CompareTo(Score other)
+        {
+            return other.Points - Points;
+        }
+
     }
 }

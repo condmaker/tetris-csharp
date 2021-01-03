@@ -25,7 +25,7 @@ namespace Tetris
         /// Method responsible for rotating the Tetromino piece by 90 degrees 
         /// clockwise.
         /// The method is empty to make sure the square piece doesn't
-        ///  rotate
+        /// rotate
         /// /// </summary>
         public override void Rotate()
         { }
