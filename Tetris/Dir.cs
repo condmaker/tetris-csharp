@@ -31,7 +31,7 @@ namespace Tetris
         Right,
 
         /// <summary>
-        /// Confirm selection.
+        /// Confirm selection or return.
         /// </summary>
         Enter,
 

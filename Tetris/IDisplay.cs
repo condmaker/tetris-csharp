@@ -3,12 +3,25 @@ using System.Collections.Concurrent;
 
 namespace Tetris
 {
+    /// <summary>
+    /// An interface to define a display.
+    /// </summary>
     public interface IDisplay
     {
-        void TitleScreen(Dir dir);
+        /// <summary>
+        /// Renders a current frame.
+        /// </summary>
         void Render();
-        void UpdateScene(Scene scene);
 
+        /// <summary>
+        /// Updates a frame based on a scene.
+        /// </summary>
+        /// <param name="scene">The scene itself.</param>
+        void UpdateScene(Scene scene);
+        
+        /// <summary>
+        /// Renders a final time.
+        /// </summary>
         void Finish();
     }
 }

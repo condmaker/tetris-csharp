@@ -11,6 +11,10 @@ namespace Tetris
     {
         private readonly DoubleBuffer2D screen;
 
+        /// <summary>
+        /// Class constructor. Defines the width of the screen and the program's
+        /// title.
+        /// </summary>
         public ConsoleDisplay()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -29,7 +33,13 @@ namespace Tetris
             Console.SetCursorPosition(0, 0);
         }
 
-        public void TitleScreen(Dir dir)
+        /// <summary>
+        /// Writes the title screen Pixel information to the buffer.
+        /// </summary>
+        /// <param name="dir">The current direction pressed by the
+        /// user. Decides to render the selection arrow on START GAME or
+        /// TUTORIAL.</param>
+        private void TitleScreen(Dir dir)
         {
             // T
             screen[(screen.XDim / 2) - 13, 4] = new Pixel(ConsoleColor.Red);
@@ -175,6 +185,10 @@ namespace Tetris
                 c: 'L');
         }
 
+        /// <summary>
+        /// Method that writes the current status of a scene to the buffer.
+        /// </summary>
+        /// <param name="scene">The current scene to be rendered.</param>
         public void UpdateScene(Scene scene)
         {
             if (scene is Board)
@@ -351,6 +365,9 @@ namespace Tetris
             }
         }
 
+        /// <summary>
+        /// Writes a finishing message to the buffer.
+        /// </summary>
         public void Finish()
         {
             for (int x = 0; x < screen.XDim; x++)
@@ -400,6 +417,10 @@ namespace Tetris
             Console.CursorVisible = true;
         }
 
+        /// <summary>
+        /// Writes a Game Over message and writes the player's name and score
+        /// to the buffer.
+        /// </summary>
         private void GameOver()
         {
              // G
@@ -568,6 +589,9 @@ namespace Tetris
                 ConsoleColor.Gray);
         }
 
+        /// <summary>
+        /// Renders the current image on the buffer.
+        /// </summary>
         public void Render()
         {
             Console.SetCursorPosition(0, 0);
