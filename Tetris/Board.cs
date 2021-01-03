@@ -21,7 +21,7 @@ namespace Tetris
         /// <summary>
         /// Readonly random number generator.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Random number generator.</returns>
         private readonly Random rnd = new Random();
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Tetris
         {
             scenes = new Scene[1];
             sceneChange = false;
-            score = new Score();
+            score = new Score("Player", 0);
             lastRandom = -1;
 
             BoardMatrix = new Pixel[w, h];
@@ -390,11 +390,6 @@ namespace Tetris
 
             if (!place && input == Dir.Down)
                 PlacePiece();
- 
-            // if (!ChangePiecePos(CurrentPiece, Dir.Down))
-            // {
-            //     PlacePiece();
-            // }
             
             if (input == Dir.Enter)
                 sceneChange = true;
