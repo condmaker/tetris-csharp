@@ -22,12 +22,14 @@ namespace Tetris
         /// </summary>
         private readonly int GameSpeed = 130;
 
+        private readonly float GameDificultyAccel = 0.3f;
+
         /// <summary>
         /// Instance variable that controls if the game is running or ends.
         /// </summary>
         private bool running;
 
-        private int gameDifSpeed;
+        private float gameDifSpeed;
 
         /// <summary>
         /// Instance variable to control access to critical sections.
@@ -161,7 +163,11 @@ namespace Tetris
                 {
                     isFallFrame = true;
                 }
-                Thread.Sleep(gameDifSpeed);
+
+                if (gameDifSpeed >= 130)
+                    gameDifSpeed -= GameDificultyAccel;
+
+                Thread.Sleep((int)Math.Ceiling(gameDifSpeed));
             }
             
         }
