@@ -89,6 +89,24 @@ namespace Tetris
             scenes = new Scene[1];
             sceneChange = false;
 
+            InitializeBoard(w, h);
+
+            piecePool = new List<Tetromino>
+            {
+                new LPiece(InitialPos),
+                new SquarePiece(InitialPos),
+                new JPiece(InitialPos),
+                new ZPiece(InitialPos),
+                new SPiece(InitialPos),
+                new LinePiece(InitialPos),
+                new TPiece(InitialPos),
+            };
+
+            InitializePiece();
+        }
+
+        private void InitializeBoard(int w = 10, int h = 20)
+        {
             score = new Score("Player", 0);
 
             GameState = true;
@@ -104,25 +122,15 @@ namespace Tetris
                     BoardMatrix[x, y] = new Pixel(BgColor);
                 }  
             }
+        }
 
-            piecePool = new List<Tetromino>
-            {
-                new LPiece(InitialPos),
-                new SquarePiece(InitialPos),
-                new JPiece(InitialPos),
-                new ZPiece(InitialPos),
-                new SPiece(InitialPos),
-                new LinePiece(InitialPos),
-                new TPiece(InitialPos),
-            };
-
+        private void InitializePiece()
+        {
             CurrentPiece = piecePool[GetRandomPiece()];    
             NextPiece = piecePool[GetRandomPiece()];
           
-            StorePiece(CurrentPiece);      
+            StorePiece(CurrentPiece);
         }
-
-
 
         /// <summary>
         /// Deletes every line of the board, reseting it to its 
@@ -134,6 +142,9 @@ namespace Tetris
             {
                 DeleteLine(y);
             }
+
+            InitializeBoard();
+            InitializePiece();
         }
 
         /// <summary>
@@ -147,7 +158,7 @@ namespace Tetris
             int rng;
             do 
             {
-                rng =  rnd.Next(0, piecePool.Count);
+                rng = rnd.Next(0, piecePool.Count);
             } while (rng == lastRandom);
 
             lastRandom = rng;
@@ -321,7 +332,9 @@ namespace Tetris
             if (sceneChange)
             {
                 sceneChange = false;
+
                 ClearBoard();
+                GameState = true;
                 
                 return scenes[0];
             }
@@ -388,7 +401,6 @@ namespace Tetris
                     if (c.Y <= InitialPos.Y)
                     {
                         GameState = false;
-                        ClearBoard();
                         // End Game
                         return;
                     }
