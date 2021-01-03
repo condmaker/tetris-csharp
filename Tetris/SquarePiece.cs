@@ -21,16 +21,15 @@ namespace Tetris
             Definition.Add(new Coord(1, 1));
         }
 
+        /// <summary>
+        /// Method responsible for rotating the Tetromino piece by 90 degrees 
+        /// clockwise.
+        /// The method is empty to make sure the square piece doesn't
+        /// rotate.
+        /// </summary>
         public override void Rotate()
-        { }
-
-        public override IEnumerable<Coord> Rotated()
-        {
-            for (int i = 0; i < Definition.Count; i++)
-            {
-                Coord t = Definition[i];
-                yield return t + position;
-            }
+        { 
+            // Empty so it doesn't rotate.
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Tetris
         /// Tetromino piece.
         /// </summary>
         /// <value>Tetromino piece's current position.</value>
-        protected Coord position;
+        private Coord position;
     
         /// <summary>
         /// Instance variable which represents the different positions the 
@@ -131,6 +131,8 @@ namespace Tetris
         /// </summary>
         /// <param name="input">Direction to move Tetromino.</param>
         public override void Update(Dir input) 
-        { }
+        { 
+            // No need to update.
+        }
     }
 }

@@ -9,13 +9,13 @@ namespace Tetris
     public class Client
     {
         /// <summary>
-        /// Instance variable for the Thread responsible for reading the user 
+        /// Instance variable for the Thread responsible for reading the user
         /// input.
         /// </summary>
         private readonly Thread inputThread;
 
         /// <summary>
-        /// Instance variable for the Thread responsible for making the pieces 
+        /// Instance variable for the Thread responsible for making the pieces
         /// fall .
         /// </summary>
         private readonly Thread fallTimerThread;
@@ -27,7 +27,7 @@ namespace Tetris
         private readonly int gameSpeed = 50;
 
         /// <summary>
-        /// Readonly variable that defines the acceleration of the falling 
+        /// Readonly variable that defines the acceleration of the falling
         /// speed.
         /// <remarks>Bigger values are faster.</remarks>
         /// </summary>
@@ -40,7 +40,7 @@ namespace Tetris
         private readonly int maxGameDifSpeed = 130;
 
         /// <summary>
-        /// Readonly variable that defines the initial speed of the falling 
+        /// Readonly variable that defines the initial speed of the falling
         /// pieces.
         /// <remarks>Bigger values are slower.</remarks>
         /// </summary>
@@ -68,13 +68,13 @@ namespace Tetris
         private float gameDifSpeed;
 
         /// <summary>
-        /// Instance variable that tells whether the current frame should make 
+        /// Instance variable that tells whether the current frame should make
         /// the piece fall.
         /// </summary>
         private bool isFallFrame;
 
         /// <summary>
-        /// Instance variable which stores the last key pressed by the user 
+        /// Instance variable which stores the last key pressed by the user
         /// since the last update.
         /// </summary>
         private ConsoleKey inputKey;
@@ -83,21 +83,6 @@ namespace Tetris
         /// Instance variable of the possible program Scenes.
         /// </summary>
         private Scene currentScene;
-
-        /// <summary>
-        /// Instance variable of the game scene.
-        /// </summary>
-        private readonly Board board;
-
-        /// <summary>
-        /// Instance variable of the title scene.
-        /// </summary>
-        private readonly TitleScreen title;
-
-        /// <summary>
-        /// Instance variable of the tutorial scene.
-        /// </summary>
-        private readonly Tutorial tutorial;
 
         /// <summary>
         /// Instance variable which stores Direction of movement.
@@ -115,18 +100,6 @@ namespace Tetris
 
             inputLock = new object();
             fallTimerLock = new object();
-            
-            title = new TitleScreen();
-            board = new Board();
-            tutorial = new Tutorial();
-
-            title.SetScenes(new Scene[] { board, tutorial });
-            board.SetScenes(title);
-            tutorial.SetScenes(title);
-
-            currentScene = title;
-
-            board = new Board();
 
             gameDifSpeed = (float)initialGameDifSpeed;
             isFallFrame = false;
@@ -137,6 +110,16 @@ namespace Tetris
         /// </summary>
         public void GameLoop()
         {
+            TitleScreen title = new TitleScreen();
+            Board board = new Board();
+            Tutorial tutorial = new Tutorial();
+
+            title.SetScenes(new Scene[] { board, tutorial });
+            board.SetScenes(title);
+            tutorial.SetScenes(title);
+
+            currentScene = title;
+
             IDisplay ui = new ConsoleDisplay();
             running = true;
 
@@ -149,7 +132,7 @@ namespace Tetris
                 Console.BackgroundColor = ConsoleColor.Black;
 
                 // read direction
-                ProcessInput(); 
+                ProcessInput();
 
                 // move piece down
                 lock (fallTimerLock)
@@ -158,9 +141,9 @@ namespace Tetris
                     {
                         FallPiece();
                         isFallFrame = false;
-                    }   
+                    }
                 }
-                
+
                 // update piece
                 currentScene.Update(dir);
                 currentScene = currentScene.UpdateScene();

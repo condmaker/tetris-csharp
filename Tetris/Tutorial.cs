@@ -12,8 +12,8 @@ namespace Tetris
         /// </summary>
         public Tutorial()
         {
-            sceneChange = false;
-            scenes = new Scene[1];
+            SceneChange = false;
+            Scenes = new Scene[1];
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Tetris
         public override void Update(Dir input)
         {
             if (input != Dir.None)
-                sceneChange = true;
+                SceneChange = true;
         }
 
         /// <summary>
@@ -34,10 +34,10 @@ namespace Tetris
         /// nothing.</returns>
         public override Scene UpdateScene()
         {
-            if (sceneChange)
+            if (SceneChange)
             {
-                sceneChange = false;
-                return scenes[0];
+                SceneChange = false;
+                return Scenes[0];
             }
             
             return this;

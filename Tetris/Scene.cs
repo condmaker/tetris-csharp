@@ -10,12 +10,12 @@ namespace Tetris
         /// <summary>
         /// An array of scenes that this scene can access.
         /// </summary>
-        protected Scene[] scenes;
+        protected Scene[] Scenes { get; set; }
         
         /// <summary>
         /// A bool defining if the scene needs to be changed or not.
         /// </summary>
-        protected bool sceneChange;
+        protected bool SceneChange { get; set; }
 
         /// <summary>
         /// An method that updates the status of the current scene.
@@ -30,7 +30,7 @@ namespace Tetris
         public void SetScenes(Scene[] o)
         {
             for (int i = 0; i < o.Length; i++)
-                scenes[i] = o[i];
+                Scenes[i] = o[i];
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Tetris
         /// <param name="o">The scene to be set.</param>
         public void SetScenes(Scene o)
         {
-            scenes[0] = o;
+            Scenes[0] = o;
         }
     }
 }

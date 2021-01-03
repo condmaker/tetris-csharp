@@ -42,6 +42,7 @@ namespace Tetris
         public int Width => BoardMatrix.GetLength(0);
 
         private Score score;
+        
         /// <summary>
         /// Instance property that controls the current game's score.
         /// </summary>
@@ -86,8 +87,8 @@ namespace Tetris
         /// <param name="h">Vertical dimensions.</param>
         public Board(int w = 10, int h = 20)
         {
-            scenes = new Scene[1];
-            sceneChange = false;
+            Scenes = new Scene[1];
+            SceneChange = false;
 
             InitializeBoard(w, h);
 
@@ -165,7 +166,7 @@ namespace Tetris
 
             return rng;
         }
-        
+
         /// <summary>
         /// Method that indicates if a given Coord <paramref name="c"/> is 
         /// inside the limits of the board.
@@ -198,24 +199,6 @@ namespace Tetris
             if (!IsInsideBounds(c))
                 return false;
             return BoardMatrix[c.X, c.Y] == new Pixel(BgColor);
-        }
-
-        /// <summary>
-        /// Method that indicates whether a given set of positions are free or 
-        /// occupied.
-        /// </summary>
-        /// <param name="t">Collection of positions.</param>
-        /// <returns><c>true</c> if any of the positions are occuiped, 
-        /// <c>false</c> if all positions are free.</returns>
-        private bool IsCollision(Tetromino t)
-        {
-            foreach (Coord c in t)
-            {
-                if (!IsTileFree(c))
-                    return true;
-            }
-           
-            return false;
         }
 
         /// <summary>
@@ -257,8 +240,6 @@ namespace Tetris
                 }
             }
 
-            // tratar definition
-            // verificar collisao
             return canRot;
         }
 
@@ -334,19 +315,19 @@ namespace Tetris
         /// <returns>Another scene or itself.</returns>
         public override Scene UpdateScene()
         {
-            if (sceneChange)
+            if (SceneChange)
             {
-                sceneChange = false;
+                SceneChange = false;
 
                 ClearBoard();
                 GameState = true;
                 
-                return scenes[0];
+                return Scenes[0];
             }
 
             return this;
         }
-        
+
         /// <summary>
         /// Method that changes a piece position or rotation according to the 
         /// user input.
@@ -401,13 +382,14 @@ namespace Tetris
         private void PlacePiece()
         {
                 // Check if piece stopped off screen
-
                 foreach (Coord c in CurrentPiece)
                 {
                     if (c.Y <= InitialPos.Y)
                     {
-                        GameState = false;
+                        ClearBoard();
+
                         // End Game
+                        GameState = false;
                         return;
                     }
                 }
@@ -437,7 +419,7 @@ namespace Tetris
                 PlacePiece();
             
             if (input == Dir.Enter)
-                sceneChange = true;
+                SceneChange = true;
         }    
     }
 }

@@ -19,8 +19,8 @@ namespace Tetris
         /// </summary>
         public TitleScreen()
         {
-            scenes = new Scene[2];
-            sceneChange = false;
+            Scenes = new Scene[2];
+            SceneChange = false;
             CursorPos = true;
         }
 
@@ -39,7 +39,7 @@ namespace Tetris
                     CursorPos = false;
                     break;
                 case Dir.Enter:
-                    sceneChange = true;
+                    SceneChange = true;
                     break;
             }
         }
@@ -51,14 +51,14 @@ namespace Tetris
         /// nothing.</returns>
         public override Scene UpdateScene()
         {
-            if (sceneChange)
+            if (SceneChange)
             {
-                sceneChange = false;
+                SceneChange = false;
 
                 if (CursorPos) 
-                    return scenes[0];
+                    return Scenes[0];
                 else if (!CursorPos) 
-                    return scenes[1];
+                    return Scenes[1];
             }
             
             return this;

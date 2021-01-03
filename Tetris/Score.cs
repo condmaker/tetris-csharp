@@ -1,3 +1,5 @@
+using System;
+
 namespace Tetris
 {
     /// <summary>
@@ -9,7 +11,7 @@ namespace Tetris
         /// Property that defines the player's name.
         /// </summary>
         /// <value>The player name.</value>
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the property that defines the player's score.
@@ -62,6 +64,17 @@ namespace Tetris
         public override string ToString()
         {
             return $"{Name} - {Points}";
+        }
+
+        /// <summary>
+        /// Compares two Score objects.
+        /// </summary>
+        /// <param name="other">Second Score object.</param>
+        /// <returns><c>-1</c> if 'other' is not a Score,
+        /// difference between 'other' and this Score otherwise.</returns>
+        public int CompareTo(Score other)
+        {
+            return other.Points - Points;
         }
     }
 }

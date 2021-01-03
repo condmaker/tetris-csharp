@@ -212,7 +212,7 @@ namespace Tetris
 
                     for (int i = 0; i < playerLength; i++)
                     {
-                        screen[(screen.XDim / 2 - playerLength / 2 + i),
+                        screen[(screen.XDim / 2) - (playerLength / 2) + i,
                             screen.YDim / 2] 
                                 = new Pixel(c: board.Score.Name[i]);
                     }
@@ -225,7 +225,7 @@ namespace Tetris
 
                     for (int h = 0; h < scoreLength; h++)
                     {
-                        screen[(screen.XDim / 2 - scoreLength / 2 + h),
+                        screen[(screen.XDim / 2) - (scoreLength / 2) + h,
                             (screen.YDim / 2) + 1] 
                                 = new Pixel(c: scoreString[h]);
                     }
@@ -253,10 +253,11 @@ namespace Tetris
 
                 for (int y = 0; y < board.NextPiece.Definition.Count; y++)
                 {
+                    int nP = board.NextPiece.Definition[y].Y;
+
                     screen[((screen.XDim / 2) - board.Width) + a + 
                         board.NextPiece.Definition[y].X, 
-                        ((screen.YDim / 2) - (board.Height / 2)) 
-                        + board.NextPiece.Definition[y].Y] 
+                        ((screen.YDim / 2) - (board.Height / 2)) + nP]
                         = board.NextPiece.Sprite;
                 }
 
@@ -306,9 +307,7 @@ namespace Tetris
                         (screen.YDim / 2) - (board.Height / 2) + 1] 
                             = new Pixel(c: scoreString[i]);
                 }
-                  
             }
-
             else if (scene is TitleScreen)
             {
                 TitleScreen titleScreen;
