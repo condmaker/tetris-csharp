@@ -18,25 +18,43 @@ namespace Tetris
         /// Instance variable for the Thread responsible for making the pieces 
         /// fall .
         /// </summary>
-        private readonly Thread FallTimerThread;
+        private readonly Thread fallTimerThread;
 
         /// <summary>
         /// Readonly variable that defines the game speed.
         /// <remarks>Bigger values are slower.</remarks>
         /// </summary>
-        private readonly int GameSpeed = 50;
+        private readonly int gameSpeed = 50;
 
         /// <summary>
         /// Readonly variable that defines the acceleration of the falling 
         /// speed.
         /// <remarks>Bigger values are faster.</remarks>
         /// </summary>
-        private readonly float GameDificultyAccel = 0.3f;
+        private readonly float gameDifficultyAccel = 0.3f;
 
         /// <summary>
         /// Readonly variable that defines the maximum speed of falling pieces.
+        /// <remarks>Bigger values are slower.</remarks>
         /// </summary>
-        private readonly int MaxGameDifSpeed = 130;
+        private readonly int maxGameDifSpeed = 130;
+
+        /// <summary>
+        /// Readonly variable that defines the initial speed of the falling 
+        /// pieces.
+        /// <remarks>Bigger values are slower.</remarks>
+        /// </summary>
+        private readonly int initialGameDifSpeed = 500;
+
+        /// <summary>
+        /// Instance variable to control access to critical sections.
+        /// </summary>
+        private readonly object InputLock;
+
+        /// <summary>
+        /// Instance variable to control access to critical sections.
+        /// </summary>
+        private readonly object FallTimerLock;
 
         /// <summary>
         /// Instance variable that controls if the game is running or ends.
@@ -48,16 +66,6 @@ namespace Tetris
         /// <remarks>Bigger values are slower.</remarks>
         /// </summary>
         private float gameDifSpeed;
-
-        /// <summary>
-        /// Instance variable to control access to critical sections.
-        /// </summary>
-        private object inputLock;
-
-        /// <summary>
-        /// Instance variable to control access to critical sections.
-        /// </summary>
-        private object fallTimerLock;
 
         /// <summary>
         /// Instance variable that tells whether the current frame should make 
@@ -103,10 +111,10 @@ namespace Tetris
         public Client()
         {
             inputThread = new Thread(ReadKey);
-            FallTimerThread = new Thread(FallTimer);
+            fallTimerThread = new Thread(FallTimer);
 
-            inputLock = new object();
-            fallTimerLock = new object();
+            InputLock = new object();
+            FallTimerLock = new object();
             
             title = new TitleScreen();
             board = new Board();
@@ -120,7 +128,7 @@ namespace Tetris
 
             board = new Board();
 
-            gameDifSpeed = 300;
+            gameDifSpeed = (float)initialGameDifSpeed;
             isFallFrame = false;
         }
 
@@ -133,15 +141,19 @@ namespace Tetris
             running = true;
 
             inputThread.Start();
-            FallTimerThread.Start();
+            fallTimerThread.Start();
 
             while (running)
             {
+                Console.SetCursorPosition(0, 0);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.Write((int)Math.Ceiling(gameDifSpeed));
+
                 // read direction
                 ProcessInput(); 
 
                 // move piece down
-                lock (fallTimerLock)
+                lock (FallTimerLock)
                 {
                     if (isFallFrame && currentScene is Board)
                     {
@@ -154,7 +166,6 @@ namespace Tetris
                 currentScene.Update(dir);
                 currentScene = currentScene.UpdateScene();
 
-                // UI.TitleScreen(dir);
                 ui.UpdateScene(currentScene);
                 
                 // reset direction
@@ -162,7 +173,7 @@ namespace Tetris
                 
                 // render
                 ui.Render();
-                Thread.Sleep(GameSpeed);
+                Thread.Sleep(gameSpeed);
             }
 
             Finish(ui);
@@ -178,7 +189,7 @@ namespace Tetris
             do
             {
                 ck = Console.ReadKey(true).Key;
-                lock (inputLock)
+                lock (InputLock)
                 {
                     inputKey = ck;
                 }
@@ -198,19 +209,18 @@ namespace Tetris
         /// </summary>
         private void FallTimer()
         {
-            while(running)
+            while (running)
             {
-                lock (fallTimerLock)
+                lock (FallTimerLock)
                 {
                     isFallFrame = true;
                 }
 
-                if (gameDifSpeed >= MaxGameDifSpeed)
-                    gameDifSpeed -= GameDificultyAccel;
+                if (gameDifSpeed > maxGameDifSpeed && currentScene is Board)
+                    gameDifSpeed -= gameDifficultyAccel;
 
                 Thread.Sleep((int)Math.Ceiling(gameDifSpeed));
             }
-            
         }
 
         /// <summary>
@@ -220,7 +230,7 @@ namespace Tetris
         private void ProcessInput()
         {
             ConsoleKey key;
-            lock (inputLock)
+            lock (InputLock)
             {
                 key = inputKey;
                 inputKey = ConsoleKey.NoName;
@@ -264,7 +274,7 @@ namespace Tetris
         private void Finish(IDisplay ui)
         {
             inputThread.Join();
-            FallTimerThread.Join();
+            fallTimerThread.Join();
             ui.Finish();
         }
     }

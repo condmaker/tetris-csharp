@@ -22,17 +22,15 @@ namespace Tetris
         }
 
         public override void Rotate()
-        {
-            return;
-        }
+        { }
 
-        public IEnumerable<Coord> Rotated()
-        {
-            for (int i = 0; i < Definition.Count; i++)
-            {
-                Coord t = Definition[i];
-                yield return t + position;
-            }
-        }
+        // public override IEnumerable<Coord> Rotated()
+        // {
+        //     for (int i = 0; i < Definition.Count; i++)
+        //     {
+        //         Coord t = Definition[i];
+        //         yield return t + position;
+        //     }
+        // }
     }
 }

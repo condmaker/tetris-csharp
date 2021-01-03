@@ -21,7 +21,7 @@ namespace Tetris
         /// <summary>
         /// Readonly random number generator.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Random number generator.</returns>
         private readonly Random rnd = new Random();
 
         /// <summary>
@@ -41,10 +41,16 @@ namespace Tetris
         /// <value>Horizontal dimension of the board.</value>
         public int Width => BoardMatrix.GetLength(0);
 
+        private Score score;
         /// <summary>
-        /// Instance variable that controls the current game's score.
+        /// Instance property that controls the current game's score.
         /// </summary>
-        public Score score;
+        public Score Score { get => score; }
+
+        /// <summary>
+        /// A boolean that defines if the game is running or not.
+        /// </summary>
+        public bool GameState { get; private set; }
         
         /// <summary>
         /// Property that gets the initial position of each piece according to 
@@ -82,7 +88,11 @@ namespace Tetris
         {
             scenes = new Scene[1];
             sceneChange = false;
-            score = new Score();
+
+            score = new Score("Player", 0);
+
+            GameState = true;
+            
             lastRandom = -1;
 
             BoardMatrix = new Pixel[w, h];
@@ -126,6 +136,7 @@ namespace Tetris
             }
         }
 
+
         /// <summary>
         /// Method responsible for getting a random number for the piece, 
         /// different from the last.
@@ -144,7 +155,8 @@ namespace Tetris
 
             return rng;
         }
-        
+
+
         /// <summary>
         /// Method that indicates if a given Coord <paramref name="c"/> is 
         /// inside the limits of the board.
@@ -166,6 +178,7 @@ namespace Tetris
             return true;
         }
 
+
         /// <summary>
         /// Method that indicates if a given board position is free.
         /// </summary>
@@ -179,23 +192,25 @@ namespace Tetris
             return BoardMatrix[c.X, c.Y] == new Pixel(BgColor);
         }
 
-        /// <summary>
-        /// Method that indicates whether a given set of positions are free or 
-        /// occupied.
-        /// </summary>
-        /// <param name="t">Collection of positions.</param>
-        /// <returns><c>true</c> if any of the positions are occuiped, 
-        /// <c>false</c> if all positions are free.</returns>
-        private bool IsCollision(Tetromino t)
-        {
-            foreach (Coord c in t)
-            {
-                if (!IsTileFree(c))
-                    return true;
-            }
+
+        // /// <summary>
+        // /// Method that indicates whether a given set of positions are free or 
+        // /// occupied.
+        // /// </summary>
+        // /// <param name="t">Collection of positions.</param>
+        // /// <returns><c>true</c> if any of the positions are occuiped, 
+        // /// <c>false</c> if all positions are free.</returns>
+        // private bool IsCollision(Tetromino t)
+        // {
+        //     foreach (Coord c in t)
+        //     {
+        //         if (!IsTileFree(c))
+        //             return true;
+        //     }
            
-            return false;
-        }
+        //     return false;
+        // }
+
 
         /// <summary>
         /// Method that indicates if a given Tetromino can move in a given 
@@ -218,6 +233,7 @@ namespace Tetris
             return true;
         }
 
+
         /// <summary>
         /// Method that indicates if a given Tetromino can rotate.
         /// </summary>
@@ -236,10 +252,10 @@ namespace Tetris
                 }
             }
 
-            // tratar definition
-            // verificar collisao
+
             return canRot;
         }
+
 
         /// <summary>
         /// Moves all lines above given line <paramref name="y"/> one line 
@@ -259,6 +275,7 @@ namespace Tetris
             for (int x = 0; x < Width; x++)
                 BoardMatrix[x, 0] = new Pixel(BgColor);
         }
+
 
         /// <summary>
         /// Iterates through all lines and calls DeleteLine on lines that are 
@@ -295,6 +312,7 @@ namespace Tetris
             return clearedLines;
         }
      
+
         /// <summary>
         /// Stores given Tetromino piece <paramref name="t"/> in its current 
         /// position on the board.
@@ -306,9 +324,12 @@ namespace Tetris
                 BoardMatrix[c.X, c.Y] = t.Sprite;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override Scene UpdateScene()
         {
-            // Not implemented yet
             if (sceneChange)
             {
                 sceneChange = false;
@@ -317,7 +338,8 @@ namespace Tetris
 
             return this;
         }
-        
+
+
         /// <summary>
         /// Method that changes a piece position or rotation according to the 
         /// user input.
@@ -365,6 +387,7 @@ namespace Tetris
             }         
         }
 
+
         /// <summary>
         /// Method responsible for placing the current piece on the board 
         /// permanently, and updating the board accordingly.
@@ -378,6 +401,7 @@ namespace Tetris
                     {
                         ClearBoard();
                         // End Game
+                        GameState = false;
                         return;
                     }
                 }
@@ -395,6 +419,7 @@ namespace Tetris
                 StorePiece(CurrentPiece);  
         }
 
+
         /// <summary>
         /// Update method to be called every frame.
         /// </summary>
@@ -405,11 +430,6 @@ namespace Tetris
 
             if (!place && input == Dir.Down)
                 PlacePiece();
- 
-            // if (!ChangePiecePos(CurrentPiece, Dir.Down))
-            // {
-            //     PlacePiece();
-            // }
             
             if (input == Dir.Enter)
                 sceneChange = true;
