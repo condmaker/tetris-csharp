@@ -112,6 +112,20 @@ namespace Tetris
             StorePiece(CurrentPiece);      
         }
 
+
+
+        /// <summary>
+        /// Deletes every line of the board, reseting it to its 
+        /// original state
+        /// </summary>
+        public void ClearBoard()
+        {
+            for(int y = 0; y < Height; y++)
+            {
+                DeleteLine(y);
+            }
+        }
+
         /// <summary>
         /// Method responsible for getting a random number for the piece, 
         /// different from the last.
@@ -362,6 +376,7 @@ namespace Tetris
                 {
                     if (c.Y <= InitialPos.Y)
                     {
+                        ClearBoard();
                         // End Game
                         return;
                     }
