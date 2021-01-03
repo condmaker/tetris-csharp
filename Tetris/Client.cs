@@ -14,21 +14,39 @@ namespace Tetris
         /// </summary>
         private readonly Thread inputThread;
 
+        /// <summary>
+        /// Instance variable for the Thread responsible for making the pieces 
+        /// fall .
+        /// </summary>
         private readonly Thread FallTimerThread;
 
         /// <summary>
         /// Readonly variable that defines the game speed.
         /// <remarks>Bigger values are slower.</remarks>
         /// </summary>
-        private readonly int GameSpeed = 130;
+        private readonly int GameSpeed = 50;
 
+        /// <summary>
+        /// Readonly variable that defines the acceleration of the falling 
+        /// speed.
+        /// <remarks>Bigger values are faster.</remarks>
+        /// </summary>
         private readonly float GameDificultyAccel = 0.3f;
+
+        /// <summary>
+        /// Readonly variable that defines the maximum speed of falling pieces.
+        /// </summary>
+        private readonly int MaxGameDifSpeed = 130;
 
         /// <summary>
         /// Instance variable that controls if the game is running or ends.
         /// </summary>
         private bool running;
 
+        /// <summary>
+        /// Instance variable that controls the current piece falling speed.
+        /// <remarks>Bigger values are slower.</remarks>
+        /// </summary>
         private float gameDifSpeed;
 
         /// <summary>
@@ -36,8 +54,15 @@ namespace Tetris
         /// </summary>
         private object inputLock;
 
+        /// <summary>
+        /// Instance variable to control access to critical sections.
+        /// </summary>
         private object fallTimerLock;
 
+        /// <summary>
+        /// Instance variable that tells whether the current frame should make 
+        /// the piece fall.
+        /// </summary>
         private bool isFallFrame;
 
         /// <summary>
@@ -46,14 +71,24 @@ namespace Tetris
         /// </summary>
         private ConsoleKey inputKey;
 
-        // The 3 scenes.
+        /// <summary>
+        /// Instance variable of the possible program Scenes.
+        /// </summary>
         private Scene currentScene;
 
         /// <summary>
-        /// Instance variable of the game board.
+        /// Instance variable of the game scene.
         /// </summary>
         private Board board;
+
+        /// <summary>
+        /// Instance variable of the title scene.
+        /// </summary>
         private TitleScreen title;
+
+        /// <summary>
+        /// Instance variable of the tutorial scene.
+        /// </summary>
         private Tutorial tutorial;
 
         /// <summary>
@@ -63,6 +98,7 @@ namespace Tetris
 
         /// <summary>
         /// Creates a new Client instance.
+        /// <remarks>Starts 2 threads.</remarks>
         /// </summary>
         public Client()
         {
@@ -107,7 +143,7 @@ namespace Tetris
                 // move piece down
                 lock (fallTimerLock)
                 {
-                    if (isFallFrame)
+                    if (isFallFrame && currentScene is Board)
                     {
                         FallPiece();
                         isFallFrame = false;
@@ -149,12 +185,17 @@ namespace Tetris
             } while (ck != ConsoleKey.Escape);
         }
 
+        /// <summary>
+        /// Method responsible for moving the piece down.
+        /// </summary>
         private void FallPiece()
         {
-            if (currentScene is Board)
-                currentScene.Update(Dir.Down);   
+            currentScene.Update(Dir.Down);   
         }
 
+        /// <summary>
+        /// Method responsible for controlling the natural fall speed.
+        /// </summary>
         private void FallTimer()
         {
             while(running)
@@ -164,7 +205,7 @@ namespace Tetris
                     isFallFrame = true;
                 }
 
-                if (gameDifSpeed >= 130)
+                if (gameDifSpeed >= MaxGameDifSpeed)
                     gameDifSpeed -= GameDificultyAccel;
 
                 Thread.Sleep((int)Math.Ceiling(gameDifSpeed));

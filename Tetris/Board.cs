@@ -24,6 +24,9 @@ namespace Tetris
         /// <returns></returns>
         private readonly Random rnd = new Random();
 
+        /// <summary>
+        /// Instance variable that records the last random number generated.
+        /// </summary>
         private int lastRandom;
 
         /// <summary>
@@ -43,24 +46,29 @@ namespace Tetris
         /// </summary>
         public Score score;
         
+        /// <summary>
+        /// Property that gets the initial position of each piece according to 
+        /// board size.
+        /// </summary>
+        /// <value>Initial piece's position.</value>
         private Coord InitialPos => new Coord(Width / 2, 2);
 
         /// <summary>
-        /// Instance variable that contains a reference to the current falling 
+        /// Property that contains a reference to the current falling 
         /// piece.
         /// </summary>
         /// <value>The current falling piece.</value>
         public Tetromino NextPiece { get; private set; }
         
         /// <summary>
-        /// Instance variable that contains a reference to the next falling 
+        /// Property that contains a reference to the next falling 
         /// piece.
         /// </summary>
         /// <value>The next falling piece.</value>
         public Tetromino CurrentPiece { get; private set; }
 
         /// <summary>
-        /// Instance variable that contains a reference to the bi-dimensional 
+        /// Property that contains a reference to the bi-dimensional 
         /// array that represents the game board.
         /// </summary>
         public Pixel[,] BoardMatrix { get; private set; }
@@ -98,12 +106,18 @@ namespace Tetris
                 new TPiece(InitialPos),
             };
 
-            NextPiece = piecePool[GetRandomPiece()];
             CurrentPiece = piecePool[GetRandomPiece()];    
+            NextPiece = piecePool[GetRandomPiece()];
           
             StorePiece(CurrentPiece);      
         }
 
+        /// <summary>
+        /// Method responsible for getting a random number for the piece, 
+        /// different from the last.
+        /// </summary>
+        /// <returns>Random number between 0 and 7, different from the last.
+        /// </returns>
         private int GetRandomPiece()
         {
             int rng;
@@ -289,7 +303,15 @@ namespace Tetris
 
             return this;
         }
-
+        
+        /// <summary>
+        /// Method that changes a piece position or rotation according to the 
+        /// user input.
+        /// </summary>
+        /// <param name="t">Piece to update.</param>
+        /// <param name="dir">Direction inputted by the user.</param>
+        /// <returns><c>true</c> if the change is possible, 
+        /// <c>false</c> otherwise.</returns>
         public bool ChangePiecePos(Tetromino t, Dir dir)
         {        
             foreach (Coord c in t)
@@ -329,6 +351,10 @@ namespace Tetris
             }         
         }
 
+        /// <summary>
+        /// Method responsible for placing the current piece on the board 
+        /// permanently, and updating the board accordingly.
+        /// </summary>
         private void PlacePiece()
         {
                 // Check if piece stopped off screen
