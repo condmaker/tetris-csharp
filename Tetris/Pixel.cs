@@ -12,11 +12,12 @@ namespace Tetris
         /// </summary>
         /// <value>Character to be printed.</value>
         public char Character { get; } 
+
         /// <summary>
         /// Property which represents the color to be printed.
         /// </summary>
         /// <value>Color to be printed.</value>
-        public ConsoleColor Color { get;}
+        public ConsoleColor Color { get; }
 
         /// <summary>
         /// Constructor. Creates a new instance of Pixel with given color and 

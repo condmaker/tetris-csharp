@@ -14,6 +14,7 @@ namespace Tetris
             for (int i = 0; i < o.Length; i++)
                 scenes[i] = o[i];
         }
+
         public void SetScenes(Scene o)
         {
             scenes[0] = o;

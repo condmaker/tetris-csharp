@@ -5,7 +5,7 @@ namespace Tetris
     /// <summary>
     /// Class which represents the L shaped piece.
     /// </summary>
-    public class LPiece: Tetromino
+    public class LPiece : Tetromino
     {
         /// <summary>
         /// Constructor. Creates a new instance on a given position.
@@ -14,12 +14,11 @@ namespace Tetris
         public LPiece(Coord pos)
             : base(pos)
         {
-            sprite = new Pixel(System.ConsoleColor.DarkGreen);
-            definition = new List<Coord>();
-            definition.Add(new Coord(-1, 0));
-            definition.Add(new Coord(0, 0));
-            definition.Add(new Coord(0, 1));
-            definition.Add(new Coord(0, 2));
+            Sprite = new Pixel(System.ConsoleColor.DarkGreen);
+            Definition.Add(new Coord(-1, 0));
+            Definition.Add(new Coord(0, 0));
+            Definition.Add(new Coord(0, 1));
+            Definition.Add(new Coord(0, 2));
         }
     }
 }

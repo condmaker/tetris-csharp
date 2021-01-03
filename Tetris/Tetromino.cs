@@ -5,7 +5,7 @@ using System.Collections;
 namespace Tetris
 {
     /// <summary>
-    /// Abstract class which represents a Tetromino piece
+    /// Abstract class which represents a Tetromino piece.
     /// </summary>
     public abstract class Tetromino : GameObject, IEnumerable<Coord>
     {
@@ -13,7 +13,7 @@ namespace Tetris
         /// Gets the property which represents the color of the Tetromino piece.
         /// </summary>
         /// <value>Tetromino piece's color.</value>
-        public Pixel sprite { get; protected set; }
+        public Pixel Sprite { get; protected set; }
 
         private Coord initialPos;
 
@@ -22,7 +22,7 @@ namespace Tetris
         /// Tetromino piece.
         /// </summary>
         /// <value>Tetromino piece's current position.</value>
-        protected Coord position;
+        private Coord position;
     
         /// <summary>
         /// Instance variable which represents the different positions the 
@@ -30,14 +30,7 @@ namespace Tetris
         /// </summary>
         /// <value>Collection of Coord occupied by the Tetromino, from its 
         /// position.</value>
-        protected IList<Coord> definition;
-
-        /// <summary>
-        /// Gets the positions which a piece occupies, from the current 
-        /// position.
-        /// </summary>
-        /// <value>The positions the piece occupies.</value>
-        public IList<Coord> Definition { get => definition; }
+        public IList<Coord> Definition { get; private set; }
 
         /// <summary>
         /// Constructor. Creates a new instance with the given initial 
@@ -47,6 +40,7 @@ namespace Tetris
         protected Tetromino(Coord initialPos)
         {
             this.initialPos = initialPos;
+            Definition = new List<Coord>();
             ResetPos();
         }
 
@@ -65,18 +59,18 @@ namespace Tetris
         /// </summary>
         public virtual void Rotate()
         {
-            for (int i = 0; i < definition.Count; i++)
+            for (int i = 0; i < Definition.Count; i++)
             {
-                Coord t = definition[i];
-                definition[i] = new Coord(-t.Y, t.X);
+                Coord t = Definition[i];
+                Definition[i] = new Coord(-t.Y, t.X);
             }
         }
         
         public IEnumerable<Coord> Rotated()
         {
-            for (int i = 0; i < definition.Count; i++)
+            for (int i = 0; i < Definition.Count; i++)
             {
-                Coord t = definition[i];
+                Coord t = Definition[i];
                 yield return new Coord(-t.Y, t.X) + position;
             }
         }
@@ -106,22 +100,22 @@ namespace Tetris
 
         /// <summary>
         /// Returns an enumerator that iterates through the Tetromino 
-        /// definition collection.
+        /// Definition collection.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the 
-        /// definition collection.</returns>
+        /// Definition collection.</returns>
         public IEnumerator<Coord> GetEnumerator()
         {
-            foreach (Coord c in definition)
+            foreach (Coord c in Definition)
                 yield return c + position;
         }
 
         /// <summary>
         /// Returns an enumerator that iterates through the Tetromino 
-        /// definition collection.
+        /// Definition collection.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the 
-        /// definition collection.</returns>
+        /// Definition collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
@@ -135,6 +129,5 @@ namespace Tetris
         {
             return;
         }
-
     }
 }

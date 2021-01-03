@@ -14,12 +14,11 @@ namespace Tetris
         public JPiece(Coord pos)
             : base(pos)
         {
-            sprite = new Pixel(System.ConsoleColor.Yellow);
-            definition = new List<Coord>();
-            definition.Add(new Coord(1, 0));
-            definition.Add(new Coord(0, 0));
-            definition.Add(new Coord(0, 1));
-            definition.Add(new Coord(0, 2));
+            Sprite = new Pixel(System.ConsoleColor.Yellow);
+            Definition.Add(new Coord(1, 0));
+            Definition.Add(new Coord(0, 0));
+            Definition.Add(new Coord(0, 1));
+            Definition.Add(new Coord(0, 2));
         }
     }
 }

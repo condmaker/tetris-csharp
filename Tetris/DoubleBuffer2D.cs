@@ -8,28 +8,29 @@ namespace Tetris
     /// </summary>
     public class DoubleBuffer2D
     {
-        private Pixel[,] current, next;
-        private ConsoleColor defaultBg;
+        private readonly ConsoleColor defaultBg;
+        private Pixel[,] current;
+        private Pixel[,] next;
 
-        public int xDim => current.GetLength(0);
-        public int yDim => current.GetLength(1);
+        public int XDim => current.GetLength(0);
+        public int YDim => current.GetLength(1);
 
         public DoubleBuffer2D(int x, int y)
         {
             current = new Pixel[x, y];
             next = new Pixel[x, y];
 
-            for (int a = 0; a < xDim; a += 1) 
+            for (int a = 0; a < XDim; a += 1) 
             {
-                for (int b = 0; b < yDim; b += 1)
+                for (int b = 0; b < YDim; b += 1)
                     current[a, b] = new Pixel(ConsoleColor.Blue);
             }
-                
 
             Clear();
 
             defaultBg = ConsoleColor.Black;
         }
+
         public Pixel this[int x, int y] 
         {
             get => current[x, y];
@@ -38,7 +39,7 @@ namespace Tetris
 
         public void Clear()
         {
-            Array.Clear(next, 0, xDim * yDim);
+            Array.Clear(next, 0, XDim * YDim);
         }
 
         public void PrintToScreen()
@@ -47,9 +48,9 @@ namespace Tetris
 
             Pixel[,] aux;
 
-            for (int y = 0; y < yDim; y++)
+            for (int y = 0; y < YDim; y++)
             {
-                for (int x = 0; x < xDim; x++)
+                for (int x = 0; x < XDim; x++)
                 {
                     if (next[x, y] == current[x, y]) 
                         continue;
@@ -59,7 +60,7 @@ namespace Tetris
                         Console.BackgroundColor = next[x, y].Color;
                     
                     Console.SetCursorPosition(x, y);
-                    Console.Write(next[x,y].Character);
+                    Console.Write(next[x, y].Character);
                 }
             }
 

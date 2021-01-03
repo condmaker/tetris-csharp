@@ -4,7 +4,7 @@ namespace Tetris
 {
     /// <summary>
     /// Class which represents the T shaped piece.
-    /// /// </summary>
+    /// </summary>
     public class TPiece : Tetromino
     {
         /// <summary>
@@ -14,12 +14,11 @@ namespace Tetris
         public TPiece(Coord pos)
             : base(pos)
         {
-            sprite = new Pixel(System.ConsoleColor.Magenta);
-            definition = new List<Coord>();
-            definition.Add(new Coord(-1, 0));
-            definition.Add(new Coord(0, 0));
-            definition.Add(new Coord(1, 0));
-            definition.Add(new Coord(0, 1));
+            Sprite = new Pixel(System.ConsoleColor.Magenta);
+            Definition.Add(new Coord(-1, 0));
+            Definition.Add(new Coord(0, 0));
+            Definition.Add(new Coord(1, 0));
+            Definition.Add(new Coord(0, 1));
         }
     }
 }

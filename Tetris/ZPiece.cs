@@ -14,12 +14,11 @@ namespace Tetris
         public ZPiece(Coord pos)
             : base(pos)
         {
-            sprite = new Pixel(System.ConsoleColor.White);
-            definition = new List<Coord>();
-            definition.Add(new Coord(-1, 1));
-            definition.Add(new Coord(0, 0));
-            definition.Add(new Coord(0, 1));
-            definition.Add(new Coord(1, 0));
+            Sprite = new Pixel(System.ConsoleColor.White);
+            Definition.Add(new Coord(-1, 1));
+            Definition.Add(new Coord(0, 0));
+            Definition.Add(new Coord(0, 1));
+            Definition.Add(new Coord(1, 0));
         }
     }
 }

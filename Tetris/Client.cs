@@ -9,6 +9,12 @@ namespace Tetris
     public class Client
     {
         /// <summary>
+        /// Instance variable for the Thread responsible for reading the user 
+        /// input.
+        /// </summary>
+        private readonly Thread inputThread;
+
+        /// <summary>
         /// Instance variable that controls if the game is running or ends.
         /// </summary>
         private bool running;
@@ -16,7 +22,7 @@ namespace Tetris
         /// <summary>
         /// Instance variable to control access to critical sections.
         /// </summary>
-        private Object inputLock; 
+        private object inputLock; 
 
         /// <summary>
         /// Instance variable which stores the last key pressed by the user 
@@ -24,21 +30,15 @@ namespace Tetris
         /// </summary>
         private ConsoleKey inputKey;
 
-
-        /// The 3 scenes.
+        // The 3 scenes.
         private Scene currentScene;
+
         /// <summary>
         /// Instance variable of the game board.
         /// </summary>
         private Board board;
         private TitleScreen title;
         private Tutorial tutorial;
-
-        /// <summary>
-        /// Instance variable for the Thread responsible for reading the user 
-        /// input.
-        /// </summary>
-        private Thread inputThread;
 
         /// <summary>
         /// Instance variable which stores Direction of movement.
@@ -57,7 +57,7 @@ namespace Tetris
             board = new Board();
             tutorial = new Tutorial();
 
-            title.SetScenes(new Scene[] {board, tutorial});
+            title.SetScenes(new Scene[] { board, tutorial });
             board.SetScenes(title);
             tutorial.SetScenes(title);
 
@@ -74,21 +74,23 @@ namespace Tetris
             IDisplay ui = new ConsoleDisplay();
             running = true;
 
-
-
             inputThread.Start();
 
-            while(running)
+            while (running)
             {
                 // read direction
-                ProcessInput();   
+                ProcessInput(); 
+                
                 // update piece
                 currentScene.Update(dir);
                 currentScene = currentScene.UpdateScene();
-                //UI.TitleScreen(dir);
+
+                // UI.TitleScreen(dir);
                 ui.UpdateScene(currentScene);
+
                 // reset direction
-                dir = Dir.None;              
+                dir = Dir.None;   
+                
                 // render
                 ui.Render();
                 Thread.Sleep(130);
@@ -107,7 +109,7 @@ namespace Tetris
             do
             {
                 ck = Console.ReadKey(true).Key;
-                lock(inputLock)
+                lock (inputLock)
                 {
                     inputKey = ck;
                 }
@@ -121,12 +123,13 @@ namespace Tetris
         private void ProcessInput()
         {
             ConsoleKey key;
-            lock(inputLock)
+            lock (inputLock)
             {
                 key = inputKey;
                 inputKey = ConsoleKey.NoName;
             }
-            switch(key)
+
+            switch (key)
             {
                 case ConsoleKey.W:
                     dir = Dir.Up;
@@ -163,7 +166,5 @@ namespace Tetris
             inputThread.Join();
             ui.Finish();
         }
-
-
     }
 }

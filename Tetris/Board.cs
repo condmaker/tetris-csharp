@@ -8,25 +8,25 @@ namespace Tetris
     /// </summary>
     public class Board: Scene
     {
+        private const ConsoleColor bgColor = ConsoleColor.Gray;
+
+        private readonly IList<Tetromino> piecePool;
+
         /// <summary>
         /// Property that represents the vertical dimension of the board.
         /// </summary>
         /// <value>Vertical dimension of the board.</value>
         public int Height => BoardMatrix.GetLength(1);
+
         /// <summary>
         /// Property that represents the horizontal dimension of the board.
         /// </summary>
         /// <value>Horizontal dimension of the board.</value>
         public int Width => BoardMatrix.GetLength(0);
 
-        private const ConsoleColor bgColor = ConsoleColor.Gray;
-
         private Random rnd = new Random();
 
-        private Coord InitialPos => new Coord(Width / 2 ,2);
-       
-        private IList<Tetromino> piecePool;
-
+        private Coord InitialPos => new Coord(Width / 2, 2);
 
         public Tetromino NextPiece { get; private set; }
         public Tetromino CurrentPiece { get; private set; }
@@ -53,7 +53,7 @@ namespace Tetris
             {
                 for (int y = 0; y < h; y++)
                 {   
-                    BoardMatrix[x,y] = new Pixel(bgColor);
+                    BoardMatrix[x, y] = new Pixel(bgColor);
                 }  
             }
 
@@ -83,6 +83,7 @@ namespace Tetris
         /// <param name="c">A Coord.</param>
         /// <returns><c>true</c> if the Coord <paramref name="c"/> is within 
         /// the limits of the board, <c>false</c> otherwise.
+        /// </returns>
         public bool IsInsideBounds(Coord c)
         {
             if (c.X < 0)
@@ -164,6 +165,7 @@ namespace Tetris
                     canRot = false;
                 }
             }
+
             // tratar definition
             // verificar collisao
             return canRot;
@@ -231,7 +233,7 @@ namespace Tetris
         public void StorePiece(Tetromino t)
         {
             foreach (Coord c in t)
-                BoardMatrix[c.X, c.Y] = t.sprite;
+                BoardMatrix[c.X, c.Y] = t.Sprite;
         }
 
         public override Scene UpdateScene()
@@ -281,7 +283,7 @@ namespace Tetris
 
         private void PlacePiece()
         {
-                //Check if piece stopped off screen
+                // Check if piece stopped off screen
                 foreach(Coord c in CurrentPiece){
                     if(c.Y <= InitialPos.Y)
                     {
@@ -289,11 +291,13 @@ namespace Tetris
                         return;
                     }
                 }
-                //DeleteLines
+
+                // DeleteLines
                 DeleteCompleteLines();
-                //Switch Piece
+
+                // Switch Piece
                 CurrentPiece = NextPiece;
-                NextPiece = piecePool[rnd.Next(0,7)];
+                NextPiece = piecePool[rnd.Next(0, 7)];
                 CurrentPiece.ResetPos();
                 StorePiece(CurrentPiece);  
         }
