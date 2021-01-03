@@ -15,6 +15,12 @@ namespace Tetris
         private readonly Thread inputThread;
 
         /// <summary>
+        /// Readonly variable that defines the game speed.
+        /// <remarks>Bigger values are slower.</remarks>
+        /// </summary>
+        private readonly int GameSpeed = 300;
+
+        /// <summary>
         /// Instance variable that controls if the game is running or ends.
         /// </summary>
         private bool running;
@@ -93,7 +99,7 @@ namespace Tetris
                 
                 // render
                 ui.Render();
-                Thread.Sleep(130);
+                Thread.Sleep(GameSpeed);
             }
 
             Finish(ui);
@@ -132,7 +138,7 @@ namespace Tetris
             switch (key)
             {
                 case ConsoleKey.W:
-                    dir = Dir.Up;
+                    dir = Dir.Rot;
                     break;
                 case ConsoleKey.S:
                     dir = Dir.Down;
