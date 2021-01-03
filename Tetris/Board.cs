@@ -192,26 +192,6 @@ namespace Tetris
             return BoardMatrix[c.X, c.Y] == new Pixel(BgColor);
         }
 
-
-        // /// <summary>
-        // /// Method that indicates whether a given set of positions are free or 
-        // /// occupied.
-        // /// </summary>
-        // /// <param name="t">Collection of positions.</param>
-        // /// <returns><c>true</c> if any of the positions are occuiped, 
-        // /// <c>false</c> if all positions are free.</returns>
-        // private bool IsCollision(Tetromino t)
-        // {
-        //     foreach (Coord c in t)
-        //     {
-        //         if (!IsTileFree(c))
-        //             return true;
-        //     }
-           
-        //     return false;
-        // }
-
-
         /// <summary>
         /// Method that indicates if a given Tetromino can move in a given 
         /// direction.
