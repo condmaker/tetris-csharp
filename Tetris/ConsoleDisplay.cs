@@ -258,7 +258,7 @@ namespace Tetris
                     screen[((screen.XDim / 2) - board.Width) + a + 
                         board.NextPiece.Definition[y].X, 
                         ((screen.YDim / 2) - (board.Height / 2)) + nP]
-                        = board.NextPiece.Sprite;
+                        = new Pixel(board.NextPiece.Sprite);
                 }
 
                 a += 4;

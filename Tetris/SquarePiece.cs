@@ -14,7 +14,7 @@ namespace Tetris
         public SquarePiece(Coord pos)
             : base(pos)
         {
-            Sprite = new Pixel(System.ConsoleColor.Blue);
+            Sprite = System.ConsoleColor.Blue;
             Definition.Add(new Coord(0, 0));
             Definition.Add(new Coord(0, 1));
             Definition.Add(new Coord(1, 0));

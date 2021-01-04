@@ -14,7 +14,7 @@ namespace Tetris
         public LinePiece(Coord pos)
             : base(pos)
         {
-            Sprite = new Pixel(System.ConsoleColor.Cyan);
+            Sprite = System.ConsoleColor.Cyan;
             Definition.Add(new Coord(0, -1));
             Definition.Add(new Coord(0, 0));
             Definition.Add(new Coord(0, 1));

@@ -13,7 +13,7 @@ namespace Tetris
         /// Gets the property which represents the color of the Tetromino piece.
         /// </summary>
         /// <value>Tetromino piece's color.</value>
-        public Pixel Sprite { get; protected set; }
+        public ConsoleColor Sprite { get; protected set; }
 
         private Coord initialPos;
 
@@ -89,17 +89,17 @@ namespace Tetris
             switch (dir)
             {
                 case Dir.Rot:
-                Rotate();
-                break;
+                    Rotate();
+                    break;
                 case Dir.Left:
-                position = position + new Coord(dir);
-                break;
+                    position = position + new Coord(dir);
+                    break;
                 case Dir.Right:
-                position = position + new Coord(dir);
-                break;
+                    position = position + new Coord(dir);
+                    break;
                 case Dir.Down:
-                position = position + new Coord(0, 1);
-                break;
+                    position = position + new Coord(0, 1);
+                    break;
             }
         }
 
@@ -125,6 +125,5 @@ namespace Tetris
         {
             return GetEnumerator();
         }
-
     }
 }

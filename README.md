@@ -25,7 +25,7 @@ feita.
 * Classes `Client`, `DoubleBuffer2D`, `Scene`, `TitleScreen`, `Tutorial`
 * Interface `IDisplay`
 * *Struct* `Pixel`
-* Responsável por parte de **Autoria**, **Referências**, e toda a 
+* Responsável por parte de **Autoria**, **Referências**, e toda a
 **Arquitetura da Solução**
 * Criação da documentação em *Doxygen*
 
@@ -49,12 +49,12 @@ Interface inteiramente feita por Marco Domingos.
 
 ### Pedro Bezerra
 
-* Classes `Board`, `Score`
-* *Struct* `Coord`
+* Classe `Board`
+* *Struct* `Coord`, `Score`
 * *Enum* `Dir`
 * Responsável por parte de **Autoria**, **Referências**
 * Maior parte da documentação do projeto
-* Corrigiu maior parte das *Warnings* no projeto.
+* Corrigiu maior parte das *Warnings* no projeto
 
 #### `Board`
 
@@ -64,13 +64,9 @@ método `Update()`, `ChangePiecePos()`, `IsRotationPossible()`. `ClearBoard()`,
 `InitializeBoard()` e `InitializePiece()` foram feitos em conjunção com
 Marco Domingos e Pedro Bezerra.
 
-#### `Score`
+#### `Score`, `Coord`
 
-Classe inteiramente feita por Pedro Bezerra.
-
-#### `Coord`
-
-*Struct* inteiramente feita por Pedro Bezerra.
+*Structs* inteiramente feitas por Pedro Bezerra.
 
 #### `Dir`
 
@@ -84,7 +80,8 @@ Classe inteiramente feita por Pedro Bezerra.
 
 Todas as classes referidas nesta secção foram inteiramente feitas por Daniel
 Fernandes, com exceção de documentação XML, que foi feita em sua maioria 
-por Pedro Bezerra.
+por Pedro Bezerra. A implementação da interface `IEnumerable` em `Tetromino`
+também foi feita por Pedro Bezerra.
 
 ## Arquitetura da Solução
 
@@ -111,7 +108,7 @@ concreto tenha aspetos em comum de forma a serem todos utilizados na `Board`.
 
 ![flux]
 
-Como já dito anteriormente, o jogo utiliza o *Game Loop* e o *Update Method*
+Como já foi dito anteriormente, o jogo utiliza o *Game Loop* e o *Update Method*
 como *design patterns* para fazer com que o jogo tenha atualizações por *frames*
 . De forma a conseguir separar 'lugares' diferentes, foram implementadas
 **cenas**, `GameObject`s que representam um 'espaço' no programa.
@@ -135,6 +132,30 @@ com que ela volte a anterior.
 É a cena que controla o jogo e que faz os updates de todas as peças, do
 'tabuleiro', e do **score**. O *input* '**Enter**' retorna o jogador a cena
 anterior.
+
+A parte mais importante desta cena é a verificação de colisões das peças, ou
+*Tetronominoes*. São feitas a partir dos métodos `IsRotationPossible()` e
+`IsMovementPossible()`, e toda informação do tabuleiro onde as peças podem
+ser movimentadas é guardada numa matriz do tabuleiro em si, guardado na
+variável `BoardMatrix`.
+
+Para a rotação, é mais simples. É apenas observada as posições absolutas
+para onde a peça pode rodar e verificado se estas posições na `Board` em si
+estão vazias ou não. Caso não estejam, a rotação não é feita.
+
+Para a movimentação, é criada uma nova coordenada de acordo com a direção que
+foi introduzida pelo jogador (por exemplo, se o jogador apertou a tecla 'D',
+a coordenada será `(1, 0)`), e irá adicionar esta nova coordenada a cada
+posição da peça atual, que será movida. Esta nova posição da peça é então
+verificada com o tabuleiro para ver se as coordenadas estão livres (ou fora
+do tabuleiro em si, que é calculado com a Largura e Altura) com 
+`IsTileFree()`, e caso estejam, a peça move-se.
+
+A forma de 'limpar' linhas após *Tetris* serem feitos também é importante (e 
+verificado continuamente no `Update()` da `Board`), ele observa com um duplo
+`for` cada linha, e 'deleta' todas as linhas que estejam preenchidas. Para cada
+linha que ele deleta, ele vai para a linha acima (com *y + 1*) e a manda para
+baixo.
 
 ### UML e Descrição das Classes
 
@@ -185,7 +206,15 @@ com `Pixel`.
 
 #### Classe `Tetromino`
 
+Define variáveis para cores e posições absolutas para uma peça, assim como a 
+posibilidade de rodar, mover a peça, e iterar as posições de cada 'parte' da 
+peça (com a interface `IEnumerable`). 
 
+`Board` utiliza três instâncias de `Tetromino`, uma delas sendo uma `IList`, 
+fazendo assim uma relação de agregação com a mesma. `Tetromino` também
+contém uma `IList` de `Coord` como variável de instância para definir 
+posições que a peça ocupará, além de uma outra variável de instância do tipo
+`Coord` que define a posição atual, sendo assim esta relação de agragação.
 
 ## Referências
 

@@ -14,7 +14,7 @@ namespace Tetris
         public SPiece(Coord pos)
             : base(pos)
         {
-            Sprite = new Pixel(System.ConsoleColor.Red);
+            Sprite = System.ConsoleColor.Red;
             Definition.Add(new Coord(-1, 0));
             Definition.Add(new Coord(0, 0));
             Definition.Add(new Coord(0, 1));

@@ -252,9 +252,9 @@ namespace Tetris
         {
             // move rows down
             for (; y > 0; y--)
-             {
+            {
                 for (int x = 0; x < Width; x++)
-                                    BoardMatrix[x, y] = BoardMatrix[x, y - 1];
+                    BoardMatrix[x, y] = BoardMatrix[x, y - 1];
             }                
             
             // clear top row
@@ -305,7 +305,7 @@ namespace Tetris
         public void StorePiece(Tetromino t)
         {
             foreach (Coord c in t)
-                BoardMatrix[c.X, c.Y] = t.Sprite;
+                BoardMatrix[c.X, c.Y] = new Pixel(t.Sprite);
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace Tetris
         public JPiece(Coord pos)
             : base(pos)
         {
-            Sprite = new Pixel(System.ConsoleColor.Yellow);
+            Sprite = System.ConsoleColor.Yellow;
             Definition.Add(new Coord(1, 0));
             Definition.Add(new Coord(0, 0));
             Definition.Add(new Coord(0, 1));

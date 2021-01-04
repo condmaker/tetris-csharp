@@ -14,7 +14,7 @@ namespace Tetris
         public LPiece(Coord pos)
             : base(pos)
         {
-            Sprite = new Pixel(System.ConsoleColor.DarkGreen);
+            Sprite = System.ConsoleColor.DarkGreen;
             Definition.Add(new Coord(-1, 0));
             Definition.Add(new Coord(0, 0));
             Definition.Add(new Coord(0, 1));

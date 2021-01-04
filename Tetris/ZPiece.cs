@@ -14,7 +14,7 @@ namespace Tetris
         public ZPiece(Coord pos)
             : base(pos)
         {
-            Sprite = new Pixel(System.ConsoleColor.White);
+            Sprite = System.ConsoleColor.White;
             Definition.Add(new Coord(-1, 1));
             Definition.Add(new Coord(0, 0));
             Definition.Add(new Coord(0, 1));
