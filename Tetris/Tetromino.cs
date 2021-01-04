@@ -7,7 +7,7 @@ namespace Tetris
     /// <summary>
     /// Abstract class which represents a Tetromino piece.
     /// </summary>
-    public abstract class Tetromino : GameObject, IEnumerable<Coord>
+    public abstract class Tetromino : IEnumerable<Coord>
     {
         /// <summary>
         /// Gets the property which represents the color of the Tetromino piece.
@@ -126,13 +126,5 @@ namespace Tetris
             return GetEnumerator();
         }
 
-        /// <summary>
-        /// Method responsible for updating the Tetromino piece each frame.
-        /// </summary>
-        /// <param name="input">Direction to move Tetromino.</param>
-        public override void Update(Dir input) 
-        { 
-            // No need to update.
-        }
     }
 }
