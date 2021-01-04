@@ -227,7 +227,16 @@ namespace Tetris
                 case ConsoleKey.W:
                     dir = Dir.Up;
                     break;
+                case ConsoleKey.UpArrow:
+                    dir = Dir.Up;
+                    break;
                 case ConsoleKey.S:
+                    if (currentScene is Board)
+                        dir = Dir.Fall;
+                    else
+                        dir = Dir.Down;
+                    break;
+                case ConsoleKey.DownArrow:
                     if (currentScene is Board)
                         dir = Dir.Fall;
                     else
@@ -236,7 +245,13 @@ namespace Tetris
                 case ConsoleKey.A:
                     dir = Dir.Left;
                     break;
+                case ConsoleKey.LeftArrow:
+                    dir = Dir.Left;
+                    break;
                 case ConsoleKey.D:
+                    dir = Dir.Right;
+                    break;
+                case ConsoleKey.RightArrow:
                     dir = Dir.Right;
                     break;
                 case ConsoleKey.Enter:
